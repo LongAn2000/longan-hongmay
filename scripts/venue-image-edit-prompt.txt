@@ -1,0 +1,5 @@
+Tool: built-in image_gen (transparent_background=true)
+Source: C:\Users\NC\Downloads\Phác thảo cổng Học viện PTIT.png
+Output: public/assets/theme-venue.png
+
+Use case: background-extraction. Edit target: the provided brown and ivory PTIT academy gate line-art PNG. Remove every gray/white checkerboard square baked into the background and replace the background with actual alpha transparency, including checkerboard patches between branches, fence bars and around the building. Keep the original brown line work, architecture, trees, fence, Vietnamese lettering and all signage unchanged in shape and position; preserve ivory fills of the architecture. Same wide composition and framing, no redraw or added elements, no residual checkerboard, no solid background, no shadow. Output a transparent PNG for a wedding invitation website.

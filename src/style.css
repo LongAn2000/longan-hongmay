@@ -1,0 +1,306 @@
+﻿@charset "UTF-8";
+
+:root {
+  --text-color: #371a16;
+  --wine: #796650;
+  --wine-light: #8e7c69;
+  --rose: #9e8b73;
+  --paper: #fcfaf7;
+  --ink: var(--text-color);
+  --border: #c7b8a5;
+  --page-width: 430px;
+  --serif: WeddingBody, Georgia, 'Times New Roman', serif;
+  --body: WeddingBody, Georgia, 'Times New Roman', serif;
+  --script: 'Luxurious Script', 'Brush Script MT', cursive;
+  font-family: var(--body);
+  font-variant-numeric: lining-nums;
+  color: var(--ink);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  scroll-padding-top: 16px;
+  background: #e5e0d8;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button { color: inherit; cursor: pointer; border: 0; }
+button:disabled { cursor: wait; opacity: .65; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+figure, h1, h2, h3, h4, p { margin: 0; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--wine); outline-offset: 5px; }
+.icon { width: 21px; height: 21px; flex-shrink: 0; }
+.filled { fill: currentColor; }
+.script { font-family: var(--script); font-weight: 400; }
+.fill-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.decoration { pointer-events: none; user-select: none; }
+.paper-section { position: relative; background: var(--paper) url('/assets/theme-paper.png') center / 100% auto; }
+.silk-section { background: #f5f2e9 url('/assets/theme-white-fabric.png') center top / 100% auto repeat-y; }
+.wedding-page { position: relative; width: 100%; max-width: var(--page-width); margin: 0 auto; overflow: hidden; background: var(--paper) url('/assets/theme-paper.png') center top / 100% auto; box-shadow: 0 0 55px #50412d18; }
+.primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; border-radius: 99px; padding: 12px 24px; background: #f2eadd; color: var(--text-color); font-size: 17px; line-height: 1.35; border: 1px solid var(--wine-light); transition: background .2s, transform .2s; }
+.primary-button:hover { background: #e8ddcf; transform: translateY(-1px); }
+.primary-button .icon { width: 17px; height: 17px; }
+.round-button { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: #fcfaf5; color: var(--text-color); box-shadow: 0 3px 12px #5b493027; }
+.round-button:hover { background: #f1eadd; }
+.section-title { position: relative; text-align: center; margin-bottom: 28px; }
+.section-title h2 { font-size: 48px; line-height: 1.3; color: var(--text-color); }
+.section-title p { font-size: 13px; letter-spacing: .04em; line-height: 1.6; }
+.eyebrow { display: block; font-size: 10px; letter-spacing: .22em; line-height: 1.5; margin-bottom: 12px; }
+.tiny-divider { width: 88px; margin: 16px auto 0; display: flex; align-items: center; gap: 12px; font-size: 10px; }
+.tiny-divider::before, .tiny-divider::after { content: ''; height: 1px; flex: 1; background: var(--border); }
+
+/* The split portrait and white name strip echo a printed wedding invitation. */
+.hero { position: relative; height: auto; aspect-ratio: 420 / 746; background: #f5f2e9 url('/assets/theme-white-fabric.png') center top / 100% auto repeat-y; }
+.hero-rail { --rail-radius: calc(min(100vw, var(--page-width)) * .1875); position: absolute; left: 4%; top: 8%; width: 37.5%; height: 63%; background-color: rgba(255, 255, 254, .7); border-radius: 28px 0 var(--rail-radius) var(--rail-radius); z-index: 2; }
+.wedding-wordmark { position: absolute; top: 6%; bottom: 60%; left: 1%; width: 98%; display: flex; flex-direction: column; justify-content: space-between; text-align: center; font-family: 'Luxurious Script', var(--script); font-size: clamp(40px, 13vw, 56px); line-height: .9; letter-spacing: -.04em; color: #371a16; z-index: 3; }
+.wedding-wordmark span { display: block; white-space: nowrap; }
+.wedding-wordmark span:last-child { font-size: .65em; }
+.hero h1 { position: absolute; top: 44%; left: 5%; width: 90%; text-align: center; font-family: var(--serif); font-size: clamp(18px, 5vw, 24px); line-height: 1.3; font-weight: 400; text-transform: uppercase; }
+.hero h1 span { display: block; color: #371a16; font-weight: 600; }
+.hero h1 i { display: block; color: #371a16; font-size: 15px; font-style: normal; margin: 9px 0; }
+.hero-round { position: absolute; bottom: 1.5%; left: 4%; width: 92%; aspect-ratio: 1; overflow: hidden; border-radius: 50%; border: 5px solid rgb(255, 255, 254); }
+.hero-round .fill-image { object-fit: cover; transform: scale(4.2); transform-origin: 53% 41%; }
+.hero-portrait { position: absolute; left: 44%; right: 4%; top: 20%; bottom: 12.5%; border-radius: 0 65px 0 65px; overflow: hidden; }
+.hero-date { position: absolute; bottom: 3.5%; width: 100%; text-align: center; font-family: 'Athena', var(--serif); font-size: 21px; font-variant-numeric: lining-nums tabular-nums; color: #371a16; letter-spacing: .22em; text-shadow: 0 1px 2px #fff9; }
+
+/* Layered envelope, contact strip and keepsake date tag. */
+.invitation-intro { padding: 14px 0 50px; }
+.envelope-collage { position: relative; width: 100%; aspect-ratio: 420 / 700; }
+.collage-flower { position: absolute; width: 40%; top: 0; left: -1%; opacity: .85; }
+.envelope-back { position: absolute; width: 79%; left: 17%; top: 15%; transform: rotate(8deg); }
+.envelope-photo { position: absolute; width: 53%; height: 29%; left: 36%; top: 23%; border: 5px solid #fff; rotate: 8deg; overflow: hidden; }
+.envelope-photo .script { position: absolute; top: 5%; left: 0; width: 100%; text-align: center; font-family: 'Luxurious Script', var(--script); font-size: 47px; line-height: 1.2; color: #fff; text-shadow: 0 2px 10px #30291b55; }
+.envelope-front { position: absolute; width: 80%; left: 16%; top: 40%; transform: rotate(8deg); }
+.photo-strip { position: absolute; left: 13%; top: 47%; width: 25%; padding: 7px 7px 22px; display: grid; gap: 6px; background: #fff; rotate: -17deg; box-shadow: 0 7px 15px #5e4d382b; }
+.photo-strip > div { position: relative; aspect-ratio: 1; overflow: hidden; }
+.date-tag { position: absolute; left: 46%; top: 54%; width: 36%; }
+.date-tag > img { width: 100%; }
+.date-tag > p { position: absolute; top: 11%; width: 100%; text-align: center; font-family: 'Athena', var(--serif); font-size: 38px; font-variant-numeric: lining-nums tabular-nums; line-height: 1.17; color: #371a16; }
+.date-tag span { display: block; text-transform: uppercase; font-size: 32px; margin: 8px 0; }
+.intro-message { text-align: center; padding: 0 28px; font-size: 17px; line-height: 1.7; }
+.invitation-heading { font-family: var(--script); font-size: 45px; font-weight: 400; line-height: 1.3; margin-bottom: 18px; }
+
+/* Oval event stationery on an ivory silk background. */
+.events-section { position: relative; padding: 44px 14px 64px; }
+.family-section { display: grid; grid-template-columns: 1fr 1fr; padding: 0 0 42px; margin: 0 7px; }
+.family { padding: 0 10px; text-align: center; }
+.family + .family { border-left: 1px solid var(--rose); }
+.family h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 9px; }
+.family p { font-size: 16px; font-weight: 600; line-height: 1.5; }
+.event-cards { display: grid; gap: 35px; }
+.event-card { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 78px 28px 70px; min-height: 600px; border: 7px solid #fffcf5; outline: 1px solid #ded4c3; border-radius: 50%; background: #faf6ee url('/assets/theme-paper.png') center / cover; box-shadow: 6px 12px 24px #5a48352b; text-align: center; }
+.event-card::before { content: ''; position: absolute; inset: 4px; border: 1px solid #b6a58b; border-radius: inherit; pointer-events: none; }
+.event-invitation { max-width: 78%; text-wrap: balance; text-transform: uppercase; font-size: 12px; line-height: 1.6; margin-bottom: 14px; }
+.event-card h3 { max-width: 90%; font-weight: 400; font-size: 15px; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 12px; }
+.event-couple { font-family: 'Luxurious Script', var(--script); font-size: 60px; line-height: 1.2; }
+.event-couple span { display: block; font-family: var(--body); font-size: 25px; font-style: italic; margin: 5px 0; }
+.venue-illustration { width: 85%; aspect-ratio: 2.35; object-fit: fill; margin: 22px auto 14px; opacity: .65; }
+.event-date { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-block: 1px solid var(--rose); width: 92%; margin-bottom: 18px; }
+.event-date > * { padding: 7px 6px; font-size: 14px; font-weight: 400; }
+.event-date strong { border-inline: 1px solid var(--rose); white-space: nowrap; }
+.event-date span:first-child { text-transform: capitalize; }
+.event-card h4 { font-size: 19px; text-transform: uppercase; font-weight: 400; margin-bottom: 9px; }
+.event-address { width: 80%; max-width: 240px; font-size: 15px; line-height: 1.45; }
+.map-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--rose); border-radius: 3px; padding: 6px 13px; margin-top: 18px; font-size: 16px; }
+.map-link .icon { width: 16px; height: 16px; }
+.event-flower { position: absolute; width: 37%; right: -3%; bottom: 3%; z-index: 2; }
+.photo-interlude { position: relative; aspect-ratio: 3 / 4; }
+.interlude-caption { position: absolute; inset: 0; padding: 35px 20px; text-align: center; color: #fff; text-shadow: 0 2px 8px #0006; }
+.interlude-caption .eyebrow { font-size: 9px; }
+.interlude-caption .script { font-size: 43px; }
+.countdown-section { padding: 74px 25px 45px; overflow: hidden; }
+.countdown-clock { position: absolute; width: 64%; right: -9%; top: 25px; opacity: .13; }
+.countdown-section .section-title h2 { font-size: 41px; }
+.countdown { position: relative; display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; text-align: center; margin: 35px 0 20px; }
+.countdown strong { font-size: 38px; line-height: 1.2; font-weight: 400; font-variant-numeric: lining-nums tabular-nums; }
+.countdown span { display: block; font-size: 14px; margin-top: 8px; }
+.countdown > div + div { border-left: 1px solid var(--border); }
+.countdown-message { position: relative; text-align: center; font-size: 16px; font-style: italic; }
+.schedule-section { --timeline-ink: var(--text-color); padding: 45px 28px 62px; }
+.schedule-section > .section-title h2 { color: var(--timeline-ink); font-size: 64px; }
+.schedule-path { position: relative; margin: 36px 0 0; padding-block: 18px; color: var(--timeline-ink); }
+.schedule-path::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: currentColor; transform: translateX(-50%); }
+.schedule-stop { position: relative; min-height: 170px; display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); align-items: center; padding-block: 20px; }
+.schedule-symbol { grid-column: 1; grid-row: 1; justify-self: center; }
+.schedule-marker { grid-column: 2; grid-row: 1; display: grid; place-items: center; }
+.schedule-marker .icon { width: 18px; height: 18px; stroke-width: 1; }
+.schedule-details { grid-column: 3; grid-row: 1; min-width: 0; padding-left: 12px; text-align: left; container-type: inline-size; }
+.schedule-stop:nth-of-type(even) .schedule-symbol { grid-column: 3; }
+.schedule-stop:nth-of-type(even) .schedule-details { grid-column: 1; padding-left: 0; padding-right: 12px; text-align: right; }
+.schedule-stop strong { display: block; font-size: 28px; line-height: 1.3; font-weight: 500; font-variant-numeric: lining-nums tabular-nums; }
+.schedule-stop h3 { margin-top: 5px; font-size: 18px; line-height: 1.35; text-transform: uppercase; font-weight: 400; white-space: pre-line; overflow-wrap: anywhere; }
+.schedule-title-line { display: block; }
+.schedule-title-line:not(:only-child) { white-space: nowrap; font-size: min(1em, 10cqi); }
+.schedule-date { font-size: 12px; margin-bottom: 3px; letter-spacing: .04em; }
+.schedule-symbol .icon { width: 72px; height: 72px; stroke-width: .55; }
+.dresscode { text-align: center; padding-top: 40px; }
+.dresscode h2 { font-size: 46px; }
+.dresscode > p { font-size: 13px; }
+.dresscode-colors { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+.dresscode-colors span { height: 22px; width: 22px; border-radius: 50%; background: #f2eadd; border: 1px solid #bbac97; }
+.dresscode-colors span:nth-child(2) { background: #bba98c; }.dresscode-colors span:nth-child(3) { background: #796650; }
+
+.couple-section { padding: 65px 18px 40px; background: #897a59 url('/assets/theme-warmBackground.jpg') center / cover; }
+.couple-portraits { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-height: 440px; }
+.couple-portraits figure { min-width: 0; }
+.couple-portraits .portrait { position: relative; aspect-ratio: 2 / 3; overflow: hidden; }
+.couple-bride .portrait { border-radius: 65px 0 0 0; }
+.couple-groom .portrait { border-radius: 0 65px 0 0; }
+.couple-portraits figcaption { text-align: center; padding: 10px 0; }
+.couple-portraits strong { display: block; font-size: 26px; line-height: 1.2; font-weight: 400; text-transform: uppercase; }
+.couple-portraits figcaption .script { display: block; font-size: 38px; line-height: 1.2; }
+.couple-bride figcaption { color: var(--text-color); }
+.couple-groom figcaption { color: var(--text-color); padding-top: 0; }
+.couple-flower { position: absolute; width: 37%; left: 33%; top: 46%; }
+.couple-story { text-align: justify; padding: 30px 15px 0; color: var(--text-color); font-size: 16px; line-height: 1.7; }
+.calendar-section { padding: 60px 40px 35px; }
+.calendar-paper { position: relative; max-width: 360px; margin: 0 auto; text-align: center; }
+.calendar-paper h2 { color: var(--text-color); font-size: 47px; margin-bottom: 20px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); row-gap: 6px; }
+.calendar-grid b { font-size: 12px; font-weight: 400; padding-bottom: 8px; }
+.calendar-grid > span { height: 30px; display: grid; place-items: center; position: relative; font-size: 17px; }
+.calendar-grid em { position: relative; font-style: normal; }
+.calendar-grid .wedding-day { color: var(--text-color); }
+.wedding-day .icon { position: absolute; color: #e6d6c3; width: 32px; height: 32px; }
+.editorial-section { padding: 35px 18px 0; }
+.editorial-collage { display: grid; grid-template-columns: 40% 1fr; gap: 7px; }
+.editorial-tall { position: relative; min-height: 330px; overflow: hidden; border-radius: 75px 0 90px 90px; }
+.editorial-right { min-width: 0; padding-top: 36px; }
+.editorial-wide { position: relative; height: 175px; overflow: hidden; border-radius: 0 70px 0 0; }
+.editorial-whispers { font-size: 35px; line-height: 1.5; text-align: center; letter-spacing: .01em; }
+.editorial-label { padding: 9px 12px 18px; background: #f2eadd; color: var(--text-color); border-radius: 0 0 0 38px; }
+.editorial-label > span { font-size: 26px; letter-spacing: .06em; }.editorial-label > p { text-align: right; font-size: 13px; margin-top: 12px; }
+.vertical-rule { width: 1px; height: 90px; margin: 38px auto 50px; background: var(--rose); position: relative; }
+.vertical-rule::after { content: ''; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--rose); bottom: 0; left: -2.5px; }
+.album-section { padding: 0 0 35px; }
+.album-section > .section-title { padding-inline: 20px; }
+.album-section .section-title h2 { font-size: 40px; }
+.album-viewer { position: relative; aspect-ratio: 3 / 4; background: #e5ded1; overflow: hidden; }
+.album-image-button { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; background: transparent; padding: 0; cursor: zoom-in; }
+.album-image-button img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.slide-outgoing { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.album-prev, .album-next { position: absolute; top: 50%; translate: 0 -50%; background: #fffdf5bd; }
+.album-prev { left: 10px; }.album-next { right: 10px; }
+.album-count { position: absolute; bottom: 15px; left: 50%; translate: -50% 0; color: var(--text-color); background: #fffdf5e6; border-radius: 20px; padding: 4px 14px; font-size: 13px; }
+.album-thumbnails { display: flex; overflow-x: auto; gap: 7px; padding: 12px 8px 7px; scrollbar-width: none; }
+.album-thumbnails::-webkit-scrollbar { display: none; }
+.thumbnail { flex: 0 0 65px; aspect-ratio: 1; padding: 0; overflow: hidden; opacity: .5; }
+.thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.thumbnail.active { opacity: 1; outline: 1px solid var(--wine); outline-offset: 2px; }
+
+.guestbook-section { text-align: center; padding: 30px 24px 45px; }
+.signature-board { position: relative; overflow: hidden; border-radius: 80px 0 80px 0; background: #eee4da; }
+.signature-board > img { width: 100%; height: auto; }
+.signatures { position: absolute; inset: 0; pointer-events: none; }
+.board-signature { position: absolute; transform: translate(-50%,-50%) rotate(-7deg); font-size: 24px; width: max-content; max-width: 56%; overflow-wrap: anywhere; line-height: 1.25; text-shadow: 0 1px 2px white; }
+.signature-count { font-size: 14px; margin: 18px 0 15px; }.guestbook-steps { font-size: 12px; margin-top: 12px; }
+.wish-list { position: relative; margin-top: 24px; max-height: 390px; overflow-y: auto; scrollbar-width: thin; }
+.empty-wishes { font-size: 14px; font-style: italic; }
+.wish { display: flex; gap: 13px; text-align: left; border-bottom: 1px solid var(--border); padding: 16px 5px; }
+.wish-heart { color: var(--text-color); padding-top: 3px; }.wish h3 { font-size: 17px; margin-bottom: 5px; }.wish p { font-size: 17px; line-height: 1.5; overflow-wrap: anywhere; white-space: pre-wrap; }
+.rsvp-section { padding: 35px 26px 20px; }
+.rsvp-intro { text-align: center; font-size: 18px; line-height: 1.5; margin-bottom: 28px; }
+.rsvp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rsvp-option { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; background: transparent; border: 1px solid var(--rose); border-radius: 32px; padding: 24px 10px; min-height: 130px; font-size: 17px; line-height: 1.4; }
+.rsvp-option:hover { background: #ece5d5; }.rsvp-option > .icon { width: 26px; height: 26px; }.rsvp-decline { color: var(--text-color); }
+.rsvp-status { text-align: center; font-size: 16px; margin-top: 16px; min-height: 20px; }
+.gift-section { padding: 25px 26px 50px; }
+.gift-intro { text-align: center; font-size: 17px; line-height: 1.5; }
+.gift-cards { display: grid; grid-template-columns: minmax(0,230px); justify-content: center; gap: 24px; max-width: 500px; margin: 24px auto 0; }
+.gift-card { min-width: 0; width: 100%; text-align: center; padding: 20px; border: 1px solid var(--border); border-radius: 100px 100px 8px 8px; background: #fdfbf4a8; }
+.gift-role { font-size: 13px; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 15px; }
+.gift-qr { padding: 8px; width: 100%; aspect-ratio: 1; object-fit: contain; }
+.qr-placeholder { width: 100%; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.qr-placeholder .icon { width: 45px; height: 45px; stroke-width: 1; }.qr-placeholder span { font-family: var(--script); font-size: 27px; }.qr-placeholder small { font-size: 13px; }
+.gift-name { font-size: 19px; font-weight: 400; margin-top: 12px; overflow-wrap: anywhere; }.gift-bank { margin-top: 8px; font-size: 16px; overflow-wrap: anywhere; }.download-qr { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 99px; font-size: 13px; padding: 8px 12px; margin-top: 12px; }.download-qr .icon { width: 14px; height: 14px; }.copy-account { max-width: 100%; margin-top: 8px; padding: 8px; background: transparent; overflow-wrap: anywhere; }.copy-account small { display: block; margin-top: 5px; font-size: 12px; }
+.closing-photo { position: relative; aspect-ratio: 16 / 10; }
+.closing-footer { padding: 55px 20px 65px; text-align: center; }
+.footer-venue { width: 100%; aspect-ratio: 2.35; object-fit: fill; margin: 12px auto 15px; opacity: .65; }
+.closing-text h2 { font-size: 68px; line-height: 1.2; }.closing-text > p { font-size: 21px; margin: 12px 0; text-transform: uppercase; letter-spacing: .04em; }.closing-text > span { font-size: 17px; line-height: 1.5; display: block; }
+
+.floating-actions { position: fixed; z-index: 15; right: max(12px,calc((100vw - var(--page-width)) / 2 + 12px)); bottom: max(18px,env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 8px; }
+.floating-actions .round-button { width: 34px; height: 34px; border: 1px solid #ccbaa3; background: #fcf7efed; }
+.floating-actions .icon { width: 16px; height: 16px; }
+.floating-actions .music-button { width: 43px; height: 43px; margin-left: -5px; }
+.floating-actions .playing { background: #e8ddcf; color: var(--text-color); }.to-top .icon { rotate: 180deg; }
+.toast { position: fixed; bottom: 30px; left: 50%; translate: -50% 20px; z-index: 200; max-width: min(90vw,380px); width: max-content; background: #fcf7ef; color: var(--text-color); padding: 13px 20px; border-radius: 12px; font-size: 16px; text-align: center; box-shadow: 0 8px 25px #0003; opacity: 0; pointer-events: none; transition: .25s; }
+.toast.visible { opacity: 1; translate: -50% 0; }
+.has-reveals .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s ease,transform .8s ease; }
+.has-reveals .reveal.revealed { opacity: 1; transform: none; }
+
+/* Native dialogs provide focus management, Escape, and keyboard navigation. */
+dialog { color: var(--ink); border: 0; }
+dialog::backdrop { background: rgb(40 34 24 / 72%); backdrop-filter: blur(5px); }
+.dialog-close { position: absolute; top: 12px; right: 12px; z-index: 3; box-shadow: none; background: #8e7c6912; width: 33px; height: 33px; }
+.dialog-close .icon { width: 18px; height: 18px; }
+.lightbox { background: transparent; padding: 0; width: min(94vw, 1000px); max-width: 1000px; height: min(94svh, 1100px); max-height: 94svh; overflow: hidden; }
+.lightbox-stage { position: relative; width: 100%; height: calc(100% - 36px); overflow: hidden; }
+.lightbox-stage > img { width: 100%; height: 100%; object-fit: contain; }
+.lightbox .dialog-close { position: fixed; top: 18px; right: 18px; background: #fffdf9; }
+.lightbox-prev, .lightbox-next { position: absolute; top: 50%; translate: 0 -50%; z-index: 1; }
+.lightbox-prev { left: 8px; }.lightbox-next { right: 8px; }
+.lightbox-count { height: 30px; width: max-content; margin: 6px auto 0; padding: 5px 14px; border-radius: 20px; color: var(--text-color); background: #fffdf5e6; text-align: center; font-family: var(--serif); font-size: 13px; }
+.form-dialog { width: min(92vw, 410px); padding: 35px 26px 28px; border-radius: 16px; max-height: 90svh; background: #faf6ef url('/assets/theme-paper.png') center / cover; box-shadow: 0 20px 60px #0004; }
+.form-dialog > h2 { font-size: 39px; color: var(--text-color); text-align: center; line-height: 1.3; margin-bottom: 12px; }
+.dialog-description { text-align: center; font-size: 17px; line-height: 1.5; margin-bottom: 20px; }
+.form-dialog label { display: block; font-family: var(--serif); font-size: 13px; color: var(--text-color); margin: 16px 0 7px; }
+.form-dialog input, .form-dialog textarea, .form-dialog select { display: block; width: 100%; border: 1px solid var(--border); border-radius: 8px; background: rgb(255 255 255 / 72%); padding: 11px 12px; color: var(--ink); font-size: 17px; }
+.form-dialog textarea { resize: vertical; min-height: 90px; }
+.form-dialog input::placeholder, .form-dialog textarea::placeholder { color: var(--text-color); }
+.form-dialog form > .primary-button { width: 100%; }
+.local-notice { font-size: 13px; color: var(--text-color); line-height: 1.5; margin: 16px 0; font-style: italic; }
+.form-steps { display: flex; justify-content: center; gap: 20px; list-style: none; padding: 0; margin: 12px 0 20px; font-size: 14px; color: var(--text-color); }
+.form-steps .current { color: var(--text-color); border-bottom: 1px solid; }
+.signature-preview { min-height: 90px; display: grid; place-items: center; text-align: center; overflow-wrap: anywhere; padding: 12px; font-size: 38px; color: var(--text-color); }
+.ink-colors { display: flex; justify-content: center; gap: 16px; margin: 15px 0 25px; }
+.ink-color { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); border: 4px solid #faf6ef; }
+.ink-color.selected { outline: 1px solid var(--ink); outline-offset: 2px; }
+.signature-picker { position: relative; overflow: hidden; border-radius: 7px; cursor: crosshair; }
+.signature-picker img { width: 100%; }
+.placed-signature { position: absolute; transform: translate(-50%, -50%) rotate(-7deg); text-align: center; max-width: 56%; width: max-content; font-size: 26px; pointer-events: none; text-shadow: 0 1px 2px white; overflow-wrap: anywhere; line-height: 1.2; }
+.form-navigation { display: flex; align-items: center; justify-content: end; gap: 12px; margin-top: 22px; }
+.form-navigation .primary-button { font-size: 13px; padding: 12px 18px; }
+.secondary-button { background: transparent; font-size: 16px; padding: 10px; border-bottom: 1px solid var(--border); }
+.noscript { position: fixed; z-index: 300; bottom: 10px; left: 5%; width: 90%; text-align: center; color: var(--text-color); background: white; padding: 20px; }
+
+
+@media (min-width: 480px) {
+  .gift-cards { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+  .gift-card { padding: 20px 12px; }
+}
+@media (min-width: 768px) {
+  :root { --page-width: min(573px,calc(100vw - 48px)); }
+  .wedding-wordmark { font-size: 66px; }
+  .hero h1 { font-size: 31px; }
+  .hero-date { font-size: 27px; }
+  .date-tag > p { font-size: 49px; }.date-tag span { font-size: 42px; }
+  .envelope-photo .script { font-size: 64px; }
+  .events-section { padding: 55px 24px 75px; }
+  .family p { font-size: 19px; }
+  .event-card { min-height: 750px; padding: 95px 50px 80px; }
+  .event-invitation { font-size: 15px; }.event-card h3 { font-size: 18px; }
+  .event-date > * { font-size: 18px; padding: 10px; }.event-card h4 { font-size: 24px; }.event-address { font-size: 19px; max-width: 300px; }
+  .section-title h2 { font-size: 56px; }.section-title p { font-size: 15px; }
+  .countdown-section { padding: 80px 40px 45px; }.countdown-section .section-title h2 { font-size: 54px; }.countdown strong { font-size: 49px; }
+  .schedule-section { padding-inline: 48px; }.schedule-section > .section-title h2 { font-size: 78px; }.schedule-stop { min-height: 210px; }.schedule-stop h3 { font-size: 23px; }.schedule-stop strong { font-size: 34px; }.schedule-date { font-size: 14px; }.schedule-symbol .icon { width: 92px; height: 92px; }
+  .couple-section { padding: 75px 24px 50px; }.couple-portraits { min-height: 570px; }.couple-portraits strong { font-size: 33px; }.couple-portraits figcaption .script { font-size: 48px; }.couple-story { font-size: 20px; }
+  .editorial-section { padding-inline: 24px; }.editorial-tall { min-height: 440px; }.editorial-wide { height: 240px; }.editorial-whispers { font-size: 47px; }.editorial-label > span { font-size: 36px; }
+  .guestbook-section,.rsvp-section,.gift-section { padding-inline: 40px; }.rsvp-options { gap: 22px; }
+}
+@media (max-width: 360px) {
+  .wedding-wordmark { font-size: 42px; }.hero h1 { font-size: 18px; }.hero h1 i { margin: 6px 0; }.hero-date { font-size: 18px; }
+  .date-tag > p { font-size: 30px; }.date-tag span { font-size: 25px; margin: 5px 0; }
+  .event-card { padding-inline: 17px; min-height: 570px; }.event-invitation { max-width: 72%; font-size: 10px; }.event-date > * { padding-inline: 4px; font-size: 12px; }
+  .section-title h2,.countdown-section .section-title h2 { font-size: 36px; }.countdown strong { font-size: 30px; }
+  .couple-portraits { min-height: 380px; }.couple-portraits strong { font-size: 22px; }.couple-portraits figcaption .script { font-size: 32px; }
+  .editorial-tall { min-height: 280px; }.editorial-wide { height: 142px; }.editorial-whispers { font-size: 27px; }.editorial-label > span { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { scroll-behavior: auto; }
+  *,*::before,*::after { animation: none !important; transition-duration: .01ms !important; }
+  .has-reveals .reveal { opacity: 1; transform: none; }
+}
