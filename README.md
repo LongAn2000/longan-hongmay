@@ -92,3 +92,12 @@ npm.cmd run test:ui
 Ảnh chụp kiểm tra nằm trong `test-results/`. Thư viện kiểm thử không cài thêm trình duyệt.
 
 Nếu chuyển project sang máy khác: cài Node.js LTS, chạy `npm.cmd ci`, sau đó `npm.cmd run dev`.
+
+## GitHub Pages
+
+Thiệp được xuất bản tại https://longan2000.github.io/longan-hongmay/.
+Mỗi lần đẩy thay đổi lên nhánh `main`, workflow `.github/workflows/deploy.yml` tự cài thư viện, build và triển khai thư mục `dist/` lên GitHub Pages.
+
+Chạy `npm.cmd run dev` để chỉnh sửa tại http://127.0.0.1:5173/.
+Để xem đúng bản build dùng trên Pages, chạy `npm.cmd run build` rồi `npm.cmd run preview` và mở http://127.0.0.1:4173/longan-hongmay/.
+`vite.config.js` đặt đường dẫn gốc cho bản build; các ảnh, nhạc và QR trong cấu hình vẫn có thể khai báo dạng `/assets/ten-file`.

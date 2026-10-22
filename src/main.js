@@ -5,6 +5,7 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const e = escapeHtml;
+const assetUrl = (path) => path.startsWith('/') && !path.startsWith('//') ? `${import.meta.env.BASE_URL}${path.slice(1)}` : path;
 const icons = {
   heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
   check: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
@@ -24,8 +25,8 @@ const icons = {
   banquet: '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="5.3"/><path d="M2 2v6m2-6v6M1 2v4a2 2 0 0 0 4 0V2M3 8v14M22 2v20m0-20c-3 3-3 8 0 9M9 9l3 3-3 4m6-7-3 3 3 4M9 9c3-2 3 1 3 3 0-2 0-5 3-3M9 16c3 2 3-2 3-4 0 2 0 6 3 4"/>',
 };
 const icon = (name, extra = '') => `<svg class="icon ${extra}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`;
-const photo = (name, className = '', position = '50% 50%', eager = false) => `<img class="${className}" src="${e(wedding.images[name])}" alt="Ảnh cưới ${e(wedding.groom)} và ${e(wedding.bride)}" style="object-position:${e(wedding.imagePositions?.[name] || position)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
-const decoration = (name, className = '') => `<img class="decoration ${className}" src="/assets/theme-${name}.png" alt="" aria-hidden="true" loading="lazy">`;
+const photo = (name, className = '', position = '50% 50%', eager = false) => `<img class="${className}" src="${e(assetUrl(wedding.images[name]))}" alt="Ảnh cưới ${e(wedding.groom)} và ${e(wedding.bride)}" style="object-position:${e(wedding.imagePositions?.[name] || position)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+const decoration = (name, className = '') => `<img class="decoration ${className}" src="${assetUrl(`/assets/theme-${name}.png`)}" alt="" aria-hidden="true" loading="lazy">`;
 const toDate = (iso) => new Date(`${iso}T12:00:00+07:00`);
 const dateParts = (iso) => {
   const [year, month, day] = iso.split('-');
@@ -113,18 +114,18 @@ $('#app').innerHTML = `
     <section class="album-section" id="album">
       <div class="section-title reveal"><span class="eyebrow">OUR MEMORIES</span><h2 class="script">Những ngày có nhau</h2><div class="tiny-divider">♥</div></div>
       <div class="album-viewer reveal" aria-roledescription="trình chiếu" aria-label="Album ảnh cưới">
-        <button class="album-image-button" id="open-lightbox" aria-label="Phóng to ảnh cưới"><img id="album-image" src="${e(wedding.album[0].src)}" style="object-position:${e(wedding.album[0].position)}" alt="Ảnh cưới 1" loading="lazy"></button>
+        <button class="album-image-button" id="open-lightbox" aria-label="Phóng to ảnh cưới"><img id="album-image" src="${e(assetUrl(wedding.album[0].src))}" style="object-position:${e(wedding.album[0].position)}" alt="Ảnh cưới 1" loading="lazy"></button>
         <button class="round-button album-prev" data-album-direction="-1" aria-label="Ảnh trước">${icon('left')}</button>
         <button class="round-button album-next" data-album-direction="1" aria-label="Ảnh sau">${icon('right')}</button>
         <span class="album-count" id="album-count" aria-live="polite">1 / ${wedding.album.length}</span>
       </div>
-      <div class="album-thumbnails" aria-label="Chọn ảnh">${wedding.album.map((image, i) => `<button class="thumbnail ${i === 0 ? 'active' : ''}" data-photo="${i}" aria-label="Xem ảnh ${i + 1}" aria-pressed="${i === 0}"><img src="${e(image.src)}" alt="" loading="lazy" style="object-position:${image.position}"></button>`).join('')}</div>
+      <div class="album-thumbnails" aria-label="Chọn ảnh">${wedding.album.map((image, i) => `<button class="thumbnail ${i === 0 ? 'active' : ''}" data-photo="${i}" aria-label="Xem ảnh ${i + 1}" aria-pressed="${i === 0}"><img src="${e(assetUrl(image.src))}" alt="" loading="lazy" style="object-position:${image.position}"></button>`).join('')}</div>
     </section>
 
     <section class="guestbook-section paper-section" id="guestbook">
       
       <div class="section-title reveal"><h2 class="script">Sổ Lưu Bút</h2><p>Ký tên & gửi lời chúc</p><div class="tiny-divider">♥</div></div>
-      <div class="signature-board reveal" id="signature-board"><img src="${e(wedding.images.guestbook)}" alt="Bảng lưu bút ảnh cưới" loading="lazy"><div class="signatures" id="signatures"></div></div>
+      <div class="signature-board reveal" id="signature-board"><img src="${e(assetUrl(wedding.images.guestbook))}" alt="Bảng lưu bút ảnh cưới" loading="lazy"><div class="signatures" id="signatures"></div></div>
       <p class="signature-count" id="signature-count">Hãy là người đầu tiên ký tên</p>
       <button class="primary-button" id="sign-guestbook">${icon('pen')} Ký tên & gửi lời chúc</button>
       <p class="guestbook-steps">1 Ký tên · 2 Chọn vị trí · 3 Lời chúc</p>
@@ -145,7 +146,7 @@ $('#app').innerHTML = `
       <div class="section-title reveal"><h2 class="script">Hộp Mừng Cưới</h2><p>Wedding Gift</p><div class="tiny-divider">♥</div></div>
       <p class="gift-intro reveal">Gia đình chúng tôi rất hân hạnh được đón tiếp !</p>
       <div class="gift-cards">${wedding.gifts.map((gift, index) => `<article class="gift-card reveal" aria-label="Mừng cưới ${e(gift.role)} ${e(gift.name)}"><p class="gift-role">${e(gift.role)}</p>
-        ${gift.qrImage ? `<img class="gift-qr" src="${e(gift.qrImage)}" alt="Mã QR mừng cưới ${e(gift.name)}" loading="lazy"><a class="download-qr" href="${e(gift.qrImage)}" download="qr-mung-cuoi-${index + 1}.png" aria-label="Tải mã QR ${e(gift.name)}">${icon('download')} Tải mã QR</a>` : `<div class="qr-placeholder">${icon('gift')}<span>Trân trọng cảm ơn</span><small>Mã QR sẽ được cập nhật</small></div>`}
+        ${gift.qrImage ? `<img class="gift-qr" src="${e(assetUrl(gift.qrImage))}" alt="Mã QR mừng cưới ${e(gift.name)}" loading="lazy"><a class="download-qr" href="${e(assetUrl(gift.qrImage))}" download="qr-mung-cuoi-${index + 1}.png" aria-label="Tải mã QR ${e(gift.name)}">${icon('download')} Tải mã QR</a>` : `<div class="qr-placeholder">${icon('gift')}<span>Trân trọng cảm ơn</span><small>Mã QR sẽ được cập nhật</small></div>`}
         <h3 class="gift-name">${e(gift.name)}</h3>
         ${gift.bank ? `<p class="gift-bank">${e(gift.bank)}</p>` : ''}
         ${gift.account ? `<button class="copy-account" data-copy-gift="${index}" aria-label="Sao chép số tài khoản ${e(gift.name)}"><span>${e(gift.account)}</span><small>Sao chép tài khoản</small></button>` : ''}
@@ -162,7 +163,7 @@ $('#app').innerHTML = `
     <a class="round-button" href="#gift" aria-label="Hộp mừng cưới">${icon('gift')}</a>
     <a class="round-button to-top" href="#home" aria-label="Về đầu thiệp">${icon('down')}</a>
   </nav>
-  <audio id="background-music" src="${e(wedding.music)}" loop preload="none"></audio>
+  <audio id="background-music" src="${e(assetUrl(wedding.music))}" loop preload="none"></audio>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <dialog class="lightbox" id="lightbox" aria-label="Ảnh cưới phóng to">
@@ -187,7 +188,7 @@ $('#app').innerHTML = `
     <ol class="form-steps" aria-label="Các bước lưu bút"><li data-step="1">1. Ký tên</li><li data-step="2">2. Vị trí</li><li data-step="3">3. Lời chúc</li></ol>
     <form id="signature-form">
       <div class="signature-step" data-panel="1"><label for="signature-name">Tên hoặc chữ ký của bạn</label><input id="signature-name" name="name" autocomplete="name" maxlength="40" required placeholder="Tên của bạn"><p class="signature-preview script" id="signature-preview">Chữ ký của bạn</p><label for="signature-color">Màu mực</label><div class="ink-colors" id="signature-color">${['#8b1e1e', '#583a38', '#314b3c', '#243b64'].map((color, i) => `<button type="button" class="ink-color ${i === 0 ? 'selected' : ''}" data-color="${color}" style="--ink:${color}" aria-label="Màu ${['đỏ rượu', 'nâu', 'xanh lá', 'xanh dương'][i]}" aria-pressed="${i === 0}"></button>`).join('')}</div></div>
-      <div class="signature-step" data-panel="2" hidden><p class="dialog-description">Chạm vào bức ảnh để chọn vị trí chữ ký.</p><div class="signature-picker" id="signature-picker" role="button" tabindex="0" aria-label="Chọn vị trí chữ ký. Dùng các phím mũi tên để điều chỉnh."><img src="${e(wedding.images.guestbook)}" alt="Chọn vị trí trên ảnh"><span class="placed-signature script" id="signature-placement"></span></div></div>
+      <div class="signature-step" data-panel="2" hidden><p class="dialog-description">Chạm vào bức ảnh để chọn vị trí chữ ký.</p><div class="signature-picker" id="signature-picker" role="button" tabindex="0" aria-label="Chọn vị trí chữ ký. Dùng các phím mũi tên để điều chỉnh."><img src="${e(assetUrl(wedding.images.guestbook))}" alt="Chọn vị trí trên ảnh"><span class="placed-signature script" id="signature-placement"></span></div></div>
       <div class="signature-step" data-panel="3" hidden><label for="signature-wish">Lời chúc của bạn</label><textarea id="signature-wish" name="wish" rows="4" maxlength="500" placeholder="Chúc hai bạn trăm năm hạnh phúc..."></textarea><p class="local-notice">Bản xem thử: chữ ký và lời chúc được lưu trên trình duyệt này.</p></div>
       <div class="form-navigation"><button class="secondary-button" type="button" id="signature-back" hidden>Quay lại</button><button class="primary-button" type="button" id="signature-next">Tiếp theo ${icon('right')}</button><button class="primary-button" type="submit" id="signature-submit" hidden>${icon('heart')} Gửi lời chúc</button></div>
     </form>
@@ -276,7 +277,7 @@ function transitionPhoto(element, image, index, direction) {
     outgoing.classList.add('slide-outgoing');
     element.after(outgoing);
   }
-  element.src = image.src;
+  element.src = assetUrl(image.src);
   element.style.objectPosition = image.position;
   element.alt = `Ảnh cưới ${index + 1}`;
   if (!outgoing) return;
@@ -306,7 +307,7 @@ async function showPhoto(index, direction = Math.sign(index - activePhoto)) {
   const request = ++photoRequest;
   const image = wedding.album[targetIndex];
   const preload = new Image();
-  preload.src = image.src;
+  preload.src = assetUrl(image.src);
   try { await preload.decode(); }
   catch {
     if (request === photoRequest) {
