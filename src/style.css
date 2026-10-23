@@ -294,10 +294,32 @@ dialog::backdrop { background: rgb(40 34 24 / 72%); backdrop-filter: blur(5px); 
 @media (max-width: 360px) {
   .wedding-wordmark { font-size: 42px; }.hero h1 { font-size: 18px; }.hero h1 i { margin: 6px 0; }.hero-date { font-size: 18px; }
   .date-tag > p { font-size: 30px; }.date-tag span { font-size: 25px; margin: 5px 0; }
-  .event-card { padding-inline: 17px; min-height: 570px; }.event-invitation { max-width: 72%; font-size: 10px; }.event-date > * { padding-inline: 4px; font-size: 12px; }
   .section-title h2,.countdown-section .section-title h2 { font-size: 36px; }.countdown strong { font-size: 30px; }
   .couple-portraits { min-height: 380px; }.couple-portraits strong { font-size: 22px; }.couple-portraits figcaption .script { font-size: 32px; }
   .editorial-tall { min-height: 280px; }.editorial-wide { height: 142px; }.editorial-whispers { font-size: 27px; }.editorial-label > span { font-size: 20px; }
+}
+/* Below desktop, scale the event section as a miniature of the 573px desktop layout so each oval stays between the silk seams. */
+@media (max-width: 767px) {
+  .wedding-page { container-type: inline-size; }
+  .events-section { --u: calc(100cqw / 573); padding: calc(55 * var(--u)) calc(24 * var(--u)) calc(75 * var(--u)); }
+  .family-section { padding-bottom: calc(42 * var(--u)); margin-inline: calc(7 * var(--u)); }
+  .family { padding-inline: calc(10 * var(--u)); }
+  .family h2 { font-size: calc(16 * var(--u)); margin-bottom: calc(9 * var(--u)); }
+  .family p { font-size: calc(19 * var(--u)); }
+  .event-cards { gap: calc(35 * var(--u)); }
+  .event-card { min-height: calc(750 * var(--u)); padding: calc(95 * var(--u)) calc(50 * var(--u)) calc(80 * var(--u)); border-width: calc(7 * var(--u)); }
+  .event-card::before { inset: calc(4 * var(--u)); }
+  .event-invitation { max-width: 78%; font-size: calc(15 * var(--u)); margin-bottom: calc(14 * var(--u)); }
+  .event-card h3 { font-size: calc(18 * var(--u)); margin-bottom: calc(12 * var(--u)); }
+  .event-couple { font-size: calc(60 * var(--u)); }
+  .event-couple span { font-size: calc(25 * var(--u)); margin-block: calc(5 * var(--u)); }
+  .venue-illustration { margin: calc(22 * var(--u)) auto calc(14 * var(--u)); }
+  .event-date { margin-bottom: calc(18 * var(--u)); }
+  .event-date > * { font-size: calc(18 * var(--u)); padding: calc(10 * var(--u)); }
+  .event-card h4 { font-size: calc(24 * var(--u)); margin-bottom: calc(9 * var(--u)); }
+  .event-address { font-size: calc(19 * var(--u)); max-width: calc(300 * var(--u)); }
+  .map-link { gap: calc(7 * var(--u)); padding: calc(6 * var(--u)) calc(13 * var(--u)); margin-top: calc(18 * var(--u)); font-size: calc(16 * var(--u)); }
+  .map-link .icon { width: calc(16 * var(--u)); height: calc(16 * var(--u)); }
 }
 @media (prefers-reduced-motion: reduce) {
   :root { scroll-behavior: auto; }
