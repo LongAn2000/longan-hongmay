@@ -92,7 +92,7 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .family h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 9px; }
 .family p { font-size: 16px; font-weight: 600; line-height: 1.5; }
 .event-cards { display: grid; gap: 35px; }
-.event-card { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 78px 28px 70px; min-height: 600px; border: 7px solid #fffcf5; outline: 1px solid #ded4c3; border-radius: 50%; background: #faf6ee url('/assets/theme-paper.png') center / cover; box-shadow: 6px 12px 24px #5a48352b; text-align: center; }
+.event-card { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 78px 28px 70px; min-height: 600px; border: 7px solid #fffcf5; border-radius: 50%; background: #faf6ee url('/assets/theme-paper.png') center / cover; box-shadow: 0 0 0 1px #ded4c3, 6px 12px 24px #5a48352b; text-align: center; }
 .event-card::before { content: ''; position: absolute; inset: 4px; border: 1px solid #b6a58b; border-radius: inherit; pointer-events: none; }
 .event-invitation { max-width: 78%; text-wrap: balance; text-transform: uppercase; font-size: 12px; line-height: 1.6; margin-bottom: 14px; }
 .event-card h3 { max-width: 90%; font-weight: 400; font-size: 15px; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 12px; }
@@ -300,8 +300,7 @@ dialog::backdrop { background: rgb(40 34 24 / 72%); backdrop-filter: blur(5px); 
 }
 /* Below desktop, scale the event section as a miniature of the 573px desktop layout so each oval stays between the silk seams. */
 @media (max-width: 767px) {
-  .wedding-page { container-type: inline-size; }
-  .events-section { --u: calc(100cqw / 573); padding: calc(55 * var(--u)) calc(24 * var(--u)) calc(75 * var(--u)); }
+  .events-section { --u: calc(min(100vw, 430px) / 573); padding: calc(55 * var(--u)) calc(24 * var(--u)) calc(75 * var(--u)); }
   .family-section { padding-bottom: calc(42 * var(--u)); margin-inline: calc(7 * var(--u)); }
   .family { padding-inline: calc(10 * var(--u)); }
   .family h2 { font-size: calc(16 * var(--u)); margin-bottom: calc(9 * var(--u)); }
