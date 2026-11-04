@@ -1,5 +1,5 @@
 import './style.css';
-import { wedding } from './config.js';
+import { wedding, rsvpEndpoint } from './config.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -349,7 +349,7 @@ $$('dialog').forEach(dialog => dialog.addEventListener('click', event => {
   if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
 }));
 
-// Frontend-only demo storage. No request is sent to the original website.
+// Lưu RSVP và lời chúc trên máy khách; RSVP còn được gửi về Google Sheet nếu có rsvpEndpoint.
 const storage = {
   read(key, fallback) { try { return JSON.parse(localStorage.getItem(`longan-hongmay:${key}`)) ?? fallback; } catch { return fallback; } },
   write(key, value) {
@@ -377,7 +377,12 @@ $('#rsvp-form').addEventListener('submit', event => {
   const response = { name, attending, guests: attending === 'yes' ? Number($('#rsvp-guests').value) : 0, note: $('#rsvp-note').value.trim(), createdAt: new Date().toISOString() };
   if (!storage.write('rsvp', response)) return;
   $('#rsvp-status').textContent = `${name}: ${attending === 'yes' ? 'Đã xác nhận tham dự' : 'Đã gửi lời hẹn dịp khác'}.`;
-  $('#rsvp-dialog').close(); toast('Đã lưu xác nhận trên thiết bị này. Cảm ơn bạn!');
+  $('#rsvp-dialog').close();
+  if (!rsvpEndpoint) { toast('Đã lưu xác nhận trên thiết bị này. Cảm ơn bạn!'); return; }
+  // Gửi về Google Sheet qua Apps Script. text/plain để trình duyệt không chặn CORS.
+  fetch(rsvpEndpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(response) })
+    .then(() => toast('Đã gửi xác nhận tới cô dâu chú rể. Cảm ơn bạn!'))
+    .catch(() => toast('Chưa gửi được, bạn kiểm tra mạng rồi gửi lại giúp mình nhé.'));
 });
 $('#rsvp-name').addEventListener('input', event => event.target.setCustomValidity(''));
 

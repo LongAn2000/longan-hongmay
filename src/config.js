@@ -1,5 +1,9 @@
 // Sửa thông tin thiệp tại đây. Ảnh cưới và nhạc được nhập từ file cá nhân.
 // Ngày giờ, địa điểm và thông tin gia đình bên dưới CHỈ LÀ NỘI DUNG MINH HỌA.
+// URL ứng dụng web Apps Script (đuôi /exec) nhận RSVP vào Google Sheet "longan-hongmay".
+// Cách tạo: xem scripts/rsvp-apps-script.gs. Để trống thì form chỉ lưu trên máy khách.
+export const rsvpEndpoint = 'https://script.google.com/macros/s/AKfycbzM6BISi4VTOKieVzOUsTAq15Uy32LRCP6mEvKKpOveZrY0Uey3dv6vBZ129uL1VJCoTg/exec';
+
 export const wedding = {
   groom: 'Long An',
   bride: 'Hồng Mây',

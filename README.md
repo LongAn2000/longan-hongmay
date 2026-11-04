@@ -93,6 +93,11 @@ npm.cmd run test:ui
 
 Nếu chuyển project sang máy khác: cài Node.js LTS, chạy `npm.cmd ci`, sau đó `npm.cmd run dev`.
 
+## Lưu xác nhận tham dự vào Google Sheet
+
+Form "Xác nhận tham dự" gửi mỗi lượt về sheet [longan-hongmay](https://docs.google.com/spreadsheets/d/1u4SUiQkYt7f_iaX1p0yR38GWwbRKQEanNE-Z5JBV3Lw/edit) qua Apps Script (`scripts/rsvp-apps-script.gs`), URL đặt ở `rsvpEndpoint` trong `src/config.js`.
+Apps Script phải triển khai dạng Ứng dụng web, "Người có quyền truy cập: Bất kỳ ai". Sửa script: Quản lý triển khai → bút chì → Phiên bản mới để giữ URL.
+
 ## GitHub Pages
 
 Thiệp được xuất bản tại https://longanhongmay.online/ (tên miền mua ở PA Việt Nam, file `public/CNAME`).

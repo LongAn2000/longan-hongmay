@@ -155,7 +155,10 @@ test('wedding gifts show both recipients and copy their accounts independently',
   await expect(page.getByRole('link', { name: 'Tải mã QR Hồng Mây', exact: true })).toHaveAttribute('href', '/assets/bride.jpg');
 });
 
-test('RSVP handles both attendance choices and persists a local response', async ({ page }) => {
+test('RSVP handles both attendance choices, persists locally and posts to the sheet', async ({ page }) => {
+  // Chặn Apps Script để test không ghi vào Google Sheet thật.
+  const posted = [];
+  await page.route('https://script.google.com/**', route => { posted.push(JSON.parse(route.request().postData())); route.fulfill({ status: 200, body: '{"ok":true}' }); });
   await openInvitation(page);
   await page.locator('[data-attending="yes"]').click();
   await page.getByLabel('Tên của bạn', { exact: true }).fill('Khách thử nghiệm');
@@ -170,6 +173,9 @@ test('RSVP handles both attendance choices and persists a local response', async
   await expect(page.locator('#rsvp-guests-field')).toBeHidden();
   await page.getByRole('button', { name: 'Gửi xác nhận', exact: true }).click();
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('longan-hongmay:rsvp')).guests)).toBe(0);
+  await expect.poll(() => posted.length).toBe(2);
+  expect(posted[0]).toMatchObject({ name: 'Khách thử nghiệm', attending: 'yes', guests: 3, note: 'Hẹn gặp hai bạn!' });
+  expect(posted[1]).toMatchObject({ name: 'Khách thử nghiệm', attending: 'no', guests: 0 });
 });
 
 test('guestbook validates names, positions signatures, escapes messages, and persists', async ({ page }) => {
