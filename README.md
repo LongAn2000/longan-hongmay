@@ -95,9 +95,11 @@ Nếu chuyển project sang máy khác: cài Node.js LTS, chạy `npm.cmd ci`, s
 
 ## GitHub Pages
 
-Thiệp được xuất bản tại https://longan2000.github.io/longan-hongmay/.
+Thiệp được xuất bản tại https://longanhongmay.online/ (tên miền mua ở PA Việt Nam, file `public/CNAME`).
+DNS: 4 bản ghi A `@` → 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153 và CNAME `www` → `longan2000.github.io`.
+Link cũ https://longan2000.github.io/longan-hongmay/ tự chuyển sang tên miền mới.
 Mỗi lần đẩy thay đổi lên nhánh `main`, workflow `.github/workflows/deploy.yml` tự cài thư viện, build và triển khai thư mục `dist/` lên GitHub Pages.
 
 Chạy `npm.cmd run dev` để chỉnh sửa tại http://127.0.0.1:5173/.
-Để xem đúng bản build dùng trên Pages, chạy `npm.cmd run build` rồi `npm.cmd run preview` và mở http://127.0.0.1:4173/longan-hongmay/.
+Để xem đúng bản build dùng trên Pages, chạy `npm.cmd run build` rồi `npm.cmd run preview` và mở http://127.0.0.1:4173/.
 `vite.config.js` đặt đường dẫn gốc cho bản build; các ảnh, nhạc và QR trong cấu hình vẫn có thể khai báo dạng `/assets/ten-file`.
