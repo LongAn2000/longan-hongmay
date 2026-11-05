@@ -1,5 +1,6 @@
 import './style.css';
 import './desktop.css';
+import './backgrounds.css';
 import './intro.css';
 import { initIntro } from './intro.js';
 import { wedding, rsvpEndpoint } from './config.js';
@@ -51,16 +52,16 @@ const eventCard = (event) => {
 
 $('#app').innerHTML = `
   <main id="invitation" class="wedding-page">
-    <header class="hero" id="home">
+    <header class="hero bg-frame" id="home">
       <div class="hero-rail">
         <p class="wedding-wordmark script" aria-hidden="true"><span>The</span><span>Wedding</span><span>Of</span></p>
         <h1><span>${e(wedding.groom)}</span><i aria-hidden="true">♥</i><span>${e(wedding.bride)}</span></h1>
-        <div class="hero-round">${photo('heroRound', 'fill-image', '60% 50%', true)}</div>
+        <div class="hero-round"><div class="hero-round-photo">${photo('heroRound', 'fill-image', '60% 50%', true)}</div><img class="hero-round-lace" src="${assetUrl('/assets/hero-lace.png')}" alt="" aria-hidden="true" fetchpriority="high"></div>
       </div>
       <div class="hero-portrait">${photo('heroPortrait', 'fill-image', '75% 50%', true)}</div>
     </header>
 
-    <section class="invitation-intro paper-section" id="invitation-intro">
+    <section class="invitation-intro bg-paper" id="invitation-intro">
       <div class="envelope-collage reveal">
         ${decoration('whiteFlower', 'collage-flower')}
         ${decoration('envelopeBack', 'envelope-back')}
@@ -72,7 +73,7 @@ $('#app').innerHTML = `
       <div class="intro-message reveal"><span class="eyebrow">THE WEDDING INVITATION</span><h2 class="invitation-heading">Thư mời chung vui</h2><p>Hạnh phúc của chúng mình sẽ trọn vẹn hơn<br>khi có bạn cùng sẻ chia.</p></div>
     </section>
 
-    <section class="events-section silk-section" id="events">
+    <section class="events-section bg-frame" id="events">
       <div class="family-section" aria-label="Thông tin hai gia đình">
         <div class="family reveal"><h2>Nhà Trai</h2>${wedding.groomFamily.map(name => `<p>${e(name)}</p>`).join('')}</div>
         <div class="family reveal"><h2>Nhà Gái</h2>${wedding.brideFamily.map(name => `<p>${e(name)}</p>`).join('')}</div>
@@ -83,13 +84,13 @@ $('#app').innerHTML = `
 
     <section class="photo-interlude" aria-label="Khoảnh khắc của chúng mình">${photo('celebration', 'fill-image', '61% 46%')}<div class="interlude-caption"><span class="eyebrow">TOGETHER IS A BEAUTIFUL PLACE TO BE</span><p class="script">You, me & forever</p></div></section>
 
-    <section class="schedule-section paper-section" aria-label="Chương trình ngày cưới">
+    <section class="schedule-section bg-paper" aria-label="Chương trình ngày cưới">
       <div class="section-title reveal"><h2 class="script">Timeline</h2></div>
       <div class="schedule-path reveal">${wedding.timeline.map(event => `<article class="schedule-stop"><span class="schedule-symbol" aria-hidden="true">${icon(event.icon)}</span><span class="schedule-marker" aria-hidden="true">${icon('heart', 'filled')}</span><div class="schedule-details"><p class="schedule-date">${dateParts(event.date).day}.${String(dateParts(event.date).month).padStart(2,'0')}.${dateParts(event.date).year}</p><strong>${e(event.time)}</strong><h3>${event.title.split('\n').map(line => `<span class="schedule-title-line">${e(line)}</span>`).join(' ')}</h3></div></article>`).join('')}</div>
       <div class="dresscode reveal"><h2 class="script">Dresscode</h2><p>TRANG PHỤC LỊCH SỰ, PHÙ HỢP</p><div class="dresscode-colors" aria-label="Gợi ý màu trang phục: kem, be, nâu"><span></span><span></span><span></span></div></div>
     </section>
 
-    <section class="couple-section" id="couple">
+    <section class="couple-section bg-frame" id="couple">
       <div class="couple-portraits">
         <figure class="couple-bride reveal"><div class="portrait">${photo('bride', 'fill-image', '51% 30%')}</div><figcaption><strong>${e(wedding.bride)}</strong><span class="script">Cô dâu</span></figcaption></figure>
         <figure class="couple-groom reveal"><figcaption><strong>${e(wedding.groom)}</strong><span class="script">Chú rể</span></figcaption><div class="portrait">${photo('groom', 'fill-image', '46% 28%')}</div></figure>
@@ -98,22 +99,24 @@ $('#app').innerHTML = `
       <p class="couple-story reveal">Từ hai hành trình riêng biệt, chúng mình đã gặp nhau, chọn ở lại và cùng viết nên một câu chuyện mang tên chúng ta. Chỉ mong từ hôm nay và mãi về sau, mỗi niềm vui đều có nhau để sẻ chia, mỗi chặng đường đều có một bàn tay để nắm lấy.</p>
     </section>
 
-    <section class="countdown-section paper-section" aria-label="Đếm ngược đến ngày cưới">
+    <div class="section-group bg-paper">
+    <section class="countdown-section" aria-label="Đếm ngược đến ngày cưới">
       ${decoration('clock', 'countdown-clock')}
       <div class="section-title reveal"><h2 class="script">Counting the moments</h2><p>CÙNG ĐẾM NGƯỢC ĐẾN NGÀY CHUNG ĐÔI</p></div>
       <div class="countdown reveal" id="countdown" role="timer" aria-label="Thời gian còn lại đến ngày cưới">${[['days','Ngày'],['hours','Giờ'],['minutes','Phút'],['seconds','Giây']].map(([key,label]) => `<div><strong data-count="${key}">00</strong><span>${label}</span></div>`).join('')}</div>
       <p class="countdown-message" id="countdown-message"></p>
     </section>
 
-    <section class="calendar-section paper-section" aria-label="Lịch cưới"><div class="calendar-paper reveal"><span class="eyebrow">SAVE OUR DATE · ${date.year}</span><h2 class="script" id="calendar-month"></h2><div class="calendar-grid" id="calendar-grid"></div></div></section>
+    <section class="calendar-section" aria-label="Lịch cưới"><div class="calendar-paper reveal"><span class="eyebrow">SAVE OUR DATE · ${date.year}</span><h2 class="script" id="calendar-month"></h2><div class="calendar-grid" id="calendar-grid"></div></div></section>
+    </div>
 
-    <section class="editorial-section paper-section" aria-label="Câu chuyện tình yêu qua ảnh">
+    <section class="editorial-section bg-frame" aria-label="Câu chuyện tình yêu qua ảnh">
       <div class="section-title reveal"><h2 class="script">The Album</h2><p>A LITTLE OF OUR FOREVER</p></div>
       <div class="editorial-collage reveal"><div class="editorial-tall">${photo('calendar','fill-image')}</div><div class="editorial-right"><div class="editorial-wide">${photo('couple','fill-image')}</div><p class="editorial-whispers">WHISPERS</p><div class="editorial-label"><span>AFFECTION</span><p>TWO HEARTS<br>ONE LOVE</p></div></div></div>
       <div class="vertical-rule" aria-hidden="true"></div>
     </section>
 
-    <section class="album-section" id="album">
+    <section class="album-section bg-paper" id="album">
       <div class="section-title reveal"><span class="eyebrow">OUR MEMORIES</span><h2 class="script">Những ngày có nhau</h2><div class="tiny-divider">♥</div></div>
       <div class="album-viewer reveal" aria-roledescription="trình chiếu" aria-label="Album ảnh cưới">
         <button class="album-image-button" id="open-lightbox" aria-label="Phóng to ảnh cưới"><img id="album-image" src="${e(assetUrl(wedding.album[0].src))}" style="object-position:${e(wedding.album[0].position)}" alt="Ảnh cưới 1" loading="lazy"></button>
@@ -125,7 +128,8 @@ $('#app').innerHTML = `
     </section>
 
 
-    <section class="rsvp-section paper-section" id="rsvp">
+    <div class="section-group bg-frame">
+    <section class="rsvp-section" id="rsvp">
       
       <div class="section-title reveal"><h2 class="script">Tham Dự</h2><p>RSVP · XÁC NHẬN THAM DỰ</p><div class="tiny-divider">♥</div></div>
       <p class="rsvp-intro reveal">Vui lòng xác nhận sự tham dự để chúng mình chuẩn bị đón tiếp bạn một cách chu đáo nhất. Trân trọng cảm ơn!</p><div class="rsvp-options reveal">
@@ -145,8 +149,9 @@ $('#app').innerHTML = `
         ${gift.account ? `<button class="copy-account" data-copy-gift="${index}" aria-label="Sao chép số tài khoản ${e(gift.name)}"><span>${e(gift.account)}</span><small>Sao chép tài khoản</small></button>` : ''}
       </article>`).join('')}</div>
     </section>
+    </div>
 
-    <div class="closing-photo">${photo('footer', 'fill-image', '45% 40%')}</div><footer class="closing-footer paper-section"><img class="monogram" src="${assetUrl('/assets/monogram-am.png')}" alt="" aria-hidden="true" loading="lazy"><div class="closing-text reveal"><h2 class="script">Thank you</h2><p>${e(wedding.groom)} & ${e(wedding.bride)}</p><span>${e(wedding.thankYou)}</span></div></footer>
+    <div class="closing-photo">${photo('footer', 'fill-image', '45% 40%')}</div><footer class="closing-footer bg-paper"><img class="monogram" src="${assetUrl('/assets/monogram-am.png')}" alt="" aria-hidden="true" loading="lazy"><div class="closing-text reveal"><h2 class="script">Thank you</h2><p>${e(wedding.groom)} & ${e(wedding.bride)}</p><span>${e(wedding.thankYou)}</span></div></footer>
   </main>
 
   <nav class="floating-actions" id="floating-actions" aria-label="Điều hướng thiệp">

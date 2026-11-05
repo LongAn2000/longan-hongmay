@@ -1,0 +1,16 @@
+/* Nền so le: các phần lần lượt dùng nền giấy kem có vân (theme-texture.jpg, từ them3.jpg) và nền giấy trắng có sẵn.
+   Ảnh nền phủ kín từng phần (cover), nên phần dài hay ngắn đều không lộ đường nối. */
+.bg-frame { position: relative; isolation: isolate; background: #efeae1; }
+.bg-frame::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; box-sizing: border-box;
+  background: #efeae1 url('/assets/theme-texture.jpg') center / cover no-repeat;
+}
+.bg-paper { background: var(--paper) url('/assets/theme-paper.png') center / 100% auto; }
+
+/* Máy tính: khung kéo rộng hết màn hình (với phần được phóng to thì chia lại cho hệ số phóng). */
+@media (min-width: 1024px) {
+  .bg-paper { background: transparent; }
+  .bg-frame { background: transparent; }
+  .bg-frame::before { left: 50%; right: auto; width: 100vw; margin-left: -50vw; }
+  .wedding-page > .bg-frame:not(.events-section):not(.couple-section)::before { width: calc(100vw / var(--z)); margin-left: calc(-50vw / var(--z)); }
+}

@@ -4,23 +4,14 @@
 @media (min-width: 1024px) {
   :root { --page-width: 573px; --z: 1.25; }
   :root, body { background: var(--paper) url('/assets/theme-paper.png') center top / 760px auto; }
-  body { overflow-x: hidden; overflow-x: clip; }
+  html, body { overflow-x: hidden; overflow-x: clip; }
   .wedding-page { max-width: 1120px; overflow: visible; box-shadow: none; background: transparent; }
-  .paper-section { background: transparent; }
 
   /* Các phần giữ bố cục cột: rộng 573px, phóng to đều */
   .wedding-page > :not(.events-section):not(.couple-section) { width: var(--page-width); margin-inline: auto; zoom: var(--z); }
-  .wedding-page > :not(.events-section):not(.couple-section):not(.hero) { overflow-x: hidden; overflow-x: clip; }
-
-  /* Nền tràn màn hình cho bìa lụa, lễ cưới lụa và nền nâu cô dâu chú rể */
-  .hero, .events-section, .couple-section { position: relative; isolation: isolate; background: transparent; }
-  .hero::before, .events-section::before, .couple-section::before {
-    content: ''; position: absolute; top: 0; bottom: 0; left: 50%; z-index: -1;
-    width: 100vw; margin-left: -50vw;
-    background: #f5f2e9 url('/assets/theme-white-fabric.png') center top / 100% auto repeat-y;
-  }
-  .hero::before { width: calc(100vw / var(--z)); margin-left: calc(-50vw / var(--z)); }
-  .couple-section::before { background: linear-gradient(90deg, #f6efe3cc 0%, #f6efe399 50%, #f6efe3cc 100%), #897a59 url('/assets/theme-warmBackground.jpg') center / cover; }
+  /* Nền khung dập nổi (theme.jpg) tràn hết màn hình: xem backgrounds.css. Các phần nền trắng dùng nền giấy của trang. */
+  .wedding-page > :not(.events-section):not(.couple-section):not(.bg-frame) { overflow-x: hidden; overflow-x: clip; }
+  .wedding-page > .bg-frame:not(.events-section):not(.couple-section) > * { overflow-x: hidden; overflow-x: clip; }
 
   .floating-actions { right: 24px; bottom: 24px; }
   .floating-actions .round-button { width: 40px; height: 40px; }
