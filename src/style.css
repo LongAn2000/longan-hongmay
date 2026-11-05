@@ -118,7 +118,6 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .interlude-caption .eyebrow { font-size: 9px; }
 .interlude-caption .script { font-size: 43px; }
 .countdown-section { padding: 74px 25px 45px; overflow: hidden; }
-.countdown-clock { position: absolute; width: 64%; right: -9%; top: 25px; opacity: .13; }
 .countdown-section .section-title h2 { font-size: 41px; }
 .countdown { position: relative; display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; text-align: center; margin: 35px 0 20px; }
 .countdown strong { font-size: 38px; line-height: 1.2; font-weight: 400; font-variant-numeric: lining-nums tabular-nums; }

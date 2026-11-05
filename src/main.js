@@ -101,7 +101,6 @@ $('#app').innerHTML = `
 
     <div class="section-group bg-paper">
     <section class="countdown-section" aria-label="Đếm ngược đến ngày cưới">
-      ${decoration('clock', 'countdown-clock')}
       <div class="section-title reveal"><h2 class="script">Counting the moments</h2><p>CÙNG ĐẾM NGƯỢC ĐẾN NGÀY CHUNG ĐÔI</p></div>
       <div class="countdown reveal" id="countdown" role="timer" aria-label="Thời gian còn lại đến ngày cưới">${[['days','Ngày'],['hours','Giờ'],['minutes','Phút'],['seconds','Giây']].map(([key,label]) => `<div><strong data-count="${key}">00</strong><span>${label}</span></div>`).join('')}</div>
       <p class="countdown-message" id="countdown-message"></p>
