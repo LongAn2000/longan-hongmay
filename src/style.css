@@ -221,7 +221,7 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .gift-name { font-size: 19px; font-weight: 400; margin-top: 12px; overflow-wrap: anywhere; }.gift-bank { margin-top: 8px; font-size: 16px; overflow-wrap: anywhere; }.download-qr { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 99px; font-size: 13px; padding: 8px 12px; margin-top: 12px; }.download-qr .icon { width: 14px; height: 14px; }.copy-account { max-width: 100%; margin-top: 8px; padding: 8px; background: transparent; overflow-wrap: anywhere; }.copy-account small { display: block; margin-top: 5px; font-size: 12px; }
 .closing-photo { position: relative; aspect-ratio: 16 / 10; }
 .closing-footer { padding: 55px 20px 65px; text-align: center; }
-.footer-venue { width: 100%; aspect-ratio: 2.35; object-fit: fill; margin: 12px auto 15px; opacity: .65; }
+.monogram { display: block; width: 150px; height: auto; margin: 12px auto 22px; }
 .closing-text h2 { font-size: 68px; line-height: 1.2; }.closing-text > p { font-size: 21px; margin: 12px 0; text-transform: uppercase; letter-spacing: .04em; }.closing-text > span { font-size: 17px; line-height: 1.5; display: block; }
 
 .floating-actions { position: fixed; z-index: 15; right: max(12px,calc((100vw - var(--page-width)) / 2 + 12px)); bottom: max(18px,env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 8px; }

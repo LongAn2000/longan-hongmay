@@ -33,6 +33,8 @@ Node.js v24.22.0 LTS và npm được cài tại `%LOCALAPPDATA%\WeddingDev\node
 
 Đã thay 9 ảnh dùng trong các phần thiệp, 16 ảnh album và `share.jpg` bằng 26 ảnh khác nhau từ `C:\Users\NC\Pictures\album`. Bản dùng cho web được xoay theo EXIF, thu nhỏ cạnh dài tối đa 2000px và lưu JPEG chất lượng 88; ảnh gốc trong thư mục Pictures giữ nguyên. Bảng đối chiếu tên ảnh nằm trong `scripts/imported-photos.json`.
 
+**Cập nhật:** toàn bộ ảnh hiện dùng bản đã chỉnh sửa từ thư mục `album_cuoi`. Album có 38 ảnh, gồm mọi ảnh đã chỉnh trừ những ảnh đã dùng ở các phần khác. Đối chiếu tên file trong `scripts/edited-photos.json`. Script `import-album.ps1` bên dưới vẫn theo bộ ảnh cũ, chạy lại sẽ ghi đè các ảnh này.
+
 Để chọn ngẫu nhiên lại từ cùng album, chạy:
 
 ```powershell
@@ -69,7 +71,7 @@ gifts: [
 - Trang mở trực tiếp ở ảnh bìa; cuộn xuống để xem lời mời. Hiệu ứng cuộn có hỗ trợ giảm chuyển động theo cài đặt thiết bị.
 - Nhạc nền phát sau lần tương tác đầu tiên, có nút bật/tắt.
 - Đếm ngược theo `date` và giờ sự kiện cùng ngày trong cấu hình, múi giờ Việt Nam (UTC+7); về 0 khi tới ngày cưới. Chương trình hiển thị các sự kiện từ `events`.
-- Album 16 ảnh, ảnh thu nhỏ, vuốt trên điện thoại, phóng to; phím mũi tên và Escape trong chế độ phóng to. Chuyển ảnh trượt mềm 700ms: bấm phải thì ảnh mới vào từ bên phải, bấm trái thì ảnh mới vào từ bên trái. Chờ ảnh tải xong để tránh khung trống; chế độ giảm chuyển động đổi ảnh trực tiếp.
+- Album 38 ảnh, ảnh thu nhỏ, vuốt trên điện thoại, phóng to; phím mũi tên và Escape trong chế độ phóng to. Chuyển ảnh trượt mềm 700ms: bấm phải thì ảnh mới vào từ bên phải, bấm trái thì ảnh mới vào từ bên trái. Chờ ảnh tải xong để tránh khung trống; chế độ giảm chuyển động đổi ảnh trực tiếp.
 - Lịch tự sinh theo ngày cấu hình, đánh dấu các sự kiện cùng tháng.
 - Lưu bút ba bước: nhập chữ ký, chọn vị trí/màu, nhập lời chúc.
 - Xác nhận tham dự và số người đi cùng.

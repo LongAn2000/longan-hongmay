@@ -83,7 +83,7 @@ export const wedding = {
     guestbook: '50% 50%',
     footer: '50% 50%',
   },
-  album: Array.from({ length: 16 }, (_, i) => ({
+  album: Array.from({ length: 38 }, (_, i) => ({
     src: `/assets/album-${i + 1}.jpg`,
     position: '50% 50%',
   })),

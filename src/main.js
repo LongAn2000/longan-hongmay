@@ -153,7 +153,7 @@ $('#app').innerHTML = `
       </article>`).join('')}</div>
     </section>
 
-    <div class="closing-photo">${photo('footer', 'fill-image', '45% 40%')}</div><footer class="closing-footer paper-section">${decoration('venue', 'footer-venue')}<div class="closing-text reveal"><h2 class="script">Thank you</h2><p>${e(wedding.groom)} & ${e(wedding.bride)}</p><span>${e(wedding.thankYou)}</span></div></footer>
+    <div class="closing-photo">${photo('footer', 'fill-image', '45% 40%')}</div><footer class="closing-footer paper-section"><img class="monogram" src="${assetUrl('/assets/monogram-am.png')}" alt="" aria-hidden="true" loading="lazy"><div class="closing-text reveal"><h2 class="script">Thank you</h2><p>${e(wedding.groom)} & ${e(wedding.bride)}</p><span>${e(wedding.thankYou)}</span></div></footer>
   </main>
 
   <nav class="floating-actions" id="floating-actions" aria-label="Điều hướng thiệp">

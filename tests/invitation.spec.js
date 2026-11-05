@@ -35,8 +35,9 @@ test('assets load locally and the invitation fits mobile and desktop screens', a
   }
   await page.setViewportSize({ width: 390, height: 844 });
   for (const image of await page.locator('main img').all()) await image.scrollIntoViewIfNeeded();
+  // Decode one at a time: decoding ~30 full-size photos at once exceeds Chromium's image-decode budget.
   await page.evaluate(async () => {
-    await Promise.all([...document.querySelectorAll('main img')].map(img => img.decode()));
+    for (const img of document.querySelectorAll('main img')) await img.decode();
   });
   await page.locator('#home').scrollIntoViewIfNeeded();
   await page.screenshot({ path: 'test-results/mobile-invitation.png', fullPage: true });
@@ -54,18 +55,18 @@ test('assets load locally and the invitation fits mobile and desktop screens', a
 test('album navigation, lightbox keyboard controls, and music work', async ({ page }) => {
   await openInvitation(page);
   await page.locator('.album-next').click();
-  await expect(page.locator('#album-count')).toHaveText('2 / 16');
+  await expect(page.locator('#album-count')).toHaveText('2 / 38');
   await expect(page.locator('.slide-outgoing')).toHaveCount(0);
   await page.getByRole('button', { name: 'Phóng to ảnh cưới' }).click();
   await expect(page.locator('#lightbox')).toBeVisible();
   await page.keyboard.press('ArrowRight');
-  await expect(page.locator('#lightbox-count')).toHaveText('3 / 16');
+  await expect(page.locator('#lightbox-count')).toHaveText('3 / 38');
   await page.keyboard.press('Escape');
   await expect(page.locator('#lightbox')).toBeHidden();
   await expect(page.locator('#open-lightbox')).toBeFocused();
-  await page.getByRole('button', { name: 'Xem ảnh 16', exact: true }).click();
+  await page.getByRole('button', { name: 'Xem ảnh 38', exact: true }).click();
   await page.locator('.album-next').click();
-  await expect(page.locator('#album-count')).toHaveText('1 / 16');
+  await expect(page.locator('#album-count')).toHaveText('1 / 38');
   // Stop and restart the actual bundled audio file.
   await page.evaluate(() => document.querySelector('audio').pause());
   await page.getByRole('button', { name: 'Bật nhạc', exact: true }).click();
@@ -78,7 +79,7 @@ test('album slides in the chosen direction and handles quick repeated clicks', a
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await openInvitation(page);
   await page.locator('.album-next').click();
-  await expect(page.locator('#album-count')).toHaveText('2 / 16');
+  await expect(page.locator('#album-count')).toHaveText('2 / 38');
   const movement = await page.locator('#album-image').evaluate(image => {
     const outgoing = image.parentElement.querySelector('.slide-outgoing');
     for (const layer of [image, outgoing]) {
@@ -96,7 +97,7 @@ test('album slides in the chosen direction and handles quick repeated clicks', a
   await expect(page.locator('.slide-outgoing')).toHaveCount(0);
 
   await page.locator('.album-prev').click();
-  await expect(page.locator('#album-count')).toHaveText('1 / 16');
+  await expect(page.locator('#album-count')).toHaveText('1 / 38');
   const reverse = await page.locator('#album-image').evaluate(image => {
     const outgoing = image.parentElement.querySelector('.slide-outgoing');
     for (const layer of [image, outgoing]) {
@@ -111,14 +112,14 @@ test('album slides in the chosen direction and handles quick repeated clicks', a
   expect(reverse.incomingX).toBeLessThan(0);
   expect(reverse.outgoingX).toBeGreaterThan(0);
   await page.locator('.album-next').evaluate(button => { button.click(); button.click(); button.click(); });
-  await expect(page.locator('#album-count')).toHaveText('4 / 16');
+  await expect(page.locator('#album-count')).toHaveText('4 / 38');
   await expect(page.locator('#album-image')).toHaveAttribute('src', '/assets/album-4.jpg');
   await expect(page.locator('.slide-outgoing')).toHaveCount(0);
 
   await page.locator('#open-lightbox').click();
   await expect(page.locator('#lightbox')).toBeVisible();
   await page.keyboard.press('ArrowRight');
-  await expect(page.locator('#lightbox-count')).toHaveText('5 / 16');
+  await expect(page.locator('#lightbox-count')).toHaveText('5 / 38');
   await expect(page.locator('.lightbox-stage .slide-outgoing')).toHaveCount(1);
   await expect(page.locator('.lightbox-stage .slide-outgoing')).toHaveCount(0);
 });
