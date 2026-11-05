@@ -1,4 +1,5 @@
 import './style.css';
+import './desktop.css';
 import { wedding, rsvpEndpoint } from './config.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);

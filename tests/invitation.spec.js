@@ -23,15 +23,24 @@ test('assets load locally and the invitation fits mobile and desktop screens', a
   for (const width of [320, 375, 390, 430, 600, 767, 768, 820, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    const expectedWidth = width >= 768 ? Math.min(573, width - 48) : Math.min(430, width);
+    const desktop = width >= 1024;
+    // Desktop: the page frame is up to 1120px; the column sections inside stay 573px wide, zoomed 1.25× (1.4× from 1600px).
+    const expectedWidth = desktop ? Math.min(1120, width) : width >= 768 ? Math.min(573, width - 48) : Math.min(430, width);
     await expect.poll(() => page.locator('main').evaluate(element => element.getBoundingClientRect().width)).toBeCloseTo(expectedWidth, 0);
-    await expect.poll(() => page.evaluate(() => {
+    if (desktop) {
+      const zoom = width >= 1600 ? 1.4 : 1.25;
+      await expect.poll(() => page.locator('#invitation-intro').evaluate(element => element.getBoundingClientRect().width)).toBeCloseTo(573 * zoom, 0);
+    }
+    // Mobile/tablet: the buttons sit inside the card. Desktop: they sit in the screen's right corner.
+    await expect.poll(() => page.evaluate(desktop => {
       const card = document.querySelector('main').getBoundingClientRect();
       const actions = document.querySelector('#floating-actions').getBoundingClientRect();
+      if (desktop) return Math.abs(innerWidth - actions.right - 24) <= 1;
       return actions.left >= card.left && actions.right <= card.right;
-    })).toBe(true);
+    }, desktop)).toBe(true);
+    // Desktop shows the groom's and bride's receptions side by side.
     const columns = await page.locator('.event-cards').evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length);
-    expect(columns).toBe(1);
+    expect(columns).toBe(desktop ? 2 : 1);
   }
   await page.setViewportSize({ width: 390, height: 844 });
   for (const image of await page.locator('main img').all()) await image.scrollIntoViewIfNeeded();
