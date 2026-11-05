@@ -1,0 +1,124 @@
+/* Màn mở đầu: máy quay số kem – nâu, cần gạt bên phải. */
+html.intro-open, html.intro-open body { overflow: hidden; height: 100%; }
+html.intro-open .floating-actions { visibility: hidden; }
+
+.slot-intro {
+  --reel-row: 46px;
+  --ink: #3b211c; --gold: #b8935a; --gold-dark: #8c6a3c; --cream: #fbf7ef; --cream-2: #efe5d3;
+  position: fixed; inset: 0; z-index: 100; overflow-y: auto; overscroll-behavior: contain;
+  display: grid; place-items: center;
+  background: radial-gradient(ellipse at 50% 35%, #fffdf8 0%, #f4eee4 55%, #e9e1d4 100%);
+  color: var(--ink); text-align: center;
+  transition: opacity .9s ease, transform .9s ease;
+}
+.slot-intro.is-leaving { opacity: 0; transform: scale(1.04); pointer-events: none; }
+.slot-confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+.slot-inner { position: relative; z-index: 2; width: min(100%, 430px); padding: 40px 20px 34px; }
+
+.slot-eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: #9a7b5c; }
+.slot-title { margin: 6px 0 2px; font-family: var(--script); font-weight: 400; font-size: 64px; line-height: 1.15; color: var(--ink); }
+.slot-names { font-size: 20px; letter-spacing: .12em; color: #6b4a3c; }
+.slot-names span { margin: 0 .55em; font-size: .85em; color: var(--gold-dark); }
+
+/* Thân máy */
+.slot-machine {
+  position: relative; width: 280px; margin: 34px auto 0; padding: 18px 18px 22px; cursor: pointer;
+  border-radius: 125px 125px 22px 22px;
+  background: linear-gradient(160deg, #fffdf8 0%, var(--cream) 40%, var(--cream-2) 100%);
+  border: 2px solid var(--gold);
+  box-shadow: inset 0 0 0 6px #fffdf8, inset 0 0 0 7px #d9c3a0, 0 22px 40px -14px #5a432a55, 0 6px 14px #5a432a22;
+}
+.slot-machine::after { /* chân đế */
+  content: ''; position: absolute; left: -10px; right: -10px; bottom: -16px; height: 18px; border-radius: 6px;
+  background: linear-gradient(#cdb187, var(--gold-dark)); box-shadow: 0 8px 14px -6px #5a432a66; z-index: -1;
+}
+.slot-crown { display: block; width: 92%; height: auto; margin: 4px auto 0; overflow: visible; }
+.slot-crown text { font-family: var(--serif); font-size: 24px; font-weight: 600; letter-spacing: .26em; fill: var(--gold-dark); }
+.slot-lights { display: flex; justify-content: center; gap: 9px; margin: 2px 0 12px; }
+.slot-lights i { width: 9px; height: 9px; border-radius: 50%; background: #e7d3ae; box-shadow: inset 0 -1px 2px #a8865366; }
+.is-spinning .slot-lights i { animation: slot-blink .5s steps(2) infinite; }
+.is-spinning .slot-lights i:nth-child(even) { animation-delay: .25s; }
+.is-done .slot-lights i { background: #f0cf7e; box-shadow: 0 0 8px #f0cf7e, inset 0 -1px 2px #a8865366; }
+@keyframes slot-blink { 50% { background: #f6d98f; box-shadow: 0 0 8px #f0cf7e; } }
+
+/* Cửa sổ ba ô quay */
+.slot-window {
+  display: grid; grid-template-columns: .85fr 1.25fr 1.15fr; gap: 4px; padding: 6px;
+  border-radius: 12px; background: linear-gradient(#5b4334, #3b2a20);
+  box-shadow: inset 0 2px 6px #0007, 0 0 0 2px var(--gold);
+}
+.slot-reel {
+  position: relative; height: calc(var(--reel-row) * 3); overflow: hidden; border-radius: 6px;
+  background: linear-gradient(#e9e2d6, #fffefb 30%, #fffefb 70%, #e9e2d6);
+}
+.slot-reel::after { /* bóng trên dưới cho cảm giác ống tròn */
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(#3b2a2066, transparent 34%, transparent 66%, #3b2a2066);
+}
+.slot-strip { will-change: transform; }
+.slot-strip span {
+  display: grid; place-items: center; height: var(--reel-row);
+  font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: .02em; color: #b9a58e; white-space: nowrap;
+}
+.slot-reel.landed .slot-strip span:nth-last-child(2) { color: var(--ink); }
+.slot-plate { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
+.slot-plate span { width: 30px; height: 12px; border-radius: 3px; background: linear-gradient(#ead8b8, #cdb187); }
+.slot-tray {
+  display: grid; place-items: center; width: 70%; height: 46px; margin: 16px auto 0; border-radius: 10px;
+  border: 1.5px solid var(--gold); background: linear-gradient(#f2e8d6, #fbf7ef);
+  color: var(--gold-dark); font-size: 18px;
+}
+
+/* Cần gạt */
+.slot-lever {
+  position: absolute; right: -34px; top: 96px; width: 34px; height: 130px; padding: 0; background: none; border: 0;
+  cursor: grab; touch-action: none;
+}
+.slot-lever::before { /* trục gắn vào thân máy */
+  content: ''; position: absolute; left: 0; bottom: 12px; width: 18px; height: 30px; border-radius: 0 6px 6px 0;
+  background: linear-gradient(90deg, #cdb187, var(--gold-dark));
+}
+.slot-rod {
+  position: absolute; left: 15px; bottom: 26px; width: 6px; height: 92px; border-radius: 3px;
+  background: linear-gradient(90deg, #6a4f3a, #b09070 50%, #6a4f3a);
+  transform-origin: 50% 100%; transition: transform .35s cubic-bezier(.5,0,.5,1.6);
+}
+.slot-knob {
+  position: absolute; left: 6px; top: 0; width: 24px; height: 24px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #c76a5c, #8c2f27 60%, #5e1c17);
+  box-shadow: 0 3px 6px #0004; transition: transform .35s cubic-bezier(.5,0,.5,1.6);
+}
+.slot-lever.pulled .slot-rod { transform: scaleY(-1); }
+.slot-lever.pulled .slot-knob { transform: translateY(160px); }
+.slot-lever:not(:disabled):hover .slot-knob { filter: brightness(1.1); }
+.slot-lever:disabled { cursor: default; }
+.slot-intro:not(.is-spinning):not(.is-done) .slot-knob { animation: slot-nudge 2.4s ease-in-out infinite; }
+@keyframes slot-nudge { 0%, 70%, 100% { transform: none; } 80% { transform: translateY(10px); } 90% { transform: translateY(-2px); } }
+
+.slot-hint { margin-top: 44px; font-size: 14px; letter-spacing: .24em; text-transform: uppercase; color: #6f5b4b; }
+.is-spinning .slot-hint, .is-done .slot-hint { visibility: hidden; }
+.slot-open {
+  display: inline-flex; align-items: center; justify-content: center; margin-top: -26px; min-width: 230px; min-height: 50px;
+  padding: 12px 30px; border-radius: 999px; border: 1px solid #fff6;
+  background: linear-gradient(#a98758, #7d5c36); color: #fffaf0;
+  font-family: var(--serif); font-size: 15px; letter-spacing: .26em; text-transform: uppercase;
+  box-shadow: 0 10px 22px -8px #5a432a99, inset 0 1px 0 #fff5; animation: slot-rise .6s ease both;
+}
+.slot-open:hover { filter: brightness(1.07); }
+@keyframes slot-rise { from { opacity: 0; transform: translateY(12px); } }
+.slot-foot { margin-top: 22px; font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: #9a7b5c; }
+.slot-result { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (max-height: 700px) {
+  .slot-inner { padding-top: 20px; }
+  .slot-title { font-size: 52px; }
+  .slot-machine { margin-top: 22px; zoom: .88; }
+}
+@media (min-width: 768px) {
+  .slot-title { font-size: 76px; }
+  .slot-names { font-size: 22px; }
+  .slot-machine { zoom: 1.12; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot-intro { transition: none; }
+}

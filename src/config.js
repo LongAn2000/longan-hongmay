@@ -64,7 +64,6 @@ export const wedding = {
     bride: '/assets/bride.jpg',
     celebration: '/assets/celebration-nho00181.jpg', // NHO00181.JPG
     calendar: '/assets/calendar.jpg',
-    guestbook: '/assets/guestbook.jpg',
     footer: '/assets/footer.jpg',
   },
   imagePositions: {
@@ -80,7 +79,6 @@ export const wedding = {
     bride: '50% 25%',
     celebration: '50% 40%',
     calendar: '50% 40%',
-    guestbook: '50% 50%',
     footer: '50% 50%',
   },
   album: Array.from({ length: 38 }, (_, i) => ({

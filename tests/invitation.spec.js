@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 async function openInvitation(page) {
-  await page.goto('/');
+  await page.goto('/?intro=0');
   await page.locator('#invitation-intro').scrollIntoViewIfNeeded();
   await expect(page.locator('#invitation-intro')).toBeInViewport();
 }
@@ -13,7 +13,7 @@ test('assets load locally and the invitation fits mobile and desktop screens', a
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.status() >= 400) failures.push(`${response.status()} ${response.url()}`); });
   page.on('request', request => { if (!request.url().startsWith('http://127.0.0.1:5173') && !request.url().startsWith('data:')) external.push(request.url()); });
-  await page.goto('/');
+  await page.goto('/?intro=0');
   await page.evaluate(() => document.fonts.ready);
   expect(await page.evaluate(() => [...document.fonts].some(font => font.family === 'Luxurious Script' && font.status === 'loaded'))).toBe(true);
   await page.screenshot({ path: 'test-results/mobile-cover.png' });
@@ -134,7 +134,7 @@ test('album slides in the chosen direction and handles quick repeated clicks', a
 });
 
 test('wedding gifts show both recipients and copy their accounts independently', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?intro=0');
   await expect(page.locator('.gift-role')).toHaveText(['Chú rể', 'Cô dâu']);
   await expect(page.locator('.gift-name')).toHaveText(['Long An', 'Hồng Mây']);
   await expect(page.locator('.qr-placeholder')).toHaveCount(2);
@@ -188,44 +188,21 @@ test('RSVP handles both attendance choices, persists locally and posts to the sh
   expect(posted[1]).toMatchObject({ name: 'Khách thử nghiệm', attending: 'no', guests: 0 });
 });
 
-test('guestbook validates names, positions signatures, escapes messages, and persists', async ({ page }) => {
-  await openInvitation(page);
-  await page.getByRole('button', { name: 'Ký tên & gửi lời chúc', exact: true }).click();
-  await page.getByRole('button', { name: 'Tiếp theo' }).click();
-  await expect(page.locator('[data-panel="1"]')).toBeVisible();
-  await page.getByLabel('Tên hoặc chữ ký của bạn').fill('Bạn thân');
-  await page.getByRole('button', { name: 'Màu xanh lá', exact: true }).click();
-  await page.getByRole('button', { name: 'Tiếp theo' }).click();
-  await page.locator('#signature-picker').click({ position: { x: 100, y: 150 } });
-  await page.locator('#signature-picker').press('ArrowRight');
-  await page.getByRole('button', { name: 'Tiếp theo' }).click();
-  await page.getByLabel('Lời chúc của bạn').fill('<img src=x onerror=alert(1)> Chúc hạnh phúc!');
-  await page.getByRole('button', { name: 'Gửi lời chúc', exact: true }).click();
-  await expect(page.locator('.board-signature')).toHaveText('Bạn thân');
-  await expect(page.locator('.wish')).toContainText('<img src=x onerror=alert(1)>');
-  await expect(page.locator('.wish img')).toHaveCount(0);
-  await openInvitation(page);
-  await expect(page.locator('.board-signature')).toHaveText('Bạn thân');
-  await expect(page.locator('#signature-count')).toHaveText('1 lời chúc yêu thương');
-});
-
 test('scroll reveals work without reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await openInvitation(page);
   await page.locator('.invitation-heading').scrollIntoViewIfNeeded();
   await expect(page.locator('.intro-message')).toHaveClass(/revealed/);
   await expect(page.locator('.invitation-heading')).toHaveCSS('opacity', '1');
-  await page.locator('#guestbook').scrollIntoViewIfNeeded();
-  await expect(page.locator('#guestbook .section-title')).toHaveClass(/revealed/);
-  await page.getByRole('button', { name: 'Ký tên & gửi lời chúc', exact: true }).click();
-  await expect(page.locator('#signature-dialog')).toBeVisible();
+  await page.locator('#rsvp').scrollIntoViewIfNeeded();
+  await expect(page.locator('#rsvp .section-title')).toHaveClass(/revealed/);
 });
 
 
 test('countdown uses the configured ceremony time in Vietnam and stops at zero', async ({page}) => {
   await page.clock.install({time:new Date('2026-11-28T07:58:59Z')});
   await page.clock.pauseAt(new Date('2026-11-28T07:59:00Z'));
-  await page.goto('/');
+  await page.goto('/?intro=0');
   await expect(page.locator('[data-count="days"]')).toHaveText('00');
   await expect(page.locator('[data-count="minutes"]')).toHaveText('01');
   await page.clock.runFor(60000);
@@ -233,4 +210,29 @@ test('countdown uses the configured ceremony time in Vietnam and stops at zero',
   await expect(page.locator('#countdown-message')).toContainText('Ngày chung đôi');
   await page.clock.runFor(10000);
   await expect(page.locator('[data-count="seconds"]')).toHaveText('00');
+});
+
+test('save-the-date slot machine spins to the wedding date and opens the invitation', async ({ page }) => {
+  await page.goto('/');
+  const intro = page.locator('.slot-intro');
+  await expect(intro).toBeVisible();
+  await expect(page.locator('.slot-open')).toBeHidden();
+  // The page behind cannot scroll while the intro is open.
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).toBe('hidden');
+  await page.getByRole('button', { name: 'Kéo cần gạt để xem ngày cưới' }).click();
+  const open = page.getByRole('button', { name: 'Xem thiệp mời' });
+  await expect(open).toBeVisible({ timeout: 8000 });
+  await expect(page.locator('.slot-result')).toHaveText('Ngày cưới: 28 tháng 11 năm 2026');
+  // The middle row of each reel shows the date.
+  const shown = await page.locator('.slot-strip').evaluateAll(strips => strips.map(strip => {
+    const reel = strip.parentElement.getBoundingClientRect();
+    const middle = reel.top + reel.height / 2;
+    return [...strip.children].find(item => { const r = item.getBoundingClientRect(); return r.top <= middle && r.bottom >= middle; })?.textContent;
+  }));
+  expect(shown).toEqual(['28', 'THG 11', '2026']);
+  await open.click();
+  await expect(intro).toHaveCount(0);
+  await expect(page.locator('#home')).toBeInViewport();
+  await expect(page.locator('#toggle-music')).toHaveAttribute('aria-pressed', 'true');
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).not.toBe('hidden');
 });

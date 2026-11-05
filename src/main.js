@@ -1,5 +1,7 @@
 import './style.css';
 import './desktop.css';
+import './intro.css';
+import { initIntro } from './intro.js';
 import { wedding, rsvpEndpoint } from './config.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -16,7 +18,6 @@ const icons = {
   right: '<path d="m9 18 6-6-6-6"/>',
   music: '<path d="M9 18V5l12-2v13M9 9l12-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="16" rx="3" ry="3"/>',
   mute: '<path d="M9 18V5l12-2v10M9 9l12-2M17 17l5 5M22 17l-5 5"/><ellipse cx="6" cy="18" rx="3" ry="3"/>',
-  pen: '<path d="m15 5 4 4M4 20l4-1L21 6a2.8 2.8 0 0 0-4-4L4 15l-1 6Z"/>',
   gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13"/><path d="M12 8H8a3 3 0 1 1 3-3l1 3ZM12 8h4a3 3 0 1 0-3-3l-1 3Z"/>',
   map: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
   download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
@@ -123,15 +124,6 @@ $('#app').innerHTML = `
       <div class="album-thumbnails" aria-label="Chọn ảnh">${wedding.album.map((image, i) => `<button class="thumbnail ${i === 0 ? 'active' : ''}" data-photo="${i}" aria-label="Xem ảnh ${i + 1}" aria-pressed="${i === 0}"><img src="${e(assetUrl(image.src))}" alt="" loading="lazy" style="object-position:${image.position}"></button>`).join('')}</div>
     </section>
 
-    <section class="guestbook-section paper-section" id="guestbook">
-      
-      <div class="section-title reveal"><h2 class="script">Sổ Lưu Bút</h2><p>Ký tên & gửi lời chúc</p><div class="tiny-divider">♥</div></div>
-      <div class="signature-board reveal" id="signature-board"><img src="${e(assetUrl(wedding.images.guestbook))}" alt="Bảng lưu bút ảnh cưới" loading="lazy"><div class="signatures" id="signatures"></div></div>
-      <p class="signature-count" id="signature-count">Hãy là người đầu tiên ký tên</p>
-      <button class="primary-button" id="sign-guestbook">${icon('pen')} Ký tên & gửi lời chúc</button>
-      <p class="guestbook-steps">1 Ký tên · 2 Chọn vị trí · 3 Lời chúc</p>
-      <div class="wish-list" id="wish-list"></div>
-    </section>
 
     <section class="rsvp-section paper-section" id="rsvp">
       
@@ -160,7 +152,6 @@ $('#app').innerHTML = `
   <nav class="floating-actions" id="floating-actions" aria-label="Điều hướng thiệp">
     <button class="round-button music-button" id="toggle-music" aria-label="Bật nhạc" aria-pressed="false">${icon('mute')}</button>
     <a class="round-button" href="#rsvp" aria-label="Xác nhận tham dự">${icon('check')}</a>
-    <a class="round-button" href="#guestbook" aria-label="Gửi lời chúc">${icon('pen')}</a>
     <a class="round-button" href="#gift" aria-label="Hộp mừng cưới">${icon('gift')}</a>
     <a class="round-button to-top" href="#home" aria-label="Về đầu thiệp">${icon('down')}</a>
   </nav>
@@ -184,16 +175,6 @@ $('#app').innerHTML = `
     </form>
   </dialog>
 
-  <dialog class="form-dialog signature-dialog" id="signature-dialog" aria-labelledby="signature-title">
-    <button class="round-button dialog-close" data-close-dialog aria-label="Đóng">${icon('close')}</button><h2 class="script" id="signature-title">Gửi chút yêu thương</h2>
-    <ol class="form-steps" aria-label="Các bước lưu bút"><li data-step="1">1. Ký tên</li><li data-step="2">2. Vị trí</li><li data-step="3">3. Lời chúc</li></ol>
-    <form id="signature-form">
-      <div class="signature-step" data-panel="1"><label for="signature-name">Tên hoặc chữ ký của bạn</label><input id="signature-name" name="name" autocomplete="name" maxlength="40" required placeholder="Tên của bạn"><p class="signature-preview script" id="signature-preview">Chữ ký của bạn</p><label for="signature-color">Màu mực</label><div class="ink-colors" id="signature-color">${['#8b1e1e', '#583a38', '#314b3c', '#243b64'].map((color, i) => `<button type="button" class="ink-color ${i === 0 ? 'selected' : ''}" data-color="${color}" style="--ink:${color}" aria-label="Màu ${['đỏ rượu', 'nâu', 'xanh lá', 'xanh dương'][i]}" aria-pressed="${i === 0}"></button>`).join('')}</div></div>
-      <div class="signature-step" data-panel="2" hidden><p class="dialog-description">Chạm vào bức ảnh để chọn vị trí chữ ký.</p><div class="signature-picker" id="signature-picker" role="button" tabindex="0" aria-label="Chọn vị trí chữ ký. Dùng các phím mũi tên để điều chỉnh."><img src="${e(assetUrl(wedding.images.guestbook))}" alt="Chọn vị trí trên ảnh"><span class="placed-signature script" id="signature-placement"></span></div></div>
-      <div class="signature-step" data-panel="3" hidden><label for="signature-wish">Lời chúc của bạn</label><textarea id="signature-wish" name="wish" rows="4" maxlength="500" placeholder="Chúc hai bạn trăm năm hạnh phúc..."></textarea><p class="local-notice">Bản xem thử: chữ ký và lời chúc được lưu trên trình duyệt này.</p></div>
-      <div class="form-navigation"><button class="secondary-button" type="button" id="signature-back" hidden>Quay lại</button><button class="primary-button" type="button" id="signature-next">Tiếp theo ${icon('right')}</button><button class="primary-button" type="submit" id="signature-submit" hidden>${icon('heart')} Gửi lời chúc</button></div>
-    </form>
-  </dialog>
 `;
 
 // Calendar: the Monday-first grid and highlighted dates follow the configuration.
@@ -387,72 +368,11 @@ $('#rsvp-form').addEventListener('submit', event => {
 });
 $('#rsvp-name').addEventListener('input', event => event.target.setCustomValidity(''));
 
-let wishes = storage.read('wishes', []);
-if (!Array.isArray(wishes)) wishes = [];
-wishes = wishes.filter(wish => wish && typeof wish.name === 'string' && typeof wish.message === 'string').slice(-100);
-function renderWishes() {
-  $('#signature-count').textContent = wishes.length ? `${wishes.length} lời chúc yêu thương` : 'Hãy là người đầu tiên ký tên';
-  $('#signatures').innerHTML = wishes.map(wish => `<span class="board-signature script" style="left:${Math.min(82, Math.max(18, Number(wish.x) || 50))}%;top:${Math.min(92, Math.max(8, Number(wish.y) || 70))}%;color:${/^#[\da-f]{6}$/i.test(wish.color) ? wish.color : '#8b1e1e'}">${e(wish.name)}</span>`).join('');
-  $('#wish-list').innerHTML = wishes.length ? [...wishes].reverse().map(wish => `<article class="wish"><span class="wish-heart">${icon('heart')}</span><div><h3>${e(wish.name)}</h3><p>${e(wish.message || 'Chúc hai bạn trăm năm hạnh phúc!')}</p></div></article>`).join('') : '<p class="empty-wishes">Chưa có lời chúc nào. Hãy là người đầu tiên!</p>';
-}
-renderWishes();
-let signatureStep = 1;
-let signatureColor = '#8b1e1e';
-let signaturePosition = { x: 50, y: 70 };
-function updateSignature() {
-  const name = $('#signature-name').value.trim() || 'Chữ ký của bạn';
-  $('#signature-preview').textContent = name;
-  $('#signature-preview').style.color = signatureColor;
-  $('#signature-placement').textContent = name;
-  Object.assign($('#signature-placement').style, { left: `${signaturePosition.x}%`, top: `${signaturePosition.y}%`, color: signatureColor });
-}
-function setStep(step) {
-  signatureStep = step;
-  $$('[data-panel]').forEach(panel => { panel.hidden = Number(panel.dataset.panel) !== step; });
-  $$('[data-step]').forEach(item => item.classList.toggle('current', Number(item.dataset.step) === step));
-  $('#signature-back').hidden = step === 1;
-  $('#signature-next').hidden = step === 3;
-  $('#signature-submit').hidden = step !== 3;
-  updateSignature();
-}
-$('#sign-guestbook').addEventListener('click', () => { setStep(1); $('#signature-dialog').showModal(); });
-$('#signature-name').addEventListener('input', event => { event.target.setCustomValidity(''); updateSignature(); });
-$$('[data-color]').forEach(button => button.addEventListener('click', () => {
-  signatureColor = button.dataset.color;
-  $$('[data-color]').forEach(item => { item.classList.toggle('selected', item === button); item.setAttribute('aria-pressed', String(item === button)); });
-  updateSignature();
-}));
-$('#signature-next').addEventListener('click', () => {
-  if (!$('#signature-name').value.trim()) {
-    $('#signature-name').setCustomValidity('Bạn nhập tên để ký vào thiệp nhé.'); $('#signature-name').reportValidity(); return;
-  }
-  setStep(Math.min(signatureStep + 1, 3));
-});
-$('#signature-back').addEventListener('click', () => setStep(Math.max(signatureStep - 1, 1)));
-$('#signature-picker').addEventListener('click', event => {
-  const rect = $('#signature-picker').getBoundingClientRect();
-  signaturePosition = { x: Math.min(82, Math.max(18, (event.clientX - rect.left) / rect.width * 100)), y: Math.min(92, Math.max(8, (event.clientY - rect.top) / rect.height * 100)) };
-  updateSignature();
-});
-$('#signature-picker').addEventListener('keydown', event => {
-  if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
-  event.preventDefault();
-  signaturePosition.x = Math.min(82, Math.max(18, signaturePosition.x + (event.key === 'ArrowRight' ? 2 : event.key === 'ArrowLeft' ? -2 : 0)));
-  signaturePosition.y = Math.min(92, Math.max(8, signaturePosition.y + (event.key === 'ArrowDown' ? 2 : event.key === 'ArrowUp' ? -2 : 0)));
-  updateSignature();
-});
-$('#signature-form').addEventListener('submit', event => {
-  event.preventDefault();
-  if (signatureStep !== 3) { $('#signature-next').click(); return; }
-  const name = $('#signature-name').value.trim();
-  if (!name) { setStep(1); $('#signature-name').focus(); return; }
-  const next = [...wishes, { name, message: $('#signature-wish').value.trim(), color: signatureColor, ...signaturePosition, createdAt: new Date().toISOString() }].slice(-100);
-  if (!storage.write('wishes', next)) return;
-  wishes = next; renderWishes(); $('#signature-dialog').close(); $('#signature-form').reset();
-  toast('Đã lưu chữ ký và lời chúc trên thiết bị này. Cảm ơn bạn!');
-});
 $$('[data-copy-gift]').forEach(button => button.addEventListener('click', async () => {
   const gift = wedding.gifts[Number(button.dataset.copyGift)];
   try { await navigator.clipboard.writeText(gift.account); toast(`Đã sao chép số tài khoản của ${gift.name}.`); }
   catch { toast(`Số tài khoản của ${gift.name}: ${gift.account}`); }
 }));
+
+// Màn mở đầu Save the Date; nút "Xem thiệp mời" mở thiệp và bật nhạc.
+initIntro({ wedding, onOpen: startMusic });

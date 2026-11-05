@@ -194,16 +194,6 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
 .thumbnail.active { opacity: 1; outline: 1px solid var(--wine); outline-offset: 2px; }
 
-.guestbook-section { text-align: center; padding: 30px 24px 45px; }
-.signature-board { position: relative; overflow: hidden; border-radius: 80px 0 80px 0; background: #eee4da; }
-.signature-board > img { width: 100%; height: auto; }
-.signatures { position: absolute; inset: 0; pointer-events: none; }
-.board-signature { position: absolute; transform: translate(-50%,-50%) rotate(-7deg); font-size: 24px; width: max-content; max-width: 56%; overflow-wrap: anywhere; line-height: 1.25; text-shadow: 0 1px 2px white; }
-.signature-count { font-size: 14px; margin: 18px 0 15px; }.guestbook-steps { font-size: 12px; margin-top: 12px; }
-.wish-list { position: relative; margin-top: 24px; max-height: 390px; overflow-y: auto; scrollbar-width: thin; }
-.empty-wishes { font-size: 14px; font-style: italic; }
-.wish { display: flex; gap: 13px; text-align: left; border-bottom: 1px solid var(--border); padding: 16px 5px; }
-.wish-heart { color: var(--text-color); padding-top: 3px; }.wish h3 { font-size: 17px; margin-bottom: 5px; }.wish p { font-size: 17px; line-height: 1.5; overflow-wrap: anywhere; white-space: pre-wrap; }
 .rsvp-section { padding: 35px 26px 20px; }
 .rsvp-intro { text-align: center; font-size: 18px; line-height: 1.5; margin-bottom: 28px; }
 .rsvp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -255,18 +245,6 @@ dialog::backdrop { background: rgb(40 34 24 / 72%); backdrop-filter: blur(5px); 
 .form-dialog input::placeholder, .form-dialog textarea::placeholder { color: var(--text-color); }
 .form-dialog form > .primary-button { width: 100%; }
 .local-notice { font-size: 13px; color: var(--text-color); line-height: 1.5; margin: 16px 0; font-style: italic; }
-.form-steps { display: flex; justify-content: center; gap: 20px; list-style: none; padding: 0; margin: 12px 0 20px; font-size: 14px; color: var(--text-color); }
-.form-steps .current { color: var(--text-color); border-bottom: 1px solid; }
-.signature-preview { min-height: 90px; display: grid; place-items: center; text-align: center; overflow-wrap: anywhere; padding: 12px; font-size: 38px; color: var(--text-color); }
-.ink-colors { display: flex; justify-content: center; gap: 16px; margin: 15px 0 25px; }
-.ink-color { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); border: 4px solid #faf6ef; }
-.ink-color.selected { outline: 1px solid var(--ink); outline-offset: 2px; }
-.signature-picker { position: relative; overflow: hidden; border-radius: 7px; cursor: crosshair; }
-.signature-picker img { width: 100%; }
-.placed-signature { position: absolute; transform: translate(-50%, -50%) rotate(-7deg); text-align: center; max-width: 56%; width: max-content; font-size: 26px; pointer-events: none; text-shadow: 0 1px 2px white; overflow-wrap: anywhere; line-height: 1.2; }
-.form-navigation { display: flex; align-items: center; justify-content: end; gap: 12px; margin-top: 22px; }
-.form-navigation .primary-button { font-size: 13px; padding: 12px 18px; }
-.secondary-button { background: transparent; font-size: 16px; padding: 10px; border-bottom: 1px solid var(--border); }
 .noscript { position: fixed; z-index: 300; bottom: 10px; left: 5%; width: 90%; text-align: center; color: var(--text-color); background: white; padding: 20px; }
 
 
@@ -291,7 +269,7 @@ dialog::backdrop { background: rgb(40 34 24 / 72%); backdrop-filter: blur(5px); 
   .schedule-section { padding-inline: 48px; }.schedule-section > .section-title h2 { font-size: 78px; }.schedule-stop { min-height: 210px; }.schedule-stop h3 { font-size: 23px; }.schedule-stop strong { font-size: 34px; }.schedule-date { font-size: 14px; }.schedule-symbol .icon { width: 92px; height: 92px; }
   .couple-section { padding: 75px 24px 50px; }.couple-portraits { min-height: 570px; }.couple-portraits strong { font-size: 33px; }.couple-portraits figcaption .script { font-size: 48px; }.couple-story { font-size: 20px; }
   .editorial-section { padding-inline: 24px; }.editorial-tall { min-height: 440px; }.editorial-wide { height: 240px; }.editorial-whispers { font-size: 47px; }.editorial-label > span { font-size: 36px; }
-  .guestbook-section,.rsvp-section,.gift-section { padding-inline: 40px; }.rsvp-options { gap: 22px; }
+  .rsvp-section,.gift-section { padding-inline: 40px; }.rsvp-options { gap: 22px; }
 }
 @media (max-width: 360px) {
   .wedding-wordmark { font-size: 42px; }.hero h1 { font-size: 18px; }.hero h1 i { margin: 6px 0; }.hero-date { font-size: 18px; }

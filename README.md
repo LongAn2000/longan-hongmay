@@ -73,9 +73,8 @@ gifts: [
 - Đếm ngược theo `date` và giờ sự kiện cùng ngày trong cấu hình, múi giờ Việt Nam (UTC+7); về 0 khi tới ngày cưới. Chương trình hiển thị các sự kiện từ `events`.
 - Album 38 ảnh, ảnh thu nhỏ, vuốt trên điện thoại, phóng to; phím mũi tên và Escape trong chế độ phóng to. Chuyển ảnh trượt mềm 700ms: bấm phải thì ảnh mới vào từ bên phải, bấm trái thì ảnh mới vào từ bên trái. Chờ ảnh tải xong để tránh khung trống; chế độ giảm chuyển động đổi ảnh trực tiếp.
 - Lịch tự sinh theo ngày cấu hình, đánh dấu các sự kiện cùng tháng.
-- Lưu bút ba bước: nhập chữ ký, chọn vị trí/màu, nhập lời chúc.
 - Xác nhận tham dự và số người đi cùng.
-- Lời chúc và RSVP chỉ lưu ở localStorage trên trình duyệt hiện tại. Không có API, không đồng bộ sang thiết bị khác và chưa có trang quản trị.
+- RSVP chỉ lưu ở localStorage trên trình duyệt hiện tại. Không có API, không đồng bộ sang thiết bị khác và chưa có trang quản trị.
 - Các nút bản đồ, tải QR và sao chép tài khoản xuất hiện khi điền thông tin tương ứng trong config.
 
 ## Build và kiểm tra
