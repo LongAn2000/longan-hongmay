@@ -15,14 +15,10 @@ html.intro-open .floating-actions { visibility: hidden; }
 .slot-confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
 .slot-inner { position: relative; z-index: 2; width: min(100%, 430px); padding: 40px 20px 34px; }
 
-.slot-eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: #9a7b5c; }
-.slot-title { margin: 6px 0 2px; font-family: var(--script); font-weight: 400; font-size: 64px; line-height: 1.15; color: var(--ink); }
-.slot-names { font-size: 20px; letter-spacing: .12em; color: #6b4a3c; }
-.slot-names span { margin: 0 .55em; font-size: .85em; color: var(--gold-dark); }
 
 /* Thân máy */
 .slot-machine {
-  position: relative; width: 280px; margin: 34px auto 0; padding: 18px 18px 22px; cursor: pointer;
+  position: relative; width: 280px; margin: 0 auto; padding: 18px 18px 22px; cursor: pointer;
   border-radius: 125px 125px 22px 22px;
   background: linear-gradient(160deg, #fffdf8 0%, var(--cream) 40%, var(--cream-2) 100%);
   border: 2px solid var(--gold);
@@ -95,10 +91,18 @@ html.intro-open .floating-actions { visibility: hidden; }
 .slot-intro:not(.is-spinning):not(.is-done) .slot-knob { animation: slot-nudge 2.4s ease-in-out infinite; }
 @keyframes slot-nudge { 0%, 70%, 100% { transform: none; } 80% { transform: translateY(10px); } 90% { transform: translateY(-2px); } }
 
-.slot-hint { margin-top: 44px; font-size: 14px; letter-spacing: .24em; text-transform: uppercase; color: #6f5b4b; }
-.is-spinning .slot-hint, .is-done .slot-hint { visibility: hidden; }
+/* Dòng chúc mừng phía trên và vùng hướng dẫn / nút phía dưới luôn giữ chỗ, để máy đứng yên ở giữa màn hình. */
+.slot-congrats {
+  min-height: 2.6em; margin: 0 auto 8px; max-width: 330px; text-wrap: balance;
+  font-family: var(--script); font-size: 34px; line-height: 1.3; color: var(--ink);
+  opacity: 0; transform: translateY(8px); transition: opacity .7s ease .15s, transform .7s ease .15s;
+}
+.is-done .slot-congrats { opacity: 1; transform: none; }
+.slot-actions { position: relative; height: 56px; margin-top: 40px; display: grid; place-items: center; }
+.slot-hint { font-size: 14px; letter-spacing: .24em; text-transform: uppercase; color: #6f5b4b; }
+.is-spinning .slot-hint, .is-done .slot-hint { display: none; }
 .slot-open {
-  display: inline-flex; align-items: center; justify-content: center; margin-top: -26px; min-width: 230px; min-height: 50px;
+  display: inline-flex; align-items: center; justify-content: center; min-width: 230px; min-height: 50px;
   padding: 12px 30px; border-radius: 999px; border: 1px solid #fff6;
   background: linear-gradient(#a98758, #7d5c36); color: #fffaf0;
   font-family: var(--serif); font-size: 15px; letter-spacing: .26em; text-transform: uppercase;
@@ -106,18 +110,17 @@ html.intro-open .floating-actions { visibility: hidden; }
 }
 .slot-open:hover { filter: brightness(1.07); }
 @keyframes slot-rise { from { opacity: 0; transform: translateY(12px); } }
-.slot-foot { margin-top: 22px; font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: #9a7b5c; }
 .slot-result { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
 @media (max-height: 700px) {
   .slot-inner { padding-top: 20px; }
-  .slot-title { font-size: 52px; }
-  .slot-machine { margin-top: 22px; zoom: .88; }
+  .slot-machine { zoom: .88; }
+  .slot-congrats { font-size: 30px; }
 }
 @media (min-width: 768px) {
-  .slot-title { font-size: 76px; }
-  .slot-names { font-size: 22px; }
   .slot-machine { zoom: 1.12; }
+  .slot-inner { width: min(100%, 700px); }
+  .slot-congrats { font-size: 44px; max-width: 660px; min-height: 1.4em; margin-bottom: 26px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .slot-intro { transition: none; }

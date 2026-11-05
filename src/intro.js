@@ -19,9 +19,7 @@ export function initIntro({ wedding, onOpen }) {
   intro.innerHTML = `
     <canvas class="slot-confetti" aria-hidden="true"></canvas>
     <div class="slot-inner">
-      <p class="slot-eyebrow">Cùng gia đình hai bên</p>
-      <h2 class="slot-title">Save the Date</h2>
-      <p class="slot-names">${wedding.groom}<span aria-hidden="true">♡</span>${wedding.bride}</p>
+      <p class="slot-congrats" aria-hidden="true">Chúc mừng bạn đã nhận được thiệp mời</p>
       <div class="slot-machine">
         <svg class="slot-crown" viewBox="0 0 300 80" aria-hidden="true">
           <path id="slot-arc" d="M40 76 A150 150 0 0 1 260 76" fill="none"/>
@@ -35,9 +33,10 @@ export function initIntro({ wedding, onOpen }) {
         <div class="slot-tray" aria-hidden="true"><span>♥</span></div>
         <button class="slot-lever" type="button" aria-label="Kéo cần gạt để xem ngày cưới"><span class="slot-rod"></span><span class="slot-knob"></span></button>
       </div>
-      <p class="slot-hint">Kéo cần gạt để xem ngày cưới</p>
-      <button class="slot-open" type="button" hidden>Xem thiệp mời</button>
-      <p class="slot-foot">Thiệp mời trân trọng gửi đến bạn</p>
+      <div class="slot-actions">
+        <p class="slot-hint">Kéo cần gạt để nhận quà</p>
+        <button class="slot-open" type="button" hidden>Xem Thiệp</button>
+      </div>
       <p class="slot-result" aria-live="polite"></p>
     </div>`;
   document.body.prepend(intro);
@@ -79,7 +78,7 @@ export function initIntro({ wedding, onOpen }) {
     Promise.all(stops).then(() => {
       intro.classList.remove('is-spinning');
       intro.classList.add('is-done');
-      intro.querySelector('.slot-result').textContent = `Ngày cưới: ${pad(day)} tháng ${month} năm ${year}`;
+      intro.querySelector('.slot-result').textContent = `Chúc mừng bạn đã nhận được thiệp mời. Ngày cưới: ${pad(day)} tháng ${month} năm ${year}`;
       openButton.hidden = false;
       openButton.focus({ preventScroll: true });
       if (!reduced) confetti(intro.querySelector('.slot-confetti'));

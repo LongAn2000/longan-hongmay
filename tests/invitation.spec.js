@@ -220,9 +220,9 @@ test('save-the-date slot machine spins to the wedding date and opens the invitat
   // The page behind cannot scroll while the intro is open.
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).toBe('hidden');
   await page.getByRole('button', { name: 'Kéo cần gạt để xem ngày cưới' }).click();
-  const open = page.getByRole('button', { name: 'Xem thiệp mời' });
+  const open = page.getByRole('button', { name: 'Xem Thiệp' });
   await expect(open).toBeVisible({ timeout: 8000 });
-  await expect(page.locator('.slot-result')).toHaveText('Ngày cưới: 28 tháng 11 năm 2026');
+  await expect(page.locator('.slot-result')).toHaveText('Chúc mừng bạn đã nhận được thiệp mời. Ngày cưới: 28 tháng 11 năm 2026');
   // The middle row of each reel shows the date.
   const shown = await page.locator('.slot-strip').evaluateAll(strips => strips.map(strip => {
     const reel = strip.parentElement.getBoundingClientRect();
