@@ -98,6 +98,7 @@ html.intro-open .floating-actions { visibility: hidden; }
   opacity: 0; transform: translateY(8px); transition: opacity .7s ease .15s, transform .7s ease .15s;
 }
 .is-done .slot-congrats { opacity: 1; transform: none; }
+.slot-congrats span { display: block; white-space: nowrap; }
 .slot-actions { position: relative; height: 56px; margin-top: 40px; display: grid; place-items: center; }
 .slot-hint { font-size: 14px; letter-spacing: .24em; text-transform: uppercase; color: #6f5b4b; }
 .is-spinning .slot-hint, .is-done .slot-hint { display: none; }
@@ -120,7 +121,7 @@ html.intro-open .floating-actions { visibility: hidden; }
 @media (min-width: 768px) {
   .slot-machine { zoom: 1.12; }
   .slot-inner { width: min(100%, 700px); }
-  .slot-congrats { font-size: 44px; max-width: 660px; min-height: 1.4em; margin-bottom: 26px; }
+  .slot-congrats { font-size: 44px; max-width: 660px; margin-bottom: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .slot-intro { transition: none; }

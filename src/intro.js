@@ -19,7 +19,7 @@ export function initIntro({ wedding, onOpen }) {
   intro.innerHTML = `
     <canvas class="slot-confetti" aria-hidden="true"></canvas>
     <div class="slot-inner">
-      <p class="slot-congrats" aria-hidden="true">Chúc mừng bạn đã nhận được thiệp mời</p>
+      <p class="slot-congrats" aria-hidden="true"><span>Chúc mừng</span><span>bạn đã nhận được thiệp mời</span></p>
       <div class="slot-machine">
         <svg class="slot-crown" viewBox="0 0 300 80" aria-hidden="true">
           <path id="slot-arc" d="M40 76 A150 150 0 0 1 260 76" fill="none"/>
