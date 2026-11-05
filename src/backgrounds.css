@@ -1,9 +1,9 @@
-/* Nền so le: các phần lần lượt dùng nền cánh hoa bạch quả màu ngà (theme-texture.jpg, từ theme6.jpg) và nền giấy trắng có sẵn.
+/* Nền so le: các phần lần lượt dùng nền đá hoa văn cổ màu ngà (theme-texture.jpg, từ theme8.jpg) và nền giấy trắng có sẵn.
    Ảnh nền phủ kín từng phần (cover), nên phần dài hay ngắn đều không lộ đường nối. */
-.bg-frame { position: relative; isolation: isolate; background: #ebe5dc; }
+.bg-frame { position: relative; isolation: isolate; background: #ece7df; }
 .bg-frame::before {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; box-sizing: border-box;
-  background: #ebe5dc url('/assets/theme-texture.jpg') center / cover no-repeat;
+  background: #ece7df url('/assets/theme-texture.jpg') center / cover no-repeat;
 }
 .bg-paper { background: var(--paper) url('/assets/theme-paper.png') center / 100% auto; }
 
