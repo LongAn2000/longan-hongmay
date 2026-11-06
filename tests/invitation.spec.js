@@ -274,7 +274,7 @@ test('save-the-date slot machine spins to the wedding date and opens the invitat
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).not.toBe('hidden');
 });
 
-test('wishes come from the sheet, scroll in the desktop rail, and new wishes post to the sheet', async ({ page }) => {
+test('wishes come from the sheet, pop up bottom-left like TikTok live comments, and new wishes post to the sheet', async ({ page }) => {
   const posted = [];
   await page.route('https://script.google.com/**', route => {
     if (route.request().method() !== 'POST') return route.fallback();
@@ -287,13 +287,14 @@ test('wishes come from the sheet, scroll in the desktop rail, and new wishes pos
   await expect(page.locator('#wishes-list .wish-item')).toHaveCount(2);
   await expect(page.locator('#wishes-list .wish-name')).toHaveText(['Ẩn danh', 'Cô Lan']);
   await expect(page.locator('#wishes-list .wish-text').first()).toHaveText('Mãi bên nhau nhé <3');
-  // Desktop rail: visible, holds the list twice for a seamless loop, and keeps moving.
-  const rail = page.locator('#wishes-rail');
-  await expect(rail).toBeVisible();
-  await expect(rail.locator('.rail-item')).toHaveCount(4);
-  const at = () => page.locator('#wishes-rail-track').evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m42);
-  const before = await at();
-  await expect.poll(at, { timeout: 4000 }).toBeLessThan(before - 5);
+  // TikTok-style feed (bottom left): wishes pop up one at a time, oldest dropping off after five.
+  const feed = page.locator('#wish-feed');
+  await expect(feed).toBeVisible();
+  await expect(feed.locator('.feed-item.is-in').first()).toBeVisible({ timeout: 4000 });
+  await expect(feed.locator('.feed-name').first()).toHaveText('Cô Lan');
+  await expect(feed.locator('.feed-avatar').first()).toHaveText('L');
+  await expect.poll(() => feed.locator('.feed-item').count(), { timeout: 6000 }).toBeGreaterThan(1);
+  expect(await feed.evaluate(el => getComputedStyle(el).pointerEvents)).toBe('none');
   // No bar fixed to the bottom of the screen and no count/"Viết lời chúc" row; the form sits under the list.
   await expect(page.locator('#wish-bar')).toHaveCount(0);
   await expect(page.locator('#wishes')).not.toContainText('Tổng lời chúc');
@@ -305,14 +306,11 @@ test('wishes come from the sheet, scroll in the desktop rail, and new wishes pos
   await expect(page.locator('#wishes-list .wish-text').first()).toHaveText('Chúc mừng hạnh phúc!');
   await expect.poll(() => posted.length).toBe(1);
   expect(posted[0]).toMatchObject({ type: 'wish', name: 'Ẩn danh', note: 'Chúc mừng hạnh phúc!' });
-  // Phones: no rail.
+  // The wish just sent pops up in the feed straight away.
+  await expect(feed.locator('.feed-text').last()).toHaveText('Chúc mừng hạnh phúc!');
+  // Phones show the feed too, narrower.
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(rail).toBeHidden();
-  // Reduced motion: the rail lists each wish once and does not move.
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.reload();
-  await expect(rail.locator('.rail-item')).toHaveCount(3);
-  const still = await at(); await page.waitForTimeout(800); expect(await at()).toBe(still);
+  await expect(feed).toBeVisible();
+  expect(await feed.evaluate(el => el.getBoundingClientRect().width)).toBeLessThanOrEqual(270);
 });
 

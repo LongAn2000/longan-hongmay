@@ -1,8 +1,9 @@
 // Lời chúc, theo mẫu thaiha-wedding.web.app:
 // - Phần "Lời Chúc": tổng số, danh sách mới nhất ở trên (cuộn trong khung), ô viết lời chúc.
-// - Máy tính: cột lời chúc chạy chậm từ dưới lên ở mép trái màn hình.
+// - Góc dưới bên trái màn hình, kiểu bình luận TikTok Live: lời chúc lần lượt nổi lên, đẩy lời cũ lên trên rồi mờ dần.
 // Dữ liệu là cột "Lời nhắn" của Google Sheet, đọc qua Apps Script (GET cùng URL /exec với RSVP).
-const RAIL_SPEED = 20; // px/giây, như mẫu
+const FEED_EVERY = 2600; // ms giữa hai lời chúc nổi lên
+const FEED_MAX = 5;      // số lời chúc giữ trên màn hình cùng lúc
 const LOCAL_KEY = 'longan-hongmay:my-wishes';
 
 const readLocal = () => { try { const v = JSON.parse(localStorage.getItem(LOCAL_KEY)); return Array.isArray(v) ? v : []; } catch { return []; } };
@@ -22,7 +23,7 @@ export function initWishes({ endpoint, toast }) {
     </form>`;
   $('#wish-form-slot').innerHTML = formHtml('wish-form-inline');
   document.body.insertAdjacentHTML('beforeend', `
-    <aside class="wishes-rail" id="wishes-rail" aria-hidden="true"><div class="wishes-rail-box"><div class="wishes-rail-track" id="wishes-rail-track"></div></div></aside>`);
+    <aside class="wish-feed" id="wish-feed" aria-hidden="true"><div class="wish-feed-list" id="wish-feed-list"></div></aside>`);
 
   let remote = [];
   let remoteOk = false; // chỉ gửi lên Sheet khi Apps Script đã có phần đọc lời chúc (tránh ghi nhầm thành "Không" tham dự)
@@ -39,46 +40,61 @@ export function initWishes({ endpoint, toast }) {
     el.append(name, text); return el;
   };
 
-  // ---- Cột chữ chạy (máy tính) ----
-  const rail = $('#wishes-rail');
-  const track = $('#wishes-rail-track');
+  // ---- Lời chúc nổi kiểu TikTok Live (góc dưới trái) ----
+  const feed = $('#wish-feed');
+  const feedList = $('#wish-feed-list');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let offset = 0, half = 0, last = 0;
-  function buildRail(wishes) {
-    track.replaceChildren();
-    rail.classList.toggle('is-empty', !wishes.length);
-    if (!wishes.length) return;
-    const frag = document.createDocumentFragment();
-    for (const w of reduced ? wishes : wishes.concat(wishes)) frag.append(item(w, 'div', 'rail-item'));
-    track.append(frag);
-    half = reduced ? 0 : track.scrollHeight / 2;
-    offset = Math.min(offset, half);
-  }
-  function step(ts) {
-    if (!last) last = ts;
-    const dt = Math.min(0.1, (ts - last) / 1000); last = ts;
-    if (half > 0 && rail.getClientRects().length) { // ẩn (display: none) trên màn hình nhỏ thì không chạy
-      offset += RAIL_SPEED * dt;
-      if (offset >= half) offset -= half;
-      track.style.transform = `translateY(${-offset}px)`;
+  let queue = [], next = 0, timer = 0;
+  const bubble = w => {
+    const el = document.createElement('div'); el.className = 'feed-item';
+    const avatar = document.createElement('span'); avatar.className = 'feed-avatar';
+    avatar.textContent = (w.name || 'Ẩn danh').trim().split(/\s+/).pop().charAt(0).toUpperCase();
+    const body = document.createElement('span'); body.className = 'feed-body';
+    const name = document.createElement('span'); name.className = 'feed-name'; name.textContent = w.name || 'Ẩn danh';
+    const text = document.createElement('span'); text.className = 'feed-text'; text.textContent = w.text;
+    body.append(name, text); el.append(avatar, body); return el;
+  };
+  function pushBubble(w) {
+    const el = bubble(w);
+    feedList.append(el);
+    if (!reduced) {
+      // Lời mới vào từ dưới: cả danh sách đang ở thấp hơn đúng một dòng rồi trượt lên, lời mới hiện dần.
+      const shift = el.offsetHeight + 8;
+      feedList.style.transition = 'none';
+      feedList.style.transform = `translateY(${shift}px)`;
+      feedList.getBoundingClientRect();
+      feedList.style.transition = '';
+      feedList.style.transform = '';
     }
-    requestAnimationFrame(step);
+    requestAnimationFrame(() => el.classList.add('is-in'));
+    while (feedList.children.length > FEED_MAX) feedList.firstElementChild.remove();
   }
-  if (!reduced) requestAnimationFrame(step);
-  // Cột bị ẩn khi dựng thì đo lại lúc đổi kích thước màn hình.
-  addEventListener('resize', () => { if (track.children.length) half = reduced ? 0 : track.scrollHeight / 2; });
+  function tick() {
+    if (queue.length && !document.documentElement.classList.contains('intro-open') && !document.hidden) {
+      pushBubble(queue[next % queue.length]);
+      next = (next + 1) % queue.length;
+    }
+    timer = setTimeout(tick, FEED_EVERY);
+  }
+  function setFeed(wishes) {
+    queue = wishes;
+    feed.classList.toggle('is-empty', !wishes.length);
+    if (next >= queue.length) next = 0;
+    if (!timer && wishes.length) timer = setTimeout(tick, 600);
+  }
 
   function render() {
     const wishes = all();
     list.replaceChildren(...[...wishes].reverse().map(w => item(w, 'li', 'wish-item')));
     if (!wishes.length) list.innerHTML = '<li class="wish-empty">Hãy là người đầu tiên gửi lời chúc tới cô dâu chú rể!</li>';
-    buildRail(wishes);
+    setFeed(wishes);
   }
 
   function add(name, text, { post = true } = {}) {
     const wish = { name: clean(name, 60) || 'Ẩn danh', text: clean(text, 300), time: new Date().toISOString() };
     if (!wish.text) return;
     local = [...local, wish]; writeLocal(local); render();
+    pushBubble(wish); // lời chúc vừa gửi nổi lên ngay
     list.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' });
     if (!post) return;
     if (!endpoint || !remoteOk) { toast('Cảm ơn bạn đã gửi lời chúc tới cô dâu chú rể!'); return; }
