@@ -13,6 +13,14 @@
   .bg-frame { background: transparent; }
   .bg-frame::before { left: 50%; right: auto; width: 100vw; margin-left: -50vw; }
   .wedding-page > .bg-frame:not(.events-section)::before { width: calc(100vw / var(--z)); margin-left: calc(-50vw / var(--z)); }
+  /* Màn ngang rộng: ảnh dọc phủ kín bị cắt mất phần trên/dưới nên mất hai cụm hoa calla ở góc.
+     Đặt riêng hai cụm hoa (cắt từ chính ảnh nền) vào góc trên phải và góc dưới trái của mỗi phần. */
+  .bg-frame::before {
+    background:
+      url('/assets/calla-corner-tr.png') right top / auto min(46%, 360px) no-repeat,
+      url('/assets/calla-corner-bl.png') left bottom / auto min(40%, 320px) no-repeat,
+      #f1f1f0 url('/assets/theme-texture.jpg') center / cover no-repeat;
+  }
 }
 
 /* Phần gộp (đếm ngược + lịch, tham dự + mừng cưới): mỗi phần con vẫn là mốc định vị cho trang trí bên trong,
