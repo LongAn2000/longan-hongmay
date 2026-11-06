@@ -2,7 +2,9 @@
 // lời chúc lần lượt nổi lên, đẩy lời cũ lên trên; chạy hết danh sách một lần thì dừng.
 // Dữ liệu là cột "Lời nhắn" của Google Sheet, đọc qua Apps Script (GET cùng URL /exec với RSVP).
 // Khách gửi lời chúc qua ô "Lời nhắn nhủ dành cho đôi bạn trẻ" của form xác nhận tham dự.
-const FEED_EVERY = 2600; // ms giữa hai lời chúc nổi lên
+const FEED_EVERY = 2600; // ms giữa hai lời chúc nổi lên (lời ngắn)
+const FEED_PER_40 = 1000; // lời dài: thêm 1 giây cho mỗi 40 ký tự sau 40 ký tự đầu, để kịp đọc hết
+const readTime = w => FEED_EVERY + Math.ceil(Math.max(0, w.text.length - 40) / 40) * FEED_PER_40;
 const FEED_MAX = 5;      // số lời chúc giữ trên màn hình cùng lúc
 const LOCAL_KEY = 'longan-hongmay:my-wishes';
 
@@ -53,8 +55,9 @@ export function initWishes({ endpoint }) {
   function tick() {
     timer = 0;
     if (next >= queue.length) return;
-    if (!document.documentElement.classList.contains('intro-open') && !document.hidden) pushBubble(queue[next++]);
-    timer = setTimeout(tick, FEED_EVERY);
+    let wait = FEED_EVERY;
+    if (!document.documentElement.classList.contains('intro-open') && !document.hidden) { const w = queue[next++]; pushBubble(w); wait = readTime(w); }
+    timer = setTimeout(tick, wait);
   }
   function refresh() {
     const seen = new Set(remote.map(key));
