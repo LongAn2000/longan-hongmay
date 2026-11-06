@@ -1,8 +1,9 @@
 /* Lời chúc nổi kiểu bình luận TikTok Live: góc dưới bên trái, không chặn thao tác bấm.
+   Bong bóng rộng vừa nội dung, tối đa 40% bề rộng màn hình.
    Lời cũ ở trên mờ dần nhờ mask chuyển từ trong suốt (trên) sang đậm (dưới). */
 .wish-feed {
   position: fixed; z-index: 13; left: 10px; bottom: max(14px, env(safe-area-inset-bottom));
-  width: min(64vw, 270px); max-height: 30vh; overflow: hidden; pointer-events: none;
+  width: 40vw; max-height: 30vh; overflow: hidden; pointer-events: none;
   display: flex; flex-direction: column; justify-content: flex-end;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 45%); mask-image: linear-gradient(to bottom, transparent 0, #000 45%);
   transition: opacity .5s ease;
@@ -28,7 +29,7 @@
 .feed-text { font-size: 14px; line-height: 1.4; overflow-wrap: break-word; max-height: calc(1.4em * 2); overflow: hidden; }
 
 @media (min-width: 768px) {
-  .wish-feed { left: 20px; bottom: 24px; width: 320px; max-height: 46vh; }
+  .wish-feed { left: 20px; bottom: 24px; max-height: 46vh; }
   .feed-name { font-size: 13px; }
   .feed-text { font-size: 15px; max-height: calc(1.4em * 3); }
 }

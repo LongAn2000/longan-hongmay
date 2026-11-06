@@ -299,9 +299,10 @@ test('wishes from the sheet pop up bottom-left like TikTok live comments, on des
   await page.getByRole('button', { name: 'Gửi xác nhận', exact: true }).click();
   await expect(feed.locator('.feed-text').last()).toHaveText('Hạnh phúc nhé!');
   await expect(feed.locator('.feed-name').last()).toHaveText('Bạn Thân');
-  // Phones show the same feed, narrower.
+  // Phones show the same feed.
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(feed).toBeVisible();
-  expect(await feed.evaluate(el => el.getBoundingClientRect().width)).toBeLessThanOrEqual(270);
+  // Bubbles are at most 40% of the screen wide.
+  expect(await feed.evaluate(el => el.getBoundingClientRect().width)).toBeCloseTo(390 * 0.4, 0);
 });
 
