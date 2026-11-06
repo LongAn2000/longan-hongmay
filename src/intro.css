@@ -4,10 +4,12 @@ html.intro-open .floating-actions { visibility: hidden; }
 
 .slot-intro {
   --reel-row: 46px;
-  --ink: #3b211c; --gold: #b8935a; --gold-dark: #8c6a3c; --cream: #fbf7ef; --cream-2: #efe5d3;
+  /* Cùng bảng màu với thiệp: chữ nâu đậm (--text-color), viền nâu nhạt (--rose / --wine), nút kem như .primary-button. */
+  --ink: var(--text-color); --gold: var(--rose); --gold-dark: var(--wine); --cream: #fcfaf5; --cream-2: #f2eadd;
   position: fixed; inset: 0; z-index: 100; overflow-y: auto; overscroll-behavior: contain;
   display: grid; place-items: center;
-  background: radial-gradient(ellipse at 50% 35%, #fffdf8 0%, #f4eee4 55%, #e9e1d4 100%);
+  /* Nền giấy trắng vân sần, giống nền giấy bên trong thiệp. */
+  background: var(--paper) url('/assets/theme-paper.png') center top / 760px auto;
   color: var(--ink); text-align: center;
   transition: opacity .9s ease, transform .9s ease;
 }
@@ -26,16 +28,16 @@ html.intro-open .floating-actions { visibility: hidden; }
 }
 .slot-machine::after { /* chân đế */
   content: ''; position: absolute; left: -10px; right: -10px; bottom: -16px; height: 18px; border-radius: 6px;
-  background: linear-gradient(#cdb187, var(--gold-dark)); box-shadow: 0 8px 14px -6px #5a432a66; z-index: -1;
+  background: linear-gradient(#c7b8a5, var(--gold-dark)); box-shadow: 0 8px 14px -6px #5a432a66; z-index: -1;
 }
 .slot-crown { display: block; width: 92%; height: auto; margin: 4px auto 0; overflow: visible; }
 .slot-crown text { font-family: var(--serif); font-size: 24px; font-weight: 600; letter-spacing: .26em; fill: var(--gold-dark); }
 .slot-lights { display: flex; justify-content: center; gap: 9px; margin: 2px 0 12px; }
-.slot-lights i { width: 9px; height: 9px; border-radius: 50%; background: #e7d3ae; box-shadow: inset 0 -1px 2px #a8865366; }
+.slot-lights i { width: 9px; height: 9px; border-radius: 50%; background: #e6dccd; box-shadow: inset 0 -1px 2px #a8865366; }
 .is-spinning .slot-lights i { animation: slot-blink .5s steps(2) infinite; }
 .is-spinning .slot-lights i:nth-child(even) { animation-delay: .25s; }
-.is-done .slot-lights i { background: #f0cf7e; box-shadow: 0 0 8px #f0cf7e, inset 0 -1px 2px #a8865366; }
-@keyframes slot-blink { 50% { background: #f6d98f; box-shadow: 0 0 8px #f0cf7e; } }
+.is-done .slot-lights i { background: #f2e2c4; box-shadow: 0 0 8px #e8d3ad, inset 0 -1px 2px #a8865366; }
+@keyframes slot-blink { 50% { background: #f6ead2; box-shadow: 0 0 8px #e8d3ad; } }
 
 /* Cửa sổ ba ô quay */
 .slot-window {
@@ -58,7 +60,7 @@ html.intro-open .floating-actions { visibility: hidden; }
 }
 .slot-reel.landed .slot-strip span:nth-last-child(2) { color: var(--ink); }
 .slot-plate { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
-.slot-plate span { width: 30px; height: 12px; border-radius: 3px; background: linear-gradient(#ead8b8, #cdb187); }
+.slot-plate span { width: 30px; height: 12px; border-radius: 3px; background: linear-gradient(#e6dccd, #c7b8a5); }
 .slot-tray {
   display: grid; place-items: center; width: 70%; height: 46px; margin: 16px auto 0; border-radius: 10px;
   border: 1.5px solid var(--gold); background: linear-gradient(#f2e8d6, #fbf7ef);
@@ -72,7 +74,7 @@ html.intro-open .floating-actions { visibility: hidden; }
 }
 .slot-lever::before { /* trục gắn vào thân máy */
   content: ''; position: absolute; left: 0; bottom: 12px; width: 18px; height: 30px; border-radius: 0 6px 6px 0;
-  background: linear-gradient(90deg, #cdb187, var(--gold-dark));
+  background: linear-gradient(90deg, #c7b8a5, var(--gold-dark));
 }
 .slot-rod {
   position: absolute; left: 15px; bottom: 26px; width: 6px; height: 92px; border-radius: 3px;
@@ -81,7 +83,7 @@ html.intro-open .floating-actions { visibility: hidden; }
 }
 .slot-knob {
   position: absolute; left: 6px; top: 0; width: 24px; height: 24px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #c76a5c, #8c2f27 60%, #5e1c17);
+  background: radial-gradient(circle at 35% 30%, #a8927a, var(--wine) 60%, #4a3a2c);
   box-shadow: 0 3px 6px #0004; transition: transform .35s cubic-bezier(.5,0,.5,1.6);
 }
 .slot-lever.pulled .slot-rod { transform: scaleY(-1); }
@@ -100,16 +102,17 @@ html.intro-open .floating-actions { visibility: hidden; }
 .is-done .slot-congrats { opacity: 1; transform: none; }
 .slot-congrats span { display: block; white-space: nowrap; }
 .slot-actions { position: relative; height: 56px; margin-top: 40px; display: grid; place-items: center; }
-.slot-hint { font-size: 14px; letter-spacing: .24em; text-transform: uppercase; color: #6f5b4b; }
+.slot-hint { font-size: 14px; letter-spacing: .24em; text-transform: uppercase; color: var(--text-color); }
 .is-spinning .slot-hint, .is-done .slot-hint { display: none; }
 .slot-open {
   display: inline-flex; align-items: center; justify-content: center; min-width: 230px; min-height: 50px;
-  padding: 12px 30px; border-radius: 999px; border: 1px solid #fff6;
-  background: linear-gradient(#a98758, #7d5c36); color: #fffaf0;
-  font-family: var(--serif); font-size: 15px; letter-spacing: .26em; text-transform: uppercase;
-  box-shadow: 0 10px 22px -8px #5a432a99, inset 0 1px 0 #fff5; animation: slot-rise .6s ease both;
+  /* Giống nút .primary-button trong thiệp (Gửi quà mừng cưới, Gửi xác nhận). */
+  padding: 12px 30px; border-radius: 99px; border: 1px solid var(--wine-light);
+  background: #f2eadd; color: var(--text-color);
+  font-family: var(--body); font-size: 17px; line-height: 1.35;
+  box-shadow: 0 8px 18px -10px #5a432a66; animation: slot-rise .6s ease both; transition: background .2s;
 }
-.slot-open:hover { filter: brightness(1.07); }
+.slot-open:hover { background: #e8ddcf; }
 @keyframes slot-rise { from { opacity: 0; transform: translateY(12px); } }
 .slot-result { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 

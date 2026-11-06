@@ -45,7 +45,9 @@ export function initWishes({ endpoint }) {
       feedList.style.transform = '';
     }
     requestAnimationFrame(() => el.classList.add('is-in'));
-    while (feedList.children.length > FEED_MAX) feedList.firstElementChild.remove();
+    // Giữ tối đa FEED_MAX lời và không cao quá --feed-max: bỏ hẳn lời cũ nhất thay vì cắt nửa chừng.
+    const maxH = parseFloat(getComputedStyle(feed).getPropertyValue('--feed-max')) / 100 * innerHeight || innerHeight * 0.3;
+    while (feedList.children.length > 1 && (feedList.children.length > FEED_MAX || feedList.offsetHeight > maxH)) feedList.firstElementChild.remove();
   }
   function tick() {
     if (queue.length && !document.documentElement.classList.contains('intro-open') && !document.hidden) {

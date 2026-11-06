@@ -105,7 +105,7 @@ function confetti(canvas) {
   const size = () => { canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
   size();
   addEventListener('resize', size);
-  const colors = ['#c9a45c', '#e2c789', '#b8893b', '#f3e2b3', '#8a6a3a', '#fffaf0'];
+  const colors = ['#9e8b73', '#c7b8a5', '#796650', '#f2eadd', '#371a16', '#e6dccd']; // bảng màu nâu – kem của thiệp
   const pieces = Array.from({ length: 170 }, () => ({
     x: innerWidth / 2 + (Math.random() - .5) * innerWidth * .5,
     y: innerHeight * .42 + (Math.random() - .5) * 80,
