@@ -15,27 +15,32 @@
 }
 .event-card::before { display: none; }
 
-/* ---------- Cô dâu chú rể: Our story ---------- */
-.couple-section { padding: 40px 0 56px; }
-.story-card { position: relative; width: 88%; margin: 0 auto; aspect-ratio: 760 / 989; }
-.story-lace { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 8px 16px #4a403038); }
+/* ---------- Cô dâu chú rể: Our story (theo mẫu) ----------
+   Nền vườn cây tối (story-garden.jpg, làm từ ảnh album) để ren trắng nổi lên; khung ren ở trên,
+   hai ảnh polaroid to, nghiêng ngược chiều, đè lên mép dưới khung và chồng lên nhau. */
+.couple-section { padding: 46px 0 64px; color: var(--text-color); }
+.couple-section.bg-frame::before { background: #2f3326 url('/assets/story-garden.jpg') center / cover no-repeat; }
+.story-card { position: relative; width: 90%; margin: 0 auto; aspect-ratio: 760 / 988; }
+.story-lace { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 10px 22px #0008); }
 .story-text {
   position: absolute; left: 21%; right: 21%; top: 17%; bottom: 15%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text-color);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
 }
-.story-eyebrow { font-size: calc(var(--w) * .03); letter-spacing: .3em; text-transform: uppercase; }
-.story-names { margin: .2em 0 .35em; font-size: calc(var(--w) * .085); line-height: 1; font-weight: 400; }
-.story-names span { display: block; font-size: .6em; margin: .1em 0; }
-.story-body { font-size: calc(var(--w) * .031); line-height: 1.6; }
+.story-eyebrow { font-size: calc(var(--w) * .034); letter-spacing: .16em; text-transform: uppercase; }
+.story-names { margin: .15em 0 .3em; font-size: calc(var(--w) * .088); line-height: .95; font-weight: 400; }
+.story-names span { display: block; font-size: .55em; margin: .05em 0; }
+.story-body { font-size: calc(var(--w) * .03); line-height: 1.55; }
 
-.story-photos { position: relative; display: flex; justify-content: center; margin: -22% 4% 0; z-index: 1; }
-.polaroid { width: 47%; margin: 0; padding: 7px 7px 0; background: #fffdf8; box-shadow: 0 10px 22px #3a2c1e40; }
-.polaroid .portrait { position: relative; aspect-ratio: 3 / 4; overflow: hidden; }
-.polaroid figcaption { display: flex; flex-direction: column; align-items: center; padding: 8px 4px 12px; color: var(--text-color); }
-.polaroid figcaption .script { font-size: calc(var(--w) * .07); line-height: 1.1; }
-.polaroid figcaption strong { font-size: calc(var(--w) * .032); font-weight: 400; letter-spacing: .14em; text-transform: uppercase; }
-.polaroid-bride { transform: rotate(-6deg) translateY(10px); margin-right: -1%; }
-.polaroid-groom { transform: rotate(5deg); margin-left: -1%; }
+.story-photos { position: relative; z-index: 1; height: calc(var(--w) * .66); margin-top: calc(var(--w) * -.2); }
+.polaroid { position: absolute; width: 50%; margin: 0; padding: 6px 6px 0; background: #fbfaf6; box-shadow: 0 12px 26px #0007; }
+.polaroid .portrait { position: relative; aspect-ratio: 4 / 3.3; overflow: hidden; }
+.polaroid figcaption { display: flex; flex-direction: column; align-items: center; padding: 4px 4px 10px; color: var(--text-color); }
+.polaroid figcaption .script { font-size: calc(var(--w) * .058); line-height: 1.1; }
+.polaroid figcaption strong { font-size: calc(var(--w) * .026); font-weight: 400; letter-spacing: .14em; text-transform: uppercase; }
+.polaroid-bride { left: 5%; top: 6%; transform: rotate(-5deg); }
+.polaroid-groom { right: 4%; top: 0; transform: rotate(6deg); z-index: 1; }
+.polaroid-bride .fill-image { object-position: 50% 62% !important; }
+.polaroid-groom .fill-image { object-position: 50% 22% !important; }
 
 /* ---------- Ô xác nhận tham dự trên giấy ren ---------- */
 .rsvp-option {

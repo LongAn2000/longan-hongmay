@@ -100,9 +100,9 @@ $('#app').innerHTML = `
           <p class="story-body">Từ hai hành trình riêng biệt, chúng mình đã gặp nhau, chọn ở lại và cùng viết nên một câu chuyện mang tên chúng ta. Chỉ mong từ hôm nay và mãi về sau, mỗi niềm vui đều có nhau để sẻ chia, mỗi chặng đường đều có một bàn tay để nắm lấy.</p>
         </div>
       </div>
-      <div class="story-photos">
-        <figure class="polaroid polaroid-bride reveal"><div class="portrait">${photo('bride', 'fill-image', '51% 30%')}</div><figcaption><span class="script">Cô dâu</span><strong>${e(wedding.bride)}</strong></figcaption></figure>
-        <figure class="polaroid polaroid-groom reveal"><div class="portrait">${photo('groom', 'fill-image', '46% 28%')}</div><figcaption><span class="script">Chú rể</span><strong>${e(wedding.groom)}</strong></figcaption></figure>
+      <div class="story-photos reveal">
+        <figure class="polaroid polaroid-bride"><div class="portrait">${photo('bride', 'fill-image', '51% 30%')}</div><figcaption><span class="script">Cô dâu</span><strong>${e(wedding.bride)}</strong></figcaption></figure>
+        <figure class="polaroid polaroid-groom"><div class="portrait">${photo('groom', 'fill-image', '46% 28%')}</div><figcaption><span class="script">Chú rể</span><strong>${e(wedding.groom)}</strong></figcaption></figure>
       </div>
     </section>
 
