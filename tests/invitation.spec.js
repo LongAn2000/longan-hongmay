@@ -157,24 +157,19 @@ test('album slides in the chosen direction and handles quick repeated clicks', a
 
 test('wedding gifts show both recipients and copy their accounts independently', async ({ page }) => {
   await page.goto('/?intro=0');
-  // The section shows two compact cards; the QR and account stay hidden until a card is opened.
-  const cards = page.locator('.gift-card');
-  await expect(cards.locator('.gift-role')).toHaveText(['Chú rể', 'Cô dâu']);
-  await expect(cards.locator('.gift-card-name')).toHaveText(['Long An', 'Hồng Mây']);
+  // The section shows a single "Gửi quà mừng cưới" button; both accounts stay hidden until it is pressed.
+  await expect(page.locator('#gift .gift-card, #gift .gift-intro')).toHaveCount(0);
+  const dialog = page.locator('#gift-dialog');
   await expect(page.getByRole('img', { name: 'Mã QR mừng cưới Long An' })).toBeHidden();
-  await page.getByRole('button', { name: 'Xem thông tin mừng cưới Chú rể Long An' }).click();
-  const groom = page.locator('#gift-dialog-0');
-  await expect(groom).toBeVisible();
-  await expect(groom.getByRole('img', { name: 'Mã QR mừng cưới Long An' })).toHaveAttribute('src', '/assets/qr-long-an.png');
-  await expect(groom.locator('.copy-account span')).toHaveText('9966834597');
+  await page.getByRole('button', { name: 'Gửi quà mừng cưới' }).click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('.gift-role')).toHaveText(['Chú rể', 'Cô dâu']);
+  await expect(dialog.locator('.gift-person')).toHaveText(['Long An', 'Hồng Mây']);
+  await expect(dialog.getByRole('img', { name: 'Mã QR mừng cưới Long An' })).toHaveAttribute('src', '/assets/qr-long-an.png');
+  await expect(dialog.getByRole('img', { name: 'Mã QR mừng cưới Hồng Mây' })).toHaveAttribute('src', '/assets/qr-hong-may.png');
+  await expect(dialog.locator('.copy-account span')).toHaveText(['9966834597', '6839812027']);
   await page.keyboard.press('Escape');
-  await expect(groom).toBeHidden();
-  await page.getByRole('button', { name: 'Xem thông tin mừng cưới Cô dâu Hồng Mây' }).click();
-  const bride = page.locator('#gift-dialog-1');
-  await expect(bride.getByRole('img', { name: 'Mã QR mừng cưới Hồng Mây' })).toHaveAttribute('src', '/assets/qr-hong-may.png');
-  await expect(bride.locator('.copy-account span')).toHaveText('6839812027');
-  await bride.getByRole('button', { name: 'Đóng' }).click();
-  await expect(bride).toBeHidden();
+  await expect(dialog).toBeHidden();
 
   // Supply test-only account and QR values without changing the real configuration.
   await page.route('**/src/config.js*', async route => {
@@ -194,14 +189,14 @@ test('wedding gifts show both recipients and copy their accounts independently',
     } });
   });
   await page.reload();
-  await page.getByRole('button', { name: 'Xem thông tin mừng cưới Cô dâu Hồng Mây' }).click();
+  await page.getByRole('button', { name: 'Gửi quà mừng cưới' }).click();
   await page.getByRole('button', { name: 'Sao chép số tài khoản Hồng Mây', exact: true }).click();
-  await expect(page.getByRole('link', { name: 'Tải mã QR Hồng Mây', exact: true })).toHaveAttribute('href', '/assets/bride.jpg');
-  await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Xem thông tin mừng cưới Chú rể Long An' }).click();
   await page.getByRole('button', { name: 'Sao chép số tài khoản Long An', exact: true }).click();
-  await expect(page.getByRole('link', { name: 'Tải mã QR Long An', exact: true })).toHaveAttribute('href', '/assets/hero.jpg');
   expect(await page.evaluate(() => window.copiedAccounts)).toEqual(['TEST_BRIDE_ACCOUNT', 'TEST_GROOM_ACCOUNT']);
+  await expect(page.getByRole('link', { name: 'Tải mã QR Long An', exact: true })).toHaveAttribute('href', '/assets/hero.jpg');
+  await expect(page.getByRole('link', { name: 'Tải mã QR Hồng Mây', exact: true })).toHaveAttribute('href', '/assets/bride.jpg');
+  await dialog.getByRole('button', { name: 'Đóng' }).click();
+  await expect(dialog).toBeHidden();
 });
 
 test('RSVP handles both attendance choices, persists locally and posts to the sheet', async ({ page }) => {
