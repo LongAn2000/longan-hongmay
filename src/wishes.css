@@ -1,11 +1,10 @@
 /* Lời chúc nổi kiểu bình luận TikTok Live: góc dưới bên trái, không chặn thao tác bấm.
    Bong bóng rộng vừa nội dung, tối đa 40% bề rộng màn hình.
-   Lời cũ ở trên mờ dần nhờ mask chuyển từ trong suốt (trên) sang đậm (dưới). */
+   Không làm mờ lời cũ: lời ở trên cùng giữ nguyên rồi biến mất khi bị đẩy ra ngoài khung. */
 .wish-feed {
   position: fixed; z-index: 13; left: 10px; bottom: max(14px, env(safe-area-inset-bottom));
   width: 40vw; max-height: 30vh; overflow: hidden; pointer-events: none;
   display: flex; flex-direction: column; justify-content: flex-end;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 45%); mask-image: linear-gradient(to bottom, transparent 0, #000 45%);
   transition: opacity .5s ease;
 }
 .wish-feed.is-empty, html.intro-open .wish-feed { opacity: 0; }
