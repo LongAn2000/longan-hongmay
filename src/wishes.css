@@ -49,21 +49,26 @@
   .wish-item .wish-name, .wish-item .wish-text { font-size: 16px; }
 }
 @media (min-width: 1280px) {
+  /* Cột lời chúc luôn hiện; phần Lễ cưới (dàn ngang) được thu lại để không bị cột đè (xem bên dưới). */
+  :root { --rail-w: clamp(230px, 17vw, 310px); }
   .wishes-rail {
-    display: block; position: fixed; z-index: 13; left: 16px; top: 64px; bottom: 80px;
-    width: min(288px, calc((100vw - 573px * var(--z, 1)) / 2 - 40px)); pointer-events: none;
-    transition: opacity .5s ease;
+    display: block; position: fixed; z-index: 13; left: 16px; top: 64px; bottom: 64px;
+    width: var(--rail-w); pointer-events: none; transition: opacity .5s ease;
   }
-  .wishes-rail.is-empty, .wishes-rail.is-covered, html.intro-open .wishes-rail { opacity: 0; }
+  .wishes-rail.is-empty, html.intro-open .wishes-rail { opacity: 0; }
   .wishes-rail-box {
     height: 100%; overflow: hidden; border-radius: 16px; border: 1px solid #ffffff99;
-    background: #fffdf8b8; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); box-shadow: 0 4px 14px #4a40301f;
+    background: #fffdf8c4; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); box-shadow: 0 4px 14px #4a40301f;
   }
   .wishes-rail-track { will-change: transform; }
-  .rail-item { padding: 8px 12px; border-top: 1px solid #371a1614; color: var(--text-color); }
+  .rail-item { padding: 10px 14px; border-top: 1px solid #371a1614; color: var(--text-color); }
   .rail-item:first-child { border-top: 0; }
-  .rail-item .wish-name { font-size: 12px; font-weight: 600; }
-  .rail-item .wish-text { margin-top: 2px; font-size: 12px; line-height: 1.45; color: #371a16d9; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .rail-item .wish-name { font-size: 15px; font-weight: 600; }
+  .rail-item .wish-text { margin-top: 3px; font-size: 15px; line-height: 1.5; color: #371a16d9; white-space: pre-wrap; overflow-wrap: anywhere; }
+  /* Lễ cưới: chừa hai bên mỗi bên một khoảng bằng cột lời chúc + lề, để hai thiệp oval không nằm dưới cột. */
+  .events-section .family-section, .events-section .event-cards { max-width: min(1040px, calc(100vw - 2 * (var(--rail-w) + 48px))); }
+  .events-section .event-cards { gap: 40px; }
+  .events-section .event-date > * { white-space: nowrap; font-size: clamp(14px, 1.15vw, 18px); padding-inline: 6px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .wishes-rail-box { overflow-y: auto; }

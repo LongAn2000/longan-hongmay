@@ -98,12 +98,6 @@ export function initWishes({ endpoint, toast }) {
     });
   }
 
-  // Ẩn cột chữ chạy khi phần Lễ cưới (rộng) đang trên màn hình.
-  if ('IntersectionObserver' in window) {
-    const wide = $('#events');
-    if (wide) new IntersectionObserver(([entry]) => rail.classList.toggle('is-covered', entry.isIntersecting), { rootMargin: '-80px 0px' }).observe(wide);
-  }
-
   render();
   if (endpoint) {
     fetch(`${endpoint}${endpoint.includes('?') ? '&' : '?'}action=wishes`, { cache: 'no-store' })
