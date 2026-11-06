@@ -1,6 +1,7 @@
 import './style.css';
 import './desktop.css';
 import './backgrounds.css';
+import './lace.css';
 import './intro.css';
 import { initIntro } from './intro.js';
 import { wedding, rsvpEndpoint } from './config.js';
@@ -91,12 +92,18 @@ $('#app').innerHTML = `
     </section>
 
     <section class="couple-section bg-frame" id="couple">
-      <div class="couple-portraits">
-        <figure class="couple-bride reveal"><div class="portrait">${photo('bride', 'fill-image', '51% 30%')}</div><figcaption><strong>${e(wedding.bride)}</strong><span class="script">Cô dâu</span></figcaption></figure>
-        <figure class="couple-groom reveal"><figcaption><strong>${e(wedding.groom)}</strong><span class="script">Chú rể</span></figcaption><div class="portrait">${photo('groom', 'fill-image', '46% 28%')}</div></figure>
-        ${decoration('coupleFlower', 'couple-flower')}
+      <div class="story-card reveal">
+        <img class="story-lace" src="${assetUrl('/assets/story-lace.png')}" alt="" aria-hidden="true" loading="lazy">
+        <div class="story-text">
+          <p class="story-eyebrow">Our story</p>
+          <h2 class="story-names script">${e(wedding.groom)}<span>&amp;</span>${e(wedding.bride)}</h2>
+          <p class="story-body">Từ hai hành trình riêng biệt, chúng mình đã gặp nhau, chọn ở lại và cùng viết nên một câu chuyện mang tên chúng ta. Chỉ mong từ hôm nay và mãi về sau, mỗi niềm vui đều có nhau để sẻ chia, mỗi chặng đường đều có một bàn tay để nắm lấy.</p>
+        </div>
       </div>
-      <p class="couple-story reveal">Từ hai hành trình riêng biệt, chúng mình đã gặp nhau, chọn ở lại và cùng viết nên một câu chuyện mang tên chúng ta. Chỉ mong từ hôm nay và mãi về sau, mỗi niềm vui đều có nhau để sẻ chia, mỗi chặng đường đều có một bàn tay để nắm lấy.</p>
+      <div class="story-photos">
+        <figure class="polaroid polaroid-bride reveal"><div class="portrait">${photo('bride', 'fill-image', '51% 30%')}</div><figcaption><span class="script">Cô dâu</span><strong>${e(wedding.bride)}</strong></figcaption></figure>
+        <figure class="polaroid polaroid-groom reveal"><div class="portrait">${photo('groom', 'fill-image', '46% 28%')}</div><figcaption><span class="script">Chú rể</span><strong>${e(wedding.groom)}</strong></figcaption></figure>
+      </div>
     </section>
 
     <div class="section-group bg-paper">
@@ -130,7 +137,7 @@ $('#app').innerHTML = `
     <div class="section-group bg-frame">
     <section class="rsvp-section" id="rsvp">
       
-      <div class="section-title reveal"><h2 class="script">Tham Dự</h2><p>RSVP · XÁC NHẬN THAM DỰ</p><div class="tiny-divider">♥</div></div>
+      <div class="section-title reveal"><h2 class="script">Tham Dự</h2><p>XÁC NHẬN THAM DỰ</p><div class="tiny-divider">♥</div></div>
       <p class="rsvp-intro reveal">Vui lòng xác nhận sự tham dự để chúng mình chuẩn bị đón tiếp bạn một cách chu đáo nhất. Trân trọng cảm ơn!</p><div class="rsvp-options reveal">
         <button class="rsvp-option" data-attending="yes">${icon('check')}<span>Có, tôi sẽ<br>tham dự</span></button>
         <button class="rsvp-option rsvp-decline" data-attending="no">${icon('close')}<span>Rất tiếc, chưa<br>sắp xếp được</span></button>

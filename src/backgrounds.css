@@ -12,7 +12,7 @@
   .bg-paper { background: transparent; }
   .bg-frame { background: transparent; }
   .bg-frame::before { left: 50%; right: auto; width: 100vw; margin-left: -50vw; }
-  .wedding-page > .bg-frame:not(.events-section):not(.couple-section)::before { width: calc(100vw / var(--z)); margin-left: calc(-50vw / var(--z)); }
+  .wedding-page > .bg-frame:not(.events-section)::before { width: calc(100vw / var(--z)); margin-left: calc(-50vw / var(--z)); }
 }
 
 /* Phần gộp (đếm ngược + lịch, tham dự + mừng cưới): mỗi phần con vẫn là mốc định vị cho trang trí bên trong,

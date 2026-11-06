@@ -1,0 +1,48 @@
+/* Khung ren:
+   - Thiệp tiệc cưới nhà trai / nhà gái nằm trong khung oval ren (oval-frame.png, từ oval.jpg).
+   - Phần cô dâu chú rể theo mẫu "Our story": lời kể nằm trong khung ren (story-lace.png, từ download.png),
+     hai ảnh polaroid nghiêng đè lên mép dưới khung.
+   - Hai ô xác nhận tham dự nằm trên giấy ren vuông (rsvp-doily.png, từ xacnhan.jpg).
+   Cỡ chữ trong khung tính theo bề rộng thiệp (--w) để luôn vừa khung trên mọi điện thoại. */
+:root { --w: min(100vw, var(--page-width)); }
+
+/* ---------- Thiệp oval tiệc cưới ---------- */
+.event-card {
+  border: 0; border-radius: 0; box-shadow: none;
+  background: url('/assets/oval-frame.png') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 10px 18px #5a483533);
+  padding-inline: 13%;
+}
+.event-card::before { display: none; }
+
+/* ---------- Cô dâu chú rể: Our story ---------- */
+.couple-section { padding: 40px 0 56px; }
+.story-card { position: relative; width: 88%; margin: 0 auto; aspect-ratio: 760 / 989; }
+.story-lace { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 8px 16px #4a403038); }
+.story-text {
+  position: absolute; left: 21%; right: 21%; top: 17%; bottom: 15%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text-color);
+}
+.story-eyebrow { font-size: calc(var(--w) * .03); letter-spacing: .3em; text-transform: uppercase; }
+.story-names { margin: .2em 0 .35em; font-size: calc(var(--w) * .085); line-height: 1; font-weight: 400; }
+.story-names span { display: block; font-size: .6em; margin: .1em 0; }
+.story-body { font-size: calc(var(--w) * .031); line-height: 1.6; }
+
+.story-photos { position: relative; display: flex; justify-content: center; margin: -22% 4% 0; z-index: 1; }
+.polaroid { width: 47%; margin: 0; padding: 7px 7px 0; background: #fffdf8; box-shadow: 0 10px 22px #3a2c1e40; }
+.polaroid .portrait { position: relative; aspect-ratio: 3 / 4; overflow: hidden; }
+.polaroid figcaption { display: flex; flex-direction: column; align-items: center; padding: 8px 4px 12px; color: var(--text-color); }
+.polaroid figcaption .script { font-size: calc(var(--w) * .07); line-height: 1.1; }
+.polaroid figcaption strong { font-size: calc(var(--w) * .032); font-weight: 400; letter-spacing: .14em; text-transform: uppercase; }
+.polaroid-bride { transform: rotate(-6deg) translateY(10px); margin-right: -1%; }
+.polaroid-groom { transform: rotate(5deg); margin-left: -1%; }
+
+/* ---------- Ô xác nhận tham dự trên giấy ren ---------- */
+.rsvp-option {
+  border: 0; border-radius: 0; aspect-ratio: 440 / 419; min-height: 0; padding: 18%;
+  background: url('/assets/rsvp-doily.png') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 6px 10px #5a483529);
+  gap: 8px; font-size: 15px; line-height: 1.35; transition: transform .2s;
+}
+.rsvp-option:hover { background-color: transparent; background: url('/assets/rsvp-doily.png') center / 100% 100% no-repeat; transform: translateY(-2px) rotate(-1deg); }
+.rsvp-option > .icon { width: 24px; height: 24px; }

@@ -148,19 +148,6 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .dresscode-colors span { height: 22px; width: 22px; border-radius: 50%; background: #f2eadd; border: 1px solid #bbac97; }
 .dresscode-colors span:nth-child(2) { background: #bba98c; }.dresscode-colors span:nth-child(3) { background: #796650; }
 
-.couple-section { padding: 65px 18px 40px; background: #897a59 url('/assets/theme-warmBackground.jpg') center / cover; }
-.couple-portraits { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-height: 440px; }
-.couple-portraits figure { min-width: 0; }
-.couple-portraits .portrait { position: relative; aspect-ratio: 2 / 3; overflow: hidden; }
-.couple-bride .portrait { border-radius: 65px 0 0 0; }
-.couple-groom .portrait { border-radius: 0 65px 0 0; }
-.couple-portraits figcaption { text-align: center; padding: 10px 0; }
-.couple-portraits strong { display: block; font-size: 26px; line-height: 1.2; font-weight: 400; text-transform: uppercase; }
-.couple-portraits figcaption .script { display: block; font-size: 38px; line-height: 1.2; }
-.couple-bride figcaption { color: var(--text-color); }
-.couple-groom figcaption { color: var(--text-color); padding-top: 0; }
-.couple-flower { position: absolute; width: 37%; left: 33%; top: 46%; }
-.couple-story { text-align: justify; padding: 30px 15px 0; color: var(--text-color); font-size: 16px; line-height: 1.7; }
 .calendar-section { padding: 60px 40px 35px; }
 .calendar-paper { position: relative; max-width: 360px; margin: 0 auto; text-align: center; }
 .calendar-paper h2 { color: var(--text-color); font-size: 47px; margin-bottom: 20px; }
@@ -269,7 +256,6 @@ dialog::backdrop { background: rgb(40 34 24 / 72%); backdrop-filter: blur(5px); 
   .section-title h2 { font-size: 56px; }.section-title p { font-size: 15px; }
   .countdown-section { padding: 80px 40px 45px; }.countdown-section .section-title h2 { font-size: 54px; }.countdown strong { font-size: 49px; }
   .schedule-section { padding-inline: 48px; }.schedule-section > .section-title h2 { font-size: 78px; }.schedule-stop { min-height: 210px; }.schedule-stop h3 { font-size: 23px; }.schedule-stop strong { font-size: 34px; }.schedule-date { font-size: 14px; }.schedule-symbol .icon { width: 92px; height: 92px; }
-  .couple-section { padding: 75px 24px 50px; }.couple-portraits { min-height: 570px; }.couple-portraits strong { font-size: 33px; }.couple-portraits figcaption .script { font-size: 48px; }.couple-story { font-size: 20px; }
   .editorial-section { padding-inline: 24px; }.editorial-tall { min-height: 440px; }.editorial-wide { height: 240px; }.editorial-whispers { font-size: 47px; }.editorial-label > span { font-size: 36px; }
   .rsvp-section,.gift-section { padding-inline: 40px; }.rsvp-options { gap: 22px; }
 }
@@ -277,7 +263,6 @@ dialog::backdrop { background: rgb(40 34 24 / 72%); backdrop-filter: blur(5px); 
   .wedding-wordmark { font-size: 42px; }.hero h1 { font-size: 18px; }.hero h1 i { margin: 6px 0; }.hero-date { font-size: 18px; }
   .date-tag > p { font-size: 30px; }.date-tag span { font-size: 25px; margin: 5px 0; }
   .section-title h2,.countdown-section .section-title h2 { font-size: 36px; }.countdown strong { font-size: 30px; }
-  .couple-portraits { min-height: 380px; }.couple-portraits strong { font-size: 22px; }.couple-portraits figcaption .script { font-size: 32px; }
   .editorial-tall { min-height: 280px; }.editorial-wide { height: 142px; }.editorial-whispers { font-size: 27px; }.editorial-label > span { font-size: 20px; }
 }
 /* Below desktop, scale the event section as a miniature of the 573px desktop layout so each oval stays between the silk seams. */
