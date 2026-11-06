@@ -7,6 +7,8 @@ async function openInvitation(page) {
 }
 
 test('assets load locally and the invitation fits mobile and desktop screens', async ({ page }) => {
+  // Resizes through 11 widths and takes several screenshots of a ~11,000px page; give it room on slow machines.
+  test.setTimeout(90000);
   const errors = [];
   const failures = [];
   const external = [];
@@ -44,10 +46,17 @@ test('assets load locally and the invitation fits mobile and desktop screens', a
   }
   await page.setViewportSize({ width: 390, height: 844 });
   for (const image of await page.locator('main img').all()) await image.scrollIntoViewIfNeeded();
-  // Decode one at a time: decoding ~30 full-size photos at once exceeds Chromium's image-decode budget.
-  await page.evaluate(async () => {
-    for (const img of document.querySelectorAll('main img')) await img.decode();
+  // Decode one at a time: decoding ~60 full-size photos at once exceeds Chromium's image-decode budget.
+  // Under memory pressure decode() can still reject for an image that loaded fine, so a rejection only
+  // counts as broken when the image has no pixels; broken images are reported by name.
+  const broken = await page.evaluate(async () => {
+    const out = [];
+    for (const img of document.querySelectorAll('main img')) {
+      try { await img.decode(); } catch { if (!img.complete || !img.naturalWidth) out.push(img.currentSrc || img.src); }
+    }
+    return out;
   });
+  expect(broken).toEqual([]);
   await page.locator('#home').scrollIntoViewIfNeeded();
   await page.screenshot({ path: 'test-results/mobile-invitation.png', fullPage: true });
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -176,7 +185,7 @@ test('RSVP handles both attendance choices, persists locally and posts to the sh
   await page.locator('[data-attending="yes"]').click();
   await page.getByLabel('Tên của bạn', { exact: true }).fill('Khách thử nghiệm');
   await page.getByLabel('Số người tham dự').selectOption('3');
-  await page.getByLabel('Lời nhắn (không bắt buộc)').fill('Hẹn gặp hai bạn!');
+  await page.getByLabel('Lời nhắn nhủ dành cho đôi bạn trẻ').fill('Hẹn gặp hai bạn!');
   await page.getByRole('button', { name: 'Gửi xác nhận', exact: true }).click();
   await expect(page.locator('#rsvp-status')).toContainText('Đã xác nhận tham dự');
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('longan-hongmay:rsvp')).guests)).toBe(3);
