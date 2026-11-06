@@ -274,41 +274,32 @@ test('save-the-date slot machine spins to the wedding date and opens the invitat
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).not.toBe('hidden');
 });
 
-test('wishes come from the sheet, pop up bottom-left like TikTok live comments, and new wishes post to the sheet', async ({ page }) => {
-  const posted = [];
-  await page.route('https://script.google.com/**', route => {
-    if (route.request().method() !== 'POST') return route.fallback();
-    posted.push(JSON.parse(route.request().postData())); route.fulfill({ status: 200, body: '{"ok":true}' });
-  });
+test('wishes from the sheet pop up bottom-left like TikTok live comments, on desktop and phones', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/?intro=0');
-  // Section: total, newest first, blank names shown as "Ẩn danh", text rendered as text (no HTML).
-  await expect(page.locator('#wishes-list .wish-item')).toHaveCount(2);
-  await expect(page.locator('#wishes-list .wish-name')).toHaveText(['Ẩn danh', 'Cô Lan']);
-  await expect(page.locator('#wishes-list .wish-text').first()).toHaveText('Mãi bên nhau nhé <3');
-  // TikTok-style feed (bottom left): wishes pop up one at a time, oldest dropping off after five.
+  // No wishes section, no left rail, no wish form: only the floating feed.
+  await expect(page.locator('#wishes, .wishes-rail, .wish-form')).toHaveCount(0);
   const feed = page.locator('#wish-feed');
   await expect(feed).toBeVisible();
   await expect(feed.locator('.feed-item.is-in').first()).toBeVisible({ timeout: 4000 });
   await expect(feed.locator('.feed-name').first()).toHaveText('Cô Lan');
   await expect(feed.locator('.feed-avatar').first()).toHaveText('L');
-  await expect.poll(() => feed.locator('.feed-item').count(), { timeout: 6000 }).toBeGreaterThan(1);
+  // Blank names show as "Ẩn danh"; text is rendered as text, not HTML.
+  await expect(feed.locator('.feed-name').nth(1)).toHaveText('Ẩn danh', { timeout: 6000 });
+  await expect(feed.locator('.feed-text').nth(1)).toHaveText('Mãi bên nhau nhé <3');
   expect(await feed.evaluate(el => getComputedStyle(el).pointerEvents)).toBe('none');
-  // No bar fixed to the bottom of the screen and no count/"Viết lời chúc" row; the form sits under the list.
-  await expect(page.locator('#wish-bar')).toHaveCount(0);
-  await expect(page.locator('#wishes')).not.toContainText('Tổng lời chúc');
-  const form = page.locator('#wish-form-inline');
-  // Send a wish with no name.
-  await form.getByPlaceholder('Viết lời chúc…').fill('Chúc mừng hạnh phúc!');
-  await form.getByRole('button', { name: 'Gửi lời chúc' }).click();
-  await expect(page.locator('#wishes-list .wish-item')).toHaveCount(3);
-  await expect(page.locator('#wishes-list .wish-text').first()).toHaveText('Chúc mừng hạnh phúc!');
-  await expect.poll(() => posted.length).toBe(1);
-  expect(posted[0]).toMatchObject({ type: 'wish', name: 'Ẩn danh', note: 'Chúc mừng hạnh phúc!' });
-  // The wish just sent pops up in the feed straight away.
-  await expect(feed.locator('.feed-text').last()).toHaveText('Chúc mừng hạnh phúc!');
-  // Phones show the feed too, narrower.
+  const box = await feed.boundingBox();
+  expect(box.x).toBeLessThan(40);
+  expect(box.y + box.height).toBeGreaterThan(900 - 60);
+  // A note sent with the RSVP pops up straight away.
+  await page.locator('[data-attending="yes"]').click();
+  await page.getByLabel('Tên của bạn', { exact: true }).fill('Bạn Thân');
+  await page.getByLabel('Lời nhắn nhủ dành cho đôi bạn trẻ').fill('Hạnh phúc nhé!');
+  await page.getByRole('button', { name: 'Gửi xác nhận', exact: true }).click();
+  await expect(feed.locator('.feed-text').last()).toHaveText('Hạnh phúc nhé!');
+  await expect(feed.locator('.feed-name').last()).toHaveText('Bạn Thân');
+  // Phones show the same feed, narrower.
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(feed).toBeVisible();
   expect(await feed.evaluate(el => el.getBoundingClientRect().width)).toBeLessThanOrEqual(270);

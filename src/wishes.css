@@ -1,40 +1,3 @@
-/* Lời chúc (theo mẫu thaiha-wedding.web.app), đổi màu đỏ đô của mẫu sang tông nâu – kem của thiệp. */
-.wishes-section { padding: 30px 25px 40px; }
-/* Nằm ngay dưới phần Tham dự, chung nền với Tham dự + Mừng cưới; không có khung nền riêng, cùng độ rộng với phần đếm ngược và lịch. */
-.wishes-card { color: var(--text-color); }
-.wishes-card > h2 { text-align: center; font-size: 46px; line-height: 1.15; font-weight: 400; }
-.wishes-sub { margin-top: 6px; text-align: center; font-size: 15px; color: #000000b3; }
-.wishes-list {
-  list-style: none; margin: 24px 0 0; padding: 0 4px 0 0; display: grid; gap: 12px;
-  max-height: 60vh; overflow-y: auto; scrollbar-width: thin; overscroll-behavior: contain;
-}
-.wish-item { background: color-mix(in srgb, var(--text-color) 5%, transparent); background: #371a160d; border-radius: 12px; padding: 12px 14px; color: #000000cc; }
-.wish-item .wish-name { font-size: 15px; font-weight: 600; color: var(--text-color); }
-.wish-item .wish-text { margin-top: 4px; font-size: 15px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
-.wish-empty { padding: 18px 8px; text-align: center; font-style: italic; color: #00000099; }
-
-/* Ô viết lời chúc: một hàng (tên · lời chúc · gửi). */
-.wish-form {
-  display: flex; align-items: center; gap: 8px; padding: 8px; margin-top: 14px;
-  border: 1px solid #371a1626; border-radius: 16px;
-}
-.wish-form input {
-  min-width: 0; padding: 9px 12px; border: 0; border-radius: 12px; background: #0000000d; color: var(--text-color);
-  font-size: 15px; outline: none; transition: background .2s, box-shadow .2s;
-}
-.wish-form input:focus { background: #fffdf8; box-shadow: 0 0 0 2px #371a164d; }
-.wish-form input::placeholder { color: #00000080; }
-.wish-form input[name="name"] { flex: 0 0 104px; }
-.wish-form input[name="text"] { flex: 1 1 auto; }
-.wish-form button {
-  flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
-  border-radius: 12px; background: var(--text-color); color: #fff; transition: background .2s, transform .1s;
-}
-.wish-form button:hover { background: #4d2a24; }
-.wish-form button:active { transform: scale(.95); }
-.wish-form button svg { width: 20px; height: 20px; fill: currentColor; }
-.wish-form button span { display: none; }
-
 /* Lời chúc nổi kiểu bình luận TikTok Live: góc dưới bên trái, không chặn thao tác bấm.
    Lời cũ ở trên mờ dần nhờ mask chuyển từ trong suốt (trên) sang đậm (dưới). */
 .wish-feed {
@@ -65,15 +28,6 @@
   .wish-feed { left: 20px; bottom: 24px; width: 320px; max-height: 46vh; }
   .feed-name { font-size: 13px; }
   .feed-text { font-size: 15px; -webkit-line-clamp: 3; }
-  .wish-form button { width: auto; height: auto; padding: 9px 18px; font-size: 16px; }
-  .wish-form button svg { display: none; }
-  .wish-form button span { display: inline; }
-  .wish-form input[name="name"] { flex-basis: 176px; }
-  .wishes-section { padding: 40px 40px 48px; }
-  .wishes-card > h2 { font-size: 56px; }
-  .wishes-sub { font-size: 16px; }
-  .wish-item { padding: 16px; }
-  .wish-item .wish-name, .wish-item .wish-text { font-size: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .wish-feed-list, .feed-item { transition: none; }

@@ -147,14 +147,6 @@ $('#app').innerHTML = `
       <p id="rsvp-status" class="rsvp-status" aria-live="polite"></p>
     </section>
 
-    <section class="wishes-section" id="wishes" aria-labelledby="wishes-title">
-      <div class="wishes-card reveal">
-        <h2 class="script" id="wishes-title">Lời Chúc</h2>
-        <p class="wishes-sub">Những lời chúc tốt đẹp từ người thân và bạn bè</p>
-        <ul class="wishes-list" id="wishes-list" aria-live="polite"></ul>
-        <div id="wish-form-slot"></div>
-      </div>
-    </section>
 
     <section class="gift-section" id="gift">
       <div class="section-title reveal"><h2 class="script">Hộp Mừng Cưới</h2><p>Wedding Gift</p><div class="tiny-divider">♥</div></div>
@@ -388,7 +380,7 @@ $('#rsvp-form').addEventListener('submit', event => {
   if (!storage.write('rsvp', response)) return;
   $('#rsvp-status').textContent = `${name}: ${attending === 'yes' ? 'Đã xác nhận tham dự' : 'Đã gửi lời hẹn dịp khác'}.`;
   $('#rsvp-dialog').close();
-  if (response.note) wishes.add(name, response.note, { post: false });
+  if (response.note) wishes.add(name, response.note);
   if (!rsvpEndpoint) { toast('Đã lưu xác nhận trên thiết bị này. Cảm ơn bạn!'); return; }
   // Gửi về Google Sheet qua Apps Script. text/plain để trình duyệt không chặn CORS.
   fetch(rsvpEndpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(response) })
@@ -404,8 +396,8 @@ $$('[data-copy-gift]').forEach(button => button.addEventListener('click', async 
   catch { toast(`Số tài khoản của ${gift.name}: ${gift.account}`); }
 }));
 
-// Lời chúc: đọc cột "Lời nhắn" của Sheet qua Apps Script; lời nhắn trong form tham dự cũng hiện ngay ở đây.
-const wishes = initWishes({ endpoint: rsvpEndpoint, toast });
+// Lời chúc nổi ở góc dưới trái: đọc cột "Lời nhắn" của Sheet qua Apps Script; lời nhắn trong form tham dự cũng nổi lên ngay.
+const wishes = initWishes({ endpoint: rsvpEndpoint });
 
 // Màn mở đầu Save the Date; nút "Xem thiệp mời" mở thiệp và bật nhạc.
 initIntro({ wedding, onOpen: startMusic });
