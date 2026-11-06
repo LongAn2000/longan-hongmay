@@ -148,12 +148,7 @@ $('#app').innerHTML = `
     <section class="gift-section" id="gift">
       <div class="section-title reveal"><h2 class="script">Hộp Mừng Cưới</h2><p>Wedding Gift</p><div class="tiny-divider">♥</div></div>
       <p class="gift-intro reveal">Gia đình chúng tôi rất hân hạnh được đón tiếp !</p>
-      <div class="gift-cards">${wedding.gifts.map((gift, index) => `<article class="gift-card reveal" aria-label="Mừng cưới ${e(gift.role)} ${e(gift.name)}"><p class="gift-role">${e(gift.role)}</p>
-        ${gift.qrImage ? `<img class="gift-qr" src="${e(assetUrl(gift.qrImage))}" alt="Mã QR mừng cưới ${e(gift.name)}" loading="lazy"><a class="download-qr" href="${e(assetUrl(gift.qrImage))}" download="qr-mung-cuoi-${index + 1}.png" aria-label="Tải mã QR ${e(gift.name)}">${icon('download')} Tải mã QR</a>` : `<div class="qr-placeholder">${icon('gift')}<span>Trân trọng cảm ơn</span><small>Mã QR sẽ được cập nhật</small></div>`}
-        ${gift.bank ? `<p class="gift-bank">${e(gift.bank)}</p>` : ''}
-        ${gift.holder ? `<p class="gift-holder">${e(gift.holder)}</p>` : ''}
-        ${gift.account ? `<button class="copy-account" data-copy-gift="${index}" aria-label="Sao chép số tài khoản ${e(gift.name)}"><span>${e(gift.account)}</span><small>Sao chép tài khoản</small></button>` : ''}
-      </article>`).join('')}</div>
+      <div class="gift-cards">${wedding.gifts.map((gift, index) => `<button type="button" class="gift-card reveal" data-open-gift="${index}" aria-haspopup="dialog" aria-label="Xem thông tin mừng cưới ${e(gift.role)} ${e(gift.name)}"><span class="gift-role">${e(gift.role)}</span>${icon('gift', 'gift-icon')}<span class="gift-card-name script">${e(gift.name)}</span><span class="gift-open">Xem mã QR</span></button>`).join('')}</div>
     </section>
     </div>
 
@@ -175,6 +170,15 @@ $('#app').innerHTML = `
     <div class="lightbox-stage"><img id="lightbox-image" alt="Ảnh cưới phóng to"></div><button class="round-button lightbox-next" data-album-direction="1" aria-label="Ảnh sau">${icon('right')}</button>
     <p class="lightbox-count" id="lightbox-count"></p>
   </dialog>
+
+  ${wedding.gifts.map((gift, index) => `<dialog class="form-dialog gift-dialog" id="gift-dialog-${index}" aria-label="Mừng cưới ${e(gift.role)} ${e(gift.name)}">
+    <button class="round-button dialog-close" data-close-dialog aria-label="Đóng">${icon('close')}</button>
+    <p class="gift-role">${e(gift.role)}</p><h2 class="script">${e(gift.name)}</h2>
+    ${gift.qrImage ? `<img class="gift-qr" src="${e(assetUrl(gift.qrImage))}" alt="Mã QR mừng cưới ${e(gift.name)}" loading="lazy"><a class="download-qr" href="${e(assetUrl(gift.qrImage))}" download="qr-mung-cuoi-${index + 1}.png" aria-label="Tải mã QR ${e(gift.name)}">${icon('download')} Tải mã QR</a>` : `<div class="qr-placeholder">${icon('gift')}<span>Trân trọng cảm ơn</span><small>Mã QR sẽ được cập nhật</small></div>`}
+    ${gift.bank ? `<p class="gift-bank">${e(gift.bank)}</p>` : ''}
+    ${gift.holder ? `<p class="gift-holder">${e(gift.holder)}</p>` : ''}
+    ${gift.account ? `<button class="copy-account" data-copy-gift="${index}" aria-label="Sao chép số tài khoản ${e(gift.name)}"><span>${e(gift.account)}</span><small>Sao chép tài khoản</small></button>` : ''}
+  </dialog>`).join('')}
 
   <dialog class="form-dialog" id="rsvp-dialog" aria-labelledby="rsvp-dialog-title">
     <button class="round-button dialog-close" data-close-dialog aria-label="Đóng">${icon('close')}</button>
@@ -379,6 +383,7 @@ $('#rsvp-form').addEventListener('submit', event => {
 });
 $('#rsvp-name').addEventListener('input', event => event.target.setCustomValidity(''));
 
+$$('[data-open-gift]').forEach(button => button.addEventListener('click', () => $(`#gift-dialog-${button.dataset.openGift}`).showModal()));
 $$('[data-copy-gift]').forEach(button => button.addEventListener('click', async () => {
   const gift = wedding.gifts[Number(button.dataset.copyGift)];
   try { await navigator.clipboard.writeText(gift.account); toast(`Đã sao chép số tài khoản của ${gift.name}.`); }

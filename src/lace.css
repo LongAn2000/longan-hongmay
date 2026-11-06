@@ -54,3 +54,18 @@
 
 /* Mừng cưới: tên chủ tài khoản một dòng, chữ nhỏ giãn cách. */
 .gift-holder { margin-top: 4px; font-size: 12px; letter-spacing: .08em; white-space: nowrap; }
+
+/* Mừng cưới: hai thẻ gọn (chú rể, cô dâu) cạnh nhau; bấm vào thẻ mới mở hộp thoại có mã QR và số tài khoản. */
+.gift-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 420px; }
+.gift-card {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 26px 10px 20px;
+  color: var(--text-color); font: inherit; cursor: pointer; transition: transform .2s, box-shadow .2s;
+}
+.gift-card:hover { transform: translateY(-2px); box-shadow: 0 8px 18px #5a483522; }
+.gift-card .gift-role { margin-bottom: 0; }
+.gift-card .gift-icon { width: 34px; height: 34px; stroke-width: 1; }
+.gift-card-name { font-size: 30px; line-height: 1.15; }
+.gift-open { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.gift-dialog { text-align: center; }
+.gift-dialog > h2 { margin-bottom: 6px; }
+.gift-dialog .gift-qr { width: min(100%, 260px); margin: 8px auto 4px; background: #fff; }
