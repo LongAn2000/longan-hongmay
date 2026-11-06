@@ -1,6 +1,5 @@
 // Lời chúc, theo mẫu thaiha-wedding.web.app:
 // - Phần "Lời Chúc": tổng số, danh sách mới nhất ở trên (cuộn trong khung), ô viết lời chúc.
-// - Thanh viết lời chúc cố định ở đáy màn hình (Tên tuỳ chọn · Viết lời chúc… · Gửi).
 // - Máy tính: cột lời chúc chạy chậm từ dưới lên ở mép trái màn hình.
 // Dữ liệu là cột "Lời nhắn" của Google Sheet, đọc qua Apps Script (GET cùng URL /exec với RSVP).
 const RAIL_SPEED = 20; // px/giây, như mẫu
@@ -24,9 +23,7 @@ export function initWishes({ endpoint, toast }) {
     </form>`;
   $('#wish-form-slot').innerHTML = formHtml('wish-form-inline');
   document.body.insertAdjacentHTML('beforeend', `
-    <div class="wish-bar" id="wish-bar">${formHtml('wish-form-bar')}</div>
     <aside class="wishes-rail" id="wishes-rail" aria-hidden="true"><div class="wishes-rail-box"><div class="wishes-rail-track" id="wishes-rail-track"></div></div></aside>`);
-  document.documentElement.classList.add('has-wish-bar');
 
   let remote = [];
   let remoteOk = false; // chỉ gửi lên Sheet khi Apps Script đã có phần đọc lời chúc (tránh ghi nhầm thành "Không" tham dự)
@@ -103,16 +100,15 @@ export function initWishes({ endpoint, toast }) {
     });
   }
 
-  // "Viết lời chúc": đưa con trỏ vào ô lời chúc của thanh dưới màn hình (hoặc ô trong khung nếu thanh đang ẩn).
+  // "Viết lời chúc": cuộn tới ô viết lời chúc trong khung và đặt con trỏ vào đó.
   $('#write-wish').addEventListener('click', () => {
-    const target = document.documentElement.classList.contains('wish-inline-visible') ? '#wish-form-inline' : '#wish-form-bar';
-    $(`${target} input[name="text"]`).focus();
+    const input = $('#wish-form-inline input[name="text"]');
+    input.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
+    input.focus({ preventScroll: true });
   });
 
-  // Ẩn thanh dưới khi ô viết lời chúc trong khung đang hiện, và ẩn cột chữ chạy khi phần Lễ cưới (rộng) đang trên màn hình.
+  // Ẩn cột chữ chạy khi phần Lễ cưới (rộng) đang trên màn hình.
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => document.documentElement.classList.toggle('wish-inline-visible', entry.isIntersecting))
-      .observe($('#wish-form-inline'));
     const wide = $('#events');
     if (wide) new IntersectionObserver(([entry]) => rail.classList.toggle('is-covered', entry.isIntersecting), { rootMargin: '-80px 0px' }).observe(wide);
   }

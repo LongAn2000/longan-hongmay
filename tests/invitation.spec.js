@@ -299,18 +299,19 @@ test('wishes come from the sheet, scroll in the desktop rail, and new wishes pos
   const at = () => page.locator('#wishes-rail-track').evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m42);
   const before = await at();
   await expect.poll(at, { timeout: 4000 }).toBeLessThan(before - 5);
-  // Bottom bar: send a wish with no name.
-  const bar = page.locator('#wish-form-bar');
-  await expect(bar).toBeInViewport();
-  await bar.getByPlaceholder('Viết lời chúc…').fill('Chúc mừng hạnh phúc!');
-  await bar.getByRole('button', { name: 'Gửi lời chúc' }).click();
+  // No bar fixed to the bottom of the screen; "Viết lời chúc" jumps to the form inside the card.
+  await expect(page.locator('#wish-bar')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Viết lời chúc' }).click();
+  const form = page.locator('#wish-form-inline');
+  await expect(form.getByPlaceholder('Viết lời chúc…')).toBeFocused();
+  await expect(form).toBeInViewport();
+  // Send a wish with no name.
+  await form.getByPlaceholder('Viết lời chúc…').fill('Chúc mừng hạnh phúc!');
+  await form.getByRole('button', { name: 'Gửi lời chúc' }).click();
   await expect(page.locator('#wish-count')).toHaveText('3');
   await expect(page.locator('#wishes-list .wish-text').first()).toHaveText('Chúc mừng hạnh phúc!');
   await expect.poll(() => posted.length).toBe(1);
   expect(posted[0]).toMatchObject({ type: 'wish', name: 'Ẩn danh', note: 'Chúc mừng hạnh phúc!' });
-  // The bar slides away while the section's own form is on screen.
-  await page.locator('#wish-form-inline').scrollIntoViewIfNeeded();
-  await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('wish-inline-visible'))).toBe(true);
   // Phones: no rail.
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(rail).toBeHidden();

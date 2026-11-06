@@ -1,9 +1,7 @@
 /* Lời chúc (theo mẫu thaiha-wedding.web.app), đổi màu đỏ đô của mẫu sang tông nâu – kem của thiệp. */
-.wishes-section { padding: 40px 18px 56px; }
-.wishes-card {
-  background: #fff; border-radius: 24px; padding: 26px 20px 20px; color: var(--text-color);
-  box-shadow: 0 10px 30px #4a40301a;
-}
+.wishes-section { padding: 60px 25px 56px; }
+/* Không có khung nền riêng: hiện thẳng trên nền giấy, cùng độ rộng với phần đếm ngược và lịch. */
+.wishes-card { color: var(--text-color); }
 .wishes-card > h2 { text-align: center; font-size: 46px; line-height: 1.15; font-weight: 400; }
 .wishes-sub { margin-top: 6px; text-align: center; font-size: 15px; color: #000000b3; }
 .wishes-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 24px; }
@@ -23,16 +21,16 @@
 .wish-item .wish-text { margin-top: 4px; font-size: 15px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
 .wish-empty { padding: 18px 8px; text-align: center; font-style: italic; color: #00000099; }
 
-/* Ô viết lời chúc: một hàng (tên · lời chúc · gửi), dùng cả trong khung và ở thanh dưới màn hình. */
+/* Ô viết lời chúc: một hàng (tên · lời chúc · gửi). */
 .wish-form {
   display: flex; align-items: center; gap: 8px; padding: 8px; margin-top: 14px;
-  background: #fffffff2; border: 1px solid #0000000d; border-radius: 16px; box-shadow: 0 4px 14px #4a403014;
+  border: 1px solid #371a1626; border-radius: 16px;
 }
 .wish-form input {
   min-width: 0; padding: 9px 12px; border: 0; border-radius: 12px; background: #0000000d; color: var(--text-color);
   font-size: 15px; outline: none; transition: background .2s, box-shadow .2s;
 }
-.wish-form input:focus { background: #fff; box-shadow: 0 0 0 2px #371a164d; }
+.wish-form input:focus { background: #fffdf8; box-shadow: 0 0 0 2px #371a164d; }
 .wish-form input::placeholder { color: #00000080; }
 .wish-form input[name="name"] { flex: 0 0 104px; }
 .wish-form input[name="text"] { flex: 1 1 auto; }
@@ -45,17 +43,6 @@
 .wish-form button svg { width: 20px; height: 20px; fill: currentColor; }
 .wish-form button span { display: none; }
 
-/* Thanh dưới màn hình: luôn hiện khi đã mở thiệp, trượt xuống khi ô viết lời chúc trong khung đang hiện. */
-.wish-bar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 14; padding: 8px 12px max(12px, env(safe-area-inset-bottom));
-  transition: transform .35s ease;
-}
-.wish-bar .wish-form { max-width: 720px; margin: 0 auto; }
-html.intro-open .wish-bar, html.wish-inline-visible .wish-bar { transform: translateY(110%); }
-html.has-wish-bar .floating-actions { bottom: calc(max(12px, env(safe-area-inset-bottom)) + 76px); }
-.floating-actions { transition: bottom .35s ease; }
-html.has-wish-bar .closing-footer { padding-bottom: 110px; }
-
 /* Cột lời chúc chạy chữ: chỉ trên màn hình đủ rộng để không đè lên thiệp. */
 .wishes-rail { display: none; }
 @media (min-width: 768px) {
@@ -63,8 +50,7 @@ html.has-wish-bar .closing-footer { padding-bottom: 110px; }
   .wish-form button svg { display: none; }
   .wish-form button span { display: inline; }
   .wish-form input[name="name"] { flex-basis: 176px; }
-  .wishes-section { padding: 56px 40px 72px; }
-  .wishes-card { padding: 32px; }
+  .wishes-section { padding: 80px 40px 72px; }
   .wishes-card > h2 { font-size: 56px; }
   .wishes-sub, .wishes-head p { font-size: 16px; }
   .wish-item { padding: 16px; }
@@ -88,6 +74,5 @@ html.has-wish-bar .closing-footer { padding-bottom: 110px; }
   .rail-item .wish-text { margin-top: 2px; font-size: 12px; line-height: 1.45; color: #371a16d9; white-space: pre-wrap; overflow-wrap: anywhere; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .wish-bar, .floating-actions { transition: none; }
   .wishes-rail-box { overflow-y: auto; }
 }
