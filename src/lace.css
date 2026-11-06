@@ -37,8 +37,8 @@
 .polaroid figcaption { display: flex; flex-direction: column; align-items: center; padding: 4px 4px 10px; color: var(--text-color); }
 .polaroid figcaption .script { font-size: calc(var(--w) * .058); line-height: 1.1; }
 .polaroid figcaption strong { font-size: calc(var(--w) * .026); font-weight: 400; letter-spacing: .14em; text-transform: uppercase; }
-.polaroid-bride { left: 5%; top: 6%; transform: rotate(-5deg); }
-.polaroid-groom { right: 4%; top: 0; transform: rotate(6deg); z-index: 1; }
+.polaroid-groom { left: 5%; top: 6%; transform: rotate(-5deg); }
+.polaroid-bride { right: 4%; top: 0; transform: rotate(6deg); z-index: 1; }
 .polaroid-bride .fill-image { object-position: 50% 62% !important; }
 .polaroid-groom .fill-image { object-position: 50% 22% !important; }
 

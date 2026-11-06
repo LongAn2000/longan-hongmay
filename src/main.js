@@ -101,8 +101,8 @@ $('#app').innerHTML = `
         </div>
       </div>
       <div class="story-photos reveal">
-        <figure class="polaroid polaroid-bride"><div class="portrait">${photo('bride', 'fill-image', '51% 30%')}</div><figcaption><span class="script">Cô dâu</span><strong>${e(wedding.bride)}</strong></figcaption></figure>
         <figure class="polaroid polaroid-groom"><div class="portrait">${photo('groom', 'fill-image', '46% 28%')}</div><figcaption><span class="script">Chú rể</span><strong>${e(wedding.groom)}</strong></figcaption></figure>
+        <figure class="polaroid polaroid-bride"><div class="portrait">${photo('bride', 'fill-image', '51% 30%')}</div><figcaption><span class="script">Cô dâu</span><strong>${e(wedding.bride)}</strong></figcaption></figure>
       </div>
     </section>
 
