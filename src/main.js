@@ -181,7 +181,7 @@ $('#app').innerHTML = `
     <h2 class="script" id="rsvp-dialog-title">Hẹn gặp bạn</h2><p class="dialog-description" id="rsvp-dialog-description"></p>
     <form id="rsvp-form"><label for="rsvp-name">Tên của bạn</label><input id="rsvp-name" name="name" autocomplete="name" required maxlength="80" placeholder="Nhập tên của bạn">
       <div id="rsvp-guests-field"><label for="rsvp-guests">Số người tham dự</label><select id="rsvp-guests" name="guests">${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1} người</option>`).join('')}</select></div>
-      <label for="rsvp-note">Lời nhắn (không bắt buộc)</label><textarea id="rsvp-note" name="note" rows="3" maxlength="500" placeholder="Gửi một lời nhắn tới cô dâu chú rể..."></textarea>
+      <label for="rsvp-note">Lời nhắn nhủ dành cho đôi bạn trẻ</label><textarea id="rsvp-note" name="note" rows="3" maxlength="500" placeholder="Gửi một lời nhắn tới cô dâu chú rể..."></textarea>
       <p class="local-notice">Bản xem thử: xác nhận được lưu trên trình duyệt này.</p><button class="primary-button" type="submit">${icon('check')} Gửi xác nhận</button>
     </form>
   </dialog>
