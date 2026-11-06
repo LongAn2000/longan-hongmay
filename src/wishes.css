@@ -1,12 +1,9 @@
 /* Lời chúc (theo mẫu thaiha-wedding.web.app), đổi màu đỏ đô của mẫu sang tông nâu – kem của thiệp. */
-.wishes-section { padding: 60px 25px 56px; }
-/* Không có khung nền riêng: hiện thẳng trên nền giấy, cùng độ rộng với phần đếm ngược và lịch. */
+.wishes-section { padding: 30px 25px 40px; }
+/* Nằm ngay dưới phần Tham dự, chung nền với Tham dự + Mừng cưới; không có khung nền riêng, cùng độ rộng với phần đếm ngược và lịch. */
 .wishes-card { color: var(--text-color); }
 .wishes-card > h2 { text-align: center; font-size: 46px; line-height: 1.15; font-weight: 400; }
 .wishes-sub { margin-top: 6px; text-align: center; font-size: 15px; color: #000000b3; }
-  flex-shrink: 0; padding: 6px 12px; border-radius: 999px; background: #0000000f; color: var(--text-color);
-  font-size: 13px; transition: background .2s;
-}
 .wishes-list {
   list-style: none; margin: 24px 0 0; padding: 0 4px 0 0; display: grid; gap: 12px;
   max-height: 60vh; overflow-y: auto; scrollbar-width: thin; overscroll-behavior: contain;
@@ -45,7 +42,7 @@
   .wish-form button svg { display: none; }
   .wish-form button span { display: inline; }
   .wish-form input[name="name"] { flex-basis: 176px; }
-  .wishes-section { padding: 80px 40px 72px; }
+  .wishes-section { padding: 40px 40px 48px; }
   .wishes-card > h2 { font-size: 56px; }
   .wishes-sub { font-size: 16px; }
   .wish-item { padding: 16px; }

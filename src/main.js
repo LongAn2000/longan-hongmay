@@ -147,14 +147,7 @@ $('#app').innerHTML = `
       <p id="rsvp-status" class="rsvp-status" aria-live="polite"></p>
     </section>
 
-    <section class="gift-section" id="gift">
-      <div class="section-title reveal"><h2 class="script">Hộp Mừng Cưới</h2><p>Wedding Gift</p><div class="tiny-divider">♥</div></div>
-      <p class="gift-intro reveal">Gia đình chúng tôi rất hân hạnh được đón tiếp !</p>
-      <div class="gift-cards">${wedding.gifts.map((gift, index) => `<button type="button" class="gift-card reveal" data-open-gift="${index}" aria-haspopup="dialog" aria-label="Xem thông tin mừng cưới ${e(gift.role)} ${e(gift.name)}"><span class="gift-role">${e(gift.role)}</span>${icon('gift', 'gift-icon')}<span class="gift-card-name script">${e(gift.name)}</span><span class="gift-open">Xem mã QR</span></button>`).join('')}</div>
-    </section>
-    </div>
-
-    <section class="wishes-section bg-paper" id="wishes" aria-labelledby="wishes-title">
+    <section class="wishes-section" id="wishes" aria-labelledby="wishes-title">
       <div class="wishes-card reveal">
         <h2 class="script" id="wishes-title">Lời Chúc</h2>
         <p class="wishes-sub">Những lời chúc tốt đẹp từ người thân và bạn bè</p>
@@ -162,6 +155,13 @@ $('#app').innerHTML = `
         <div id="wish-form-slot"></div>
       </div>
     </section>
+
+    <section class="gift-section" id="gift">
+      <div class="section-title reveal"><h2 class="script">Hộp Mừng Cưới</h2><p>Wedding Gift</p><div class="tiny-divider">♥</div></div>
+      <p class="gift-intro reveal">Gia đình chúng tôi rất hân hạnh được đón tiếp !</p>
+      <div class="gift-cards">${wedding.gifts.map((gift, index) => `<button type="button" class="gift-card reveal" data-open-gift="${index}" aria-haspopup="dialog" aria-label="Xem thông tin mừng cưới ${e(gift.role)} ${e(gift.name)}"><span class="gift-role">${e(gift.role)}</span>${icon('gift', 'gift-icon')}<span class="gift-card-name script">${e(gift.name)}</span><span class="gift-open">Xem mã QR</span></button>`).join('')}</div>
+    </section>
+    </div>
 
     <div class="closing-photo">${photo('footer', 'fill-image', '45% 40%')}</div><footer class="closing-footer bg-paper"><img class="monogram" src="${assetUrl('/assets/monogram-am.png')}" alt="" aria-hidden="true" loading="lazy"><div class="closing-text reveal"><h2 class="script">Thank you</h2><p>${e(wedding.groom)} & ${e(wedding.bride)}</p><span>${e(wedding.thankYou)}</span></div></footer>
   </main>
