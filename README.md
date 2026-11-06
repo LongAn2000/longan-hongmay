@@ -27,7 +27,7 @@ Node.js v24.22.0 LTS và npm được cài tại `%LOCALAPPDATA%\WeddingDev\node
 - **src/main.js**: dựng nội dung, đếm ngược và xử lý nhạc, album, ký tên, RSVP.
 - **public/assets/**: ảnh, font và nhạc đã tải về để trang chạy không phụ thuộc mạng.
 
-**Ngày cưới, giờ, địa điểm và thông tin gia đình hiện tại là dữ liệu minh họa.** Nhạc nền là “Một Nhà” — Da LAB, nhập từ file MP3 do bạn cung cấp và lưu tại `public/assets/mot-nha-da-lab.mp3`. Chưa cài QR ngân hàng vì chưa có QR của bạn.
+**Ngày cưới, giờ, địa điểm và thông tin gia đình hiện tại là dữ liệu minh họa.** Nhạc nền là “Một Nhà” — Da LAB, nhập từ file MP3 do bạn cung cấp và lưu tại `public/assets/mot-nha-da-lab.mp3`. QR mừng cưới: chú rể Vietcombank, cô dâu Techcombank (`public/assets/qr-long-an.png`, `qr-hong-may.png`).
 
 ### Ảnh cưới cá nhân
 

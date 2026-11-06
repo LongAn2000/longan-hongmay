@@ -137,8 +137,11 @@ test('wedding gifts show both recipients and copy their accounts independently',
   await page.goto('/?intro=0');
   await expect(page.locator('.gift-role')).toHaveText(['Chú rể', 'Cô dâu']);
   await expect(page.locator('.gift-name')).toHaveText(['Long An', 'Hồng Mây']);
-  await expect(page.locator('.qr-placeholder')).toHaveCount(2);
-  await expect(page.locator('.copy-account')).toHaveCount(0);
+  // The real QR codes and accounts are configured.
+  await expect(page.locator('.qr-placeholder')).toHaveCount(0);
+  await expect(page.getByRole('img', { name: 'Mã QR mừng cưới Long An' })).toHaveAttribute('src', '/assets/qr-long-an.png');
+  await expect(page.getByRole('img', { name: 'Mã QR mừng cưới Hồng Mây' })).toHaveAttribute('src', '/assets/qr-hong-may.png');
+  await expect(page.locator('.copy-account span')).toHaveText(['9966834597', '6839812027']);
 
   // Supply test-only account and QR values without changing the real configuration.
   await page.route('**/src/config.js*', async route => {

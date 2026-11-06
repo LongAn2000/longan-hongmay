@@ -90,16 +90,18 @@ export const wedding = {
     {
       name: 'Long An',
       role: 'Chú rể',
-      qrImage: '', // Ví dụ: '/assets/qr-long-an.png'.
-      bank: '',
-      account: '',
+      qrImage: '/assets/qr-long-an.png',
+      bank: 'Vietcombank',
+      holder: 'PHAM LONG AN',
+      account: '9966834597',
     },
     {
       name: 'Hồng Mây',
       role: 'Cô dâu',
-      qrImage: '', // Ví dụ: '/assets/qr-hong-may.png'.
-      bank: '',
-      account: '',
+      qrImage: '/assets/qr-hong-may.png',
+      bank: 'Techcombank',
+      holder: 'NGUYEN THI HONG MAY',
+      account: '6839812027',
     },
   ],
   thankYou: 'Sự hiện diện của bạn là niềm hạnh phúc của chúng tôi.',

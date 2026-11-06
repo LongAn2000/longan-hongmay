@@ -51,3 +51,6 @@
 }
 .rsvp-option:hover { background-color: transparent; background: url('/assets/rsvp-doily.png') center / 100% 100% no-repeat; transform: translateY(-2px) rotate(-1deg); }
 .rsvp-option > .icon { width: 24px; height: 24px; }
+
+/* Mừng cưới: tên chủ tài khoản một dòng, chữ nhỏ giãn cách. */
+.gift-holder { margin-top: 4px; font-size: 12px; letter-spacing: .08em; white-space: nowrap; }
