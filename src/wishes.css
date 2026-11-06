@@ -4,16 +4,11 @@
 .wishes-card { color: var(--text-color); }
 .wishes-card > h2 { text-align: center; font-size: 46px; line-height: 1.15; font-weight: 400; }
 .wishes-sub { margin-top: 6px; text-align: center; font-size: 15px; color: #000000b3; }
-.wishes-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 24px; }
-.wishes-head p { font-size: 15px; color: #000000b3; }
-.wishes-head span { font-weight: 600; color: var(--text-color); }
-.wishes-write {
   flex-shrink: 0; padding: 6px 12px; border-radius: 999px; background: #0000000f; color: var(--text-color);
   font-size: 13px; transition: background .2s;
 }
-.wishes-write:hover { background: #00000021; }
 .wishes-list {
-  list-style: none; margin: 14px 0 0; padding: 0 4px 0 0; display: grid; gap: 12px;
+  list-style: none; margin: 24px 0 0; padding: 0 4px 0 0; display: grid; gap: 12px;
   max-height: 60vh; overflow-y: auto; scrollbar-width: thin; overscroll-behavior: contain;
 }
 .wish-item { background: color-mix(in srgb, var(--text-color) 5%, transparent); background: #371a160d; border-radius: 12px; padding: 12px 14px; color: #000000cc; }
@@ -52,7 +47,7 @@
   .wish-form input[name="name"] { flex-basis: 176px; }
   .wishes-section { padding: 80px 40px 72px; }
   .wishes-card > h2 { font-size: 56px; }
-  .wishes-sub, .wishes-head p { font-size: 16px; }
+  .wishes-sub { font-size: 16px; }
   .wish-item { padding: 16px; }
   .wish-item .wish-name, .wish-item .wish-text { font-size: 16px; }
 }

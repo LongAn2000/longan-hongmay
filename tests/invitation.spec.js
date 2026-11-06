@@ -289,7 +289,7 @@ test('wishes come from the sheet, scroll in the desktop rail, and new wishes pos
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/?intro=0');
   // Section: total, newest first, blank names shown as "Ẩn danh", text rendered as text (no HTML).
-  await expect(page.locator('#wish-count')).toHaveText('2');
+  await expect(page.locator('#wishes-list .wish-item')).toHaveCount(2);
   await expect(page.locator('#wishes-list .wish-name')).toHaveText(['Ẩn danh', 'Cô Lan']);
   await expect(page.locator('#wishes-list .wish-text').first()).toHaveText('Mãi bên nhau nhé <3');
   // Desktop rail: visible, holds the list twice for a seamless loop, and keeps moving.
@@ -299,16 +299,14 @@ test('wishes come from the sheet, scroll in the desktop rail, and new wishes pos
   const at = () => page.locator('#wishes-rail-track').evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m42);
   const before = await at();
   await expect.poll(at, { timeout: 4000 }).toBeLessThan(before - 5);
-  // No bar fixed to the bottom of the screen; "Viết lời chúc" jumps to the form inside the card.
+  // No bar fixed to the bottom of the screen and no count/"Viết lời chúc" row; the form sits under the list.
   await expect(page.locator('#wish-bar')).toHaveCount(0);
-  await page.getByRole('button', { name: 'Viết lời chúc' }).click();
+  await expect(page.locator('#wishes')).not.toContainText('Tổng lời chúc');
   const form = page.locator('#wish-form-inline');
-  await expect(form.getByPlaceholder('Viết lời chúc…')).toBeFocused();
-  await expect(form).toBeInViewport();
   // Send a wish with no name.
   await form.getByPlaceholder('Viết lời chúc…').fill('Chúc mừng hạnh phúc!');
   await form.getByRole('button', { name: 'Gửi lời chúc' }).click();
-  await expect(page.locator('#wish-count')).toHaveText('3');
+  await expect(page.locator('#wishes-list .wish-item')).toHaveCount(3);
   await expect(page.locator('#wishes-list .wish-text').first()).toHaveText('Chúc mừng hạnh phúc!');
   await expect.poll(() => posted.length).toBe(1);
   expect(posted[0]).toMatchObject({ type: 'wish', name: 'Ẩn danh', note: 'Chúc mừng hạnh phúc!' });

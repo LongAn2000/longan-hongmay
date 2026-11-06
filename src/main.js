@@ -158,7 +158,6 @@ $('#app').innerHTML = `
       <div class="wishes-card reveal">
         <h2 class="script" id="wishes-title">Lời Chúc</h2>
         <p class="wishes-sub">Những lời chúc tốt đẹp từ người thân và bạn bè</p>
-        <div class="wishes-head"><p>Tổng lời chúc: <span id="wish-count">0</span></p><button type="button" class="wishes-write" id="write-wish">Viết lời chúc</button></div>
         <ul class="wishes-list" id="wishes-list" aria-live="polite"></ul>
         <div id="wish-form-slot"></div>
       </div>

@@ -13,7 +13,6 @@ const valid = w => w && typeof w.text === 'string' && w.text.trim();
 export function initWishes({ endpoint, toast }) {
   const $ = s => document.querySelector(s);
   const list = $('#wishes-list');
-  const count = $('#wish-count');
   if (!list) return { add() {} };
 
   const formHtml = id => `<form class="wish-form" id="${id}" autocomplete="on">
@@ -71,7 +70,6 @@ export function initWishes({ endpoint, toast }) {
 
   function render() {
     const wishes = all();
-    count.textContent = String(wishes.length);
     list.replaceChildren(...[...wishes].reverse().map(w => item(w, 'li', 'wish-item')));
     if (!wishes.length) list.innerHTML = '<li class="wish-empty">Hãy là người đầu tiên gửi lời chúc tới cô dâu chú rể!</li>';
     buildRail(wishes);
@@ -99,13 +97,6 @@ export function initWishes({ endpoint, toast }) {
       form.elements.text.blur();
     });
   }
-
-  // "Viết lời chúc": cuộn tới ô viết lời chúc trong khung và đặt con trỏ vào đó.
-  $('#write-wish').addEventListener('click', () => {
-    const input = $('#wish-form-inline input[name="text"]');
-    input.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
-    input.focus({ preventScroll: true });
-  });
 
   // Ẩn cột chữ chạy khi phần Lễ cưới (rộng) đang trên màn hình.
   if ('IntersectionObserver' in window) {
