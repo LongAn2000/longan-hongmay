@@ -289,6 +289,9 @@ test('wishes from the sheet pop up bottom-left like TikTok live comments, on des
   await expect(feed.locator('.feed-name').nth(1)).toHaveText('Ẩn danh', { timeout: 6000 });
   await expect(feed.locator('.feed-text').nth(1)).toHaveText('Mãi bên nhau nhé <3');
   expect(await feed.evaluate(el => getComputedStyle(el).pointerEvents)).toBe('none');
+  // Each wish plays once: after the two sample wishes nothing new pops up.
+  await page.waitForTimeout(2600 * 2);
+  expect(await feed.locator('.feed-item').count()).toBe(2);
   const box = await feed.boundingBox();
   expect(box.x).toBeLessThan(40);
   expect(box.y + box.height).toBeGreaterThan(900 - 60);
