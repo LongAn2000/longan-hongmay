@@ -14,8 +14,8 @@
   /* Lưới 2 cột (ô tròn · chữ): bong bóng rộng vừa nội dung, chỉ xuống dòng khi chạm bề rộng tối đa.
      Trước đây dùng flex, cột chữ bị co tới 4px nên chữ xuống dòng từng ký tự. */
   display: grid; grid-template-columns: 26px auto; align-items: start; column-gap: 8px; width: max-content; max-width: 100%; padding: 6px 12px 7px 6px;
-  /* Nâu trong mờ ~40% (không làm nhòe nền): thấy rõ thiệp phía sau; chữ trắng có bóng đậm hơn để vẫn đọc được trên nền trắng. */
-  border-radius: 18px; background: #2b1a1466; color: #fff; text-shadow: 0 1px 2px #000000b3, 0 0 4px #00000066;
+  /* Nâu trong mờ ~50% (không làm nhòe nền): thấy rõ thiệp phía sau; chữ trắng có bóng đậm hơn để vẫn đọc được trên nền trắng. */
+  border-radius: 18px; background: #2b1a1480; color: #fff; text-shadow: 0 1px 2px #000000b3, 0 0 4px #00000066;
   opacity: 0; transform: translateY(8px) scale(.96); transform-origin: left bottom;
   transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.3,1);
 }
