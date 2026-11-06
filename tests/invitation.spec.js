@@ -136,7 +136,7 @@ test('album slides in the chosen direction and handles quick repeated clicks', a
 test('wedding gifts show both recipients and copy their accounts independently', async ({ page }) => {
   await page.goto('/?intro=0');
   await expect(page.locator('.gift-role')).toHaveText(['Chú rể', 'Cô dâu']);
-  await expect(page.locator('.gift-name')).toHaveText(['Long An', 'Hồng Mây']);
+  await expect(page.locator('.gift-name')).toHaveCount(0);
   // The real QR codes and accounts are configured.
   await expect(page.locator('.qr-placeholder')).toHaveCount(0);
   await expect(page.getByRole('img', { name: 'Mã QR mừng cưới Long An' })).toHaveAttribute('src', '/assets/qr-long-an.png');

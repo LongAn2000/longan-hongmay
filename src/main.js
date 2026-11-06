@@ -150,7 +150,6 @@ $('#app').innerHTML = `
       <p class="gift-intro reveal">Gia đình chúng tôi rất hân hạnh được đón tiếp !</p>
       <div class="gift-cards">${wedding.gifts.map((gift, index) => `<article class="gift-card reveal" aria-label="Mừng cưới ${e(gift.role)} ${e(gift.name)}"><p class="gift-role">${e(gift.role)}</p>
         ${gift.qrImage ? `<img class="gift-qr" src="${e(assetUrl(gift.qrImage))}" alt="Mã QR mừng cưới ${e(gift.name)}" loading="lazy"><a class="download-qr" href="${e(assetUrl(gift.qrImage))}" download="qr-mung-cuoi-${index + 1}.png" aria-label="Tải mã QR ${e(gift.name)}">${icon('download')} Tải mã QR</a>` : `<div class="qr-placeholder">${icon('gift')}<span>Trân trọng cảm ơn</span><small>Mã QR sẽ được cập nhật</small></div>`}
-        <h3 class="gift-name">${e(gift.name)}</h3>
         ${gift.bank ? `<p class="gift-bank">${e(gift.bank)}</p>` : ''}
         ${gift.holder ? `<p class="gift-holder">${e(gift.holder)}</p>` : ''}
         ${gift.account ? `<button class="copy-account" data-copy-gift="${index}" aria-label="Sao chép số tài khoản ${e(gift.name)}"><span>${e(gift.account)}</span><small>Sao chép tài khoản</small></button>` : ''}
