@@ -114,9 +114,6 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .map-link .icon { width: 16px; height: 16px; }
 .event-flower { position: absolute; width: 37%; right: -3%; bottom: 3%; z-index: 2; }
 .photo-interlude { position: relative; aspect-ratio: 3 / 4; }
-.interlude-caption { position: absolute; inset: 0; padding: 35px 20px; text-align: center; color: #fff; text-shadow: 0 2px 8px #0006; }
-.interlude-caption .eyebrow { font-size: 9px; }
-.interlude-caption .script { font-size: 43px; }
 .countdown-section { padding: 74px 25px 45px; overflow: hidden; }
 .countdown-section .section-title h2 { font-size: 41px; }
 .countdown { position: relative; display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; text-align: center; margin: 35px 0 20px; }

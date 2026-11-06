@@ -83,7 +83,7 @@ $('#app').innerHTML = `
       ${decoration('calla', 'event-flower')}
     </section>
 
-    <section class="photo-interlude" aria-label="Khoảnh khắc của chúng mình">${photo('celebration', 'fill-image', '61% 46%')}<div class="interlude-caption"><span class="eyebrow">TOGETHER IS A BEAUTIFUL PLACE TO BE</span><p class="script">You, me & forever</p></div></section>
+    <section class="photo-interlude" aria-label="Khoảnh khắc của chúng mình">${photo('celebration', 'fill-image', '61% 46%')}</section>
 
     <section class="schedule-section bg-paper" aria-label="Chương trình ngày cưới">
       <div class="section-title reveal"><h2 class="script">Timeline</h2></div>
