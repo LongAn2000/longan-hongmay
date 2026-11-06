@@ -13,6 +13,12 @@
  * Sửa script về sau: Triển khai → Quản lý triển khai → sửa (bút chì) → Phiên bản: Phiên bản mới, để giữ nguyên URL.
  *
  * Tab đầu tiên: mỗi lần khách gửi form thêm một dòng (tự thêm dòng tiêu đề nếu tab còn trống).
+ *   - Xác nhận tham dự: cột "Có đi không" là Có / Không.
+ *   - Lời chúc gửi từ khung "Lời Chúc" (không kèm xác nhận): cột "Có đi không" ghi "Lời chúc", số người để trống.
+ *
+ * Đọc lời chúc (doGet): thiệp gọi URL /exec bằng GET để lấy cột "Tên" + "Lời nhắn" của mọi dòng có lời nhắn,
+ * hiển thị ở phần Lời Chúc và cột chữ chạy bên trái. Chỉ trả về tên và lời nhắn, không trả số người hay có đi không.
+ * Muốn ẩn một lời chúc: xoá nội dung ô "Lời nhắn" của dòng đó.
  */
 
 const SPREADSHEET_ID = '1u4SUiQkYt7f_iaX1p0yR38GWwbRKQEanNE-Z5JBV3Lw';
@@ -23,17 +29,32 @@ function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
+    const isWish = data.type === 'wish';
     rsvpSheet().appendRow([
       new Date(data.createdAt || Date.now()),
       clean(data.name),
-      data.attending === 'yes' ? 'Có' : 'Không',
-      Number(data.guests) || 0,
+      isWish ? 'Lời chúc' : data.attending === 'yes' ? 'Có' : 'Không',
+      isWish ? '' : Number(data.guests) || 0,
       clean(data.note),
     ]);
   } finally {
     lock.releaseLock();
   }
   return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet() {
+  const sheet = rsvpSheet();
+  const rows = sheet.getLastRow() > 1 ? sheet.getRange(2, 1, sheet.getLastRow() - 1, HEADERS.length).getValues() : [];
+  const wishes = rows
+    .filter(row => String(row[4]).trim())
+    .map(row => ({
+      name: String(row[1]).trim().replace(/^'/, ''),
+      text: String(row[4]).trim().replace(/^'/, ''),
+      time: row[0] instanceof Date ? row[0].toISOString() : String(row[0]),
+    }))
+    .slice(-500);
+  return ContentService.createTextOutput(JSON.stringify({ ok: true, wishes })).setMimeType(ContentService.MimeType.JSON);
 }
 
 function rsvpSheet() {

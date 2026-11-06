@@ -4,6 +4,8 @@ import './backgrounds.css';
 import './lace.css';
 import './intro.css';
 import { initIntro } from './intro.js';
+import './wishes.css';
+import { initWishes } from './wishes.js';
 import { wedding, rsvpEndpoint } from './config.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -151,6 +153,16 @@ $('#app').innerHTML = `
       <div class="gift-cards">${wedding.gifts.map((gift, index) => `<button type="button" class="gift-card reveal" data-open-gift="${index}" aria-haspopup="dialog" aria-label="Xem thông tin mừng cưới ${e(gift.role)} ${e(gift.name)}"><span class="gift-role">${e(gift.role)}</span>${icon('gift', 'gift-icon')}<span class="gift-card-name script">${e(gift.name)}</span><span class="gift-open">Xem mã QR</span></button>`).join('')}</div>
     </section>
     </div>
+
+    <section class="wishes-section bg-paper" id="wishes" aria-labelledby="wishes-title">
+      <div class="wishes-card reveal">
+        <h2 class="script" id="wishes-title">Lời Chúc</h2>
+        <p class="wishes-sub">Những lời chúc tốt đẹp từ người thân và bạn bè</p>
+        <div class="wishes-head"><p>Tổng lời chúc: <span id="wish-count">0</span></p><button type="button" class="wishes-write" id="write-wish">Viết lời chúc</button></div>
+        <ul class="wishes-list" id="wishes-list" aria-live="polite"></ul>
+        <div id="wish-form-slot"></div>
+      </div>
+    </section>
 
     <div class="closing-photo">${photo('footer', 'fill-image', '45% 40%')}</div><footer class="closing-footer bg-paper"><img class="monogram" src="${assetUrl('/assets/monogram-am.png')}" alt="" aria-hidden="true" loading="lazy"><div class="closing-text reveal"><h2 class="script">Thank you</h2><p>${e(wedding.groom)} & ${e(wedding.bride)}</p><span>${e(wedding.thankYou)}</span></div></footer>
   </main>
@@ -375,6 +387,7 @@ $('#rsvp-form').addEventListener('submit', event => {
   if (!storage.write('rsvp', response)) return;
   $('#rsvp-status').textContent = `${name}: ${attending === 'yes' ? 'Đã xác nhận tham dự' : 'Đã gửi lời hẹn dịp khác'}.`;
   $('#rsvp-dialog').close();
+  if (response.note) wishes.add(name, response.note, { post: false });
   if (!rsvpEndpoint) { toast('Đã lưu xác nhận trên thiết bị này. Cảm ơn bạn!'); return; }
   // Gửi về Google Sheet qua Apps Script. text/plain để trình duyệt không chặn CORS.
   fetch(rsvpEndpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(response) })
@@ -389,6 +402,9 @@ $$('[data-copy-gift]').forEach(button => button.addEventListener('click', async 
   try { await navigator.clipboard.writeText(gift.account); toast(`Đã sao chép số tài khoản của ${gift.name}.`); }
   catch { toast(`Số tài khoản của ${gift.name}: ${gift.account}`); }
 }));
+
+// Lời chúc: đọc cột "Lời nhắn" của Sheet qua Apps Script; lời nhắn trong form tham dự cũng hiện ngay ở đây.
+const wishes = initWishes({ endpoint: rsvpEndpoint, toast });
 
 // Màn mở đầu Save the Date; nút "Xem thiệp mời" mở thiệp và bật nhạc.
 initIntro({ wedding, onOpen: startMusic });
