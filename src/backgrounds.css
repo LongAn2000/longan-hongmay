@@ -1,9 +1,9 @@
-/* Nền so le: các phần lần lượt dùng nền giấy hoa ép mờ màu kem (theme-texture.jpg, từ theme9.png, bỏ dải hoa và mép giấy xé) và nền giấy trắng có sẵn.
+/* Nền so le: các phần lần lượt dùng nền đá cẩm thạch trắng ngà (theme-texture.jpg, từ theme10.jpg) và nền giấy trắng có sẵn.
    Ảnh nền phủ kín từng phần (cover), nên phần dài hay ngắn đều không lộ đường nối. */
-.bg-frame { position: relative; isolation: isolate; background: #f5ede6; }
+.bg-frame { position: relative; isolation: isolate; background: #f1ede5; }
 .bg-frame::before {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; box-sizing: border-box;
-  background: #f5ede6 url('/assets/theme-texture.jpg') center / cover no-repeat;
+  background: #f1ede5 url('/assets/theme-texture.jpg') center / cover no-repeat;
 }
 .bg-paper { background: var(--paper) url('/assets/theme-paper.png') center / 100% auto; }
 
