@@ -104,5 +104,5 @@ export const wedding = {
       account: '6839812027',
     },
   ],
-  thankYou: 'Sự hiện diện của bạn là niềm hạnh phúc của chúng tôi.',
+  thankYou: 'Sự hiện diện của bạn là niềm hạnh phúc của chúng tớ',
 };
