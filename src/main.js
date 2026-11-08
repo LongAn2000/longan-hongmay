@@ -43,7 +43,7 @@ document.title = `Thiệp cưới ${wedding.groom} & ${wedding.bride}`;
 const eventCard = (event) => {
   const day = dateParts(event.date);
   return `<article class="event-card reveal">
-    <p class="event-invitation">Trân trọng kính mời<br>Quý khách đến dự buổi tiệc chung vui<br>cùng gia đình chúng tôi</p>
+    <p class="event-invitation">Trân trọng kính mời<br>bạn iu đến dự buổi tiệc chung vui<br>cùng gia đình chúng tớ</p>
     <h3>${e(event.title)}</h3>
     <p class="event-couple script">${e(wedding.groom)}<span>&</span>${e(wedding.bride)}</p>
     ${decoration('venue', 'venue-illustration')}
@@ -99,7 +99,7 @@ $('#app').innerHTML = `
         <div class="story-text">
           <p class="story-eyebrow">Our story</p>
           <h2 class="story-names script">${e(wedding.groom)}<span>&amp;</span>${e(wedding.bride)}</h2>
-          <p class="story-body">Từ hai hành trình riêng biệt, chúng mình đã gặp nhau, chọn ở lại và cùng viết nên một câu chuyện mang tên chúng ta. Chỉ mong từ hôm nay và mãi về sau, mỗi niềm vui đều có nhau để sẻ chia, mỗi chặng đường đều có một bàn tay để nắm lấy.</p>
+          <p class="story-body">7 năm là một hành trình dài từ bạn bè, trở thành người yêu và bây giờ gấp lại chương mới của một người, mở ra hành trình của hai ta. Từ hôm nay, ngày mai, sau này…cùng cầm tay nhau, đi hết nắng mưa.</p>
         </div>
       </div>
       <div class="story-photos reveal">

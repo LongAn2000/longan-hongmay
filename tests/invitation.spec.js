@@ -289,12 +289,12 @@ test('wishes from the sheet pop up bottom-left like TikTok live comments, on des
   await expect(feed.locator('.feed-name').nth(1)).toHaveText('Ẩn danh', { timeout: 6000 });
   await expect(feed.locator('.feed-text').nth(1)).toHaveText('Mãi bên nhau nhé <3');
   expect(await feed.evaluate(el => getComputedStyle(el).pointerEvents)).toBe('none');
-  // Each wish plays once: after the two sample wishes nothing new pops up.
-  await page.waitForTimeout(2600 * 2);
-  expect(await feed.locator('.feed-item').count()).toBe(2);
   const box = await feed.boundingBox();
   expect(box.x).toBeLessThan(40);
   expect(box.y + box.height).toBeGreaterThan(900 - 60);
+  // The final wishes keep moving out until the feed is completely empty.
+  await expect(feed.locator('.feed-item')).toHaveCount(0, { timeout: 10000 });
+  await expect(feed).toHaveClass(/is-empty/);
   // A note sent with the RSVP pops up straight away.
   await page.locator('[data-attending="yes"]').click();
   await page.getByLabel('Tên của bạn', { exact: true }).fill('Bạn Thân');
@@ -308,4 +308,42 @@ test('wishes from the sheet pop up bottom-left like TikTok live comments, on des
   // Bubbles are at most 40% of the screen wide.
   expect(await feed.evaluate(el => el.getBoundingClientRect().width)).toBeCloseTo(390 * 0.4, 0);
 });
+
+for (const { width, reducedMotion } of [
+  { width: 1440, reducedMotion: 'no-preference' },
+  { width: 390, reducedMotion: 'no-preference' },
+  { width: 390, reducedMotion: 'reduce' },
+]) {
+  test(`the final wishes leave an empty feed at ${width}px with ${reducedMotion} motion`, async ({ page }) => {
+    const lastWish = 'Chúc hai bạn luôn hạnh phúc, yêu thương và cùng nhau đi qua mọi chặng đường!';
+    await page.route('https://script.google.com/**', route => route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({ ok: true, wishes: [SAMPLE_WISHES[0], { name: 'Bạn thân', text: lastWish }] }),
+    }));
+    await page.emulateMedia({ reducedMotion });
+    await page.setViewportSize({ width, height: 900 });
+    await page.clock.install();
+    await page.goto('/?intro=0');
+    const feed = page.locator('#wish-feed');
+    await expect(feed.locator('.feed-item.is-in')).toHaveCount(1);
+    await page.clock.runFor(2600);
+    await expect(feed.locator('.feed-item')).toHaveCount(2);
+    await expect(feed.locator('.feed-text').last()).toHaveText(lastWish);
+    // A longer final wish keeps its reading time before the tail starts leaving.
+    await page.clock.runFor(3000);
+    await expect(feed.locator('.is-out')).toHaveCount(0);
+    await expect(feed.locator('.feed-item')).toHaveCount(2);
+    const lastPosition = await feed.locator('.feed-item').last().boundingBox();
+    await page.clock.runFor(1500);
+    await expect(feed.locator('.feed-item')).toHaveCount(1);
+    await expect(feed.locator('.feed-text')).toHaveText(lastWish);
+    const movedPosition = await feed.locator('.feed-item').boundingBox();
+    expect(movedPosition.y).toBeLessThan(lastPosition.y - 20);
+    await page.clock.runFor(2600);
+    await expect(feed.locator('.feed-item')).toHaveCount(0);
+    await expect(feed).toHaveClass(/is-empty/);
+    await page.clock.runFor(10000);
+    await expect(feed.locator('.feed-item')).toHaveCount(0);
+  });
+}
 

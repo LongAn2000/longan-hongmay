@@ -85,7 +85,7 @@ export const wedding = {
     src: `/assets/album-${i + 1}.jpg`,
     position: '50% 50%',
   })),
-  music: '/assets/mot-nha-da-lab.mp3', // Một Nhà — Da LAB. Để trống nếu không muốn có nhạc nền.
+  music: '/assets/you-are-the-reason-calum-scott.mp3', // You Are The Reason — Calum Scott. Để trống nếu không muốn có nhạc nền.
   gifts: [
     {
       name: 'Long An',

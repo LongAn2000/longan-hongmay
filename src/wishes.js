@@ -1,11 +1,12 @@
 // Lời chúc nổi kiểu bình luận TikTok Live ở góc dưới bên trái (máy tính và điện thoại):
-// lời chúc lần lượt nổi lên, đẩy lời cũ lên trên; chạy hết danh sách một lần thì dừng.
+// lời chúc lần lượt nổi lên, đẩy lời cũ lên trên; chạy hết một lần rồi trôi ra hết.
 // Dữ liệu là cột "Lời nhắn" của Google Sheet, đọc qua Apps Script (GET cùng URL /exec với RSVP).
 // Khách gửi lời chúc qua ô "Lời nhắn nhủ dành cho đôi bạn trẻ" của form xác nhận tham dự.
 const FEED_EVERY = 2600; // ms giữa hai lời chúc nổi lên (lời ngắn)
 const FEED_PER_40 = 1000; // lời dài: thêm 1 giây cho mỗi 40 ký tự sau 40 ký tự đầu, để kịp đọc hết
 const readTime = w => FEED_EVERY + Math.ceil(Math.max(0, w.text.length - 40) / 40) * FEED_PER_40;
 const FEED_MAX = 5;      // số lời chúc giữ trên màn hình cùng lúc
+const FEED_TRANSITION = 450; // khớp với thời gian trượt trong wishes.css
 const LOCAL_KEY = 'longan-hongmay:my-wishes';
 
 const readLocal = () => { try { const v = JSON.parse(localStorage.getItem(LOCAL_KEY)); return Array.isArray(v) ? v : []; } catch { return []; } };
@@ -23,7 +24,21 @@ export function initWishes({ endpoint }) {
 
   let remote = [];
   let local = readLocal().filter(valid); // lời nhắn khách vừa gửi, giữ trên máy tới khi Sheet trả về
-  let queue = [], next = 0, timer = 0;
+  let queue = [], next = 0, timer = 0, exitTimer = 0;
+
+  function finishExit() {
+    clearTimeout(exitTimer);
+    exitTimer = 0;
+    feedList.querySelector('.is-out')?.remove();
+    feedList.style.transition = 'none';
+    feedList.style.transform = '';
+    if (!feedList.children.length) {
+      feedList.style.height = '';
+      feed.classList.add('is-empty');
+    }
+    feedList.getBoundingClientRect();
+    feedList.style.transition = '';
+  }
 
   const bubble = w => {
     const el = document.createElement('div'); el.className = 'feed-item';
@@ -35,6 +50,9 @@ export function initWishes({ endpoint }) {
     body.append(name, text); el.append(avatar, body); return el;
   };
   function pushBubble(w) {
+    if (exitTimer) finishExit();
+    feedList.style.height = '';
+    feed.classList.remove('is-empty');
     const el = bubble(w);
     feedList.append(el);
     if (!reduced) {
@@ -51,12 +69,27 @@ export function initWishes({ endpoint }) {
     const maxH = parseFloat(getComputedStyle(feed).getPropertyValue('--feed-max')) / 100 * innerHeight || innerHeight * 0.3;
     while (feedList.children.length > 1 && (feedList.children.length > FEED_MAX || feedList.offsetHeight > maxH)) feedList.firstElementChild.remove();
   }
-  // Chạy lần lượt mỗi lời chúc đúng một lần; hết danh sách thì dừng, không lặp lại.
+  function drainBubble() {
+    const oldest = feedList.firstElementChild;
+    if (!oldest) return;
+    // Giữ chiều cao cụm để các lời còn lại tiếp tục đi lên khi bỏ lời trên cùng.
+    if (!feedList.style.height) feedList.style.height = `${feedList.offsetHeight}px`;
+    const shift = oldest.offsetHeight + 8;
+    oldest.classList.add('is-out');
+    feedList.style.transform = `translateY(-${shift}px)`;
+    if (reduced) finishExit();
+    else exitTimer = setTimeout(finishExit, FEED_TRANSITION);
+  }
+  // Chạy mỗi lời chúc một lần, sau đó tiếp tục đẩy các lời cuối ra hết rồi mới dừng.
   function tick() {
     timer = 0;
-    if (next >= queue.length) return;
+    if (next >= queue.length && !feedList.children.length) return;
     let wait = FEED_EVERY;
-    if (!document.documentElement.classList.contains('intro-open') && !document.hidden) { const w = queue[next++]; pushBubble(w); wait = readTime(w); }
+    if (!document.documentElement.classList.contains('intro-open') && !document.hidden) {
+      if (next < queue.length) {
+        const w = queue[next++]; pushBubble(w); wait = readTime(w);
+      } else drainBubble();
+    }
     timer = setTimeout(tick, wait);
   }
   function refresh() {

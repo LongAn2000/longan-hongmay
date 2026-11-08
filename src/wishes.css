@@ -20,6 +20,7 @@
   transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.3,1);
 }
 .feed-item.is-in { opacity: 1; transform: none; }
+.feed-item.is-out { opacity: 0; }
 .feed-avatar {
   flex: 0 0 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
   background: linear-gradient(135deg, #d9b98c, #a77f55); color: #fff; font-size: 13px; font-weight: 600; font-family: var(--body);
